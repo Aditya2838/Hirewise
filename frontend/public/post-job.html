@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link rel="stylesheet" href="sky/src/assets/css/style.css">
+    <link rel="shortcut icon" href="sky/src/assets/images/favicon.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <title>Admin - Manage Jobs</title>
+    <style>
+        .job-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .job-card {
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .job-badge {
+            margin-right: 5px;
+        }
+        .pagination {
+            margin-top: 30px;
+            justify-content: center;
+        }
+        .search-filters {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 0;
+        }
+        .empty-state i {
+            font-size: 50px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        #confirmDeleteModal .modal-footer {
+            justify-content: space-between;
+        }
+        .scrollable-description {
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .job-skills {
+            margin-top: 10px;
+        }
+        .job-skill {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        .company-photo-container {
+            width: 100%;
+            height: 120px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .company-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+            <a class="navbar-brand brand-logo me-5" href="index.html"><img src="../../images/w.jpeg" style="width: 100%;" class="me-2" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../images/w.jpeg"  style="width: 100%;" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="icon-menu"></span>
+            </button>
+            <ul class="navbar-nav mr-lg-2">
+                <li class="nav-item nav-search d-none d-lg-block">
+                    <div class="input-group">
+                        <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                            <span class="input-group-text" id="search">
+                                <i class="icon-search"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                        <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png" alt="profile" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item">
+                            <i class="ti-settings text-primary"></i> Settings </a>
+                        <a href="../../index.html" class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i> Logout </a>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Start Breadcrumbs -->
+    <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Add Jobs</h1>
+                        <p>View, edit, and delete your posted job listings.</p>
+                    </div>
+                    <ul class="breadcrumb-nav" style="text-decoration: none;">
+                        <li><a href="index.html" style="text-decoration: none;">Home</a></li>
+                        <li>Manage Jobs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Start Job Management Section -->
+    <section class="job-management section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>Your Posted Jobs</h2>
+                        <p>Manage all your job listings from one place</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="search-filters">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="searchJobs">Search Jobs</label>
+                                    <input type="text" id="searchJobs" class="form-control" placeholder="Search by title, company, location...">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="filterCategory">Filter by Category</label>
+                                    <select id="filterCategory" class="form-control">
+                                        <option value="">All Categories</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Healthcare">Healthcare</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="filterType">Filter by Type</label>
+                                    <select id="filterType" class="form-control">
+                                        <option value="">All Types</option>
+                                        <option value="Full Time">Full Time</option>
+                                        <option value="Part Time">Part Time</option>
+                                        <option value="Intern">Intern</option>
+                                        <option value="Remote">Remote</option>
+                                        <option value="Contract">Contract</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button id="resetFilters" class="btn btn-outline-secondary btn-block">Reset Filters</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Listings -->
+            <div class="row">
+                <div class="col-12">
+                    <div id="jobsList">
+                        <!-- Jobs will be populated here via JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="Job listing pagination">
+                        <ul class="pagination" id="pagination">
+                            <!-- Pagination will be populated here via JavaScript -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Add New Job Button -->
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary" id="openNewJobModal">
+                        <i class="lni lni-plus"></i> Post a New Job
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Job Management Section -->
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this job posting? This action cannot be undone.</p>
+                    <p><strong>Job Title:</strong> <span id="deleteJobTitle"></span></p>
+                    <p><strong>Company:</strong> <span id="deleteCompanyName"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete Job</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Edit Modal -->
+    <div class="modal fade" id="editJobModal" tabindex="-1" role="dialog" aria-labelledby="editJobModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editJobModalLabel">Edit Job</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editJobForm">
+                        <input type="hidden" id="editJobId">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="editJobTitle">Job Title*</label>
+                                    <input type="text" id="editJobTitle" name="editJobTitle" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="editCompanyName">Company Name*</label>
+                                    <input type="text" id="editCompanyName" name="editCompanyName" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="editCompanyLogo">Company Logo URL</label>
+                                    <input type="url" id="editCompanyLogo" name="editCompanyLogo" class="form-control" placeholder="https://example.com/logo.png">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="editCompanyPhoto">Company Photo URL</label>
+                                    <input type="url" id="editCompanyPhoto" name="editCompanyPhoto" class="form-control" placeholder="https://example.com/company-photo.jpg">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="editCompanyWebsite">Company Website</label>
+                                    <input type="url" id="editCompanyWebsite" name="editCompanyWebsite" class="form-control" placeholder="https://example.com">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="editJobLocation">Location*</label>
+                                    <input type="text" id="editJobLocation" name="editJobLocation" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="editSalary">Salary Range*</label>
+                                    <input type="text" id="editSalary" name="editSalary" class="form-control" placeholder="$20k - $25k" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="editJobType">Job Type*</label>
+                                    <select id="editJobType" name="editJobType" class="form-control" required>
+                                        <option value="">Select Job Type</option>
+                                        <option value="Full Time">Full Time</option>
+                                        <option value="Part Time">Part Time</option>
+                                        <option value="Intern">Intern</option>
+                                        <option value="Remote">Remote</option>
+                                        <option value="Contract">Contract</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="editJobCategory">Category*</label>
+                                    <select id="editJobCategory" name="editJobCategory" class="form-control" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Healthcare">Healthcare</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="editJobDescription">Job Description*</label>
+                                    <textarea id="editJobDescription" name="editJobDescription" class="form-control" rows="6" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="editRequiredSkills">Required Skills</label>
+                                    <input type="text" id="editRequiredSkills" name="editRequiredSkills" class="form-control" placeholder="e.g. JavaScript, React, Node.js">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="editApplicationDeadline">Application Deadline</label>
+                                    <input type="date" id="editApplicationDeadline" name="editApplicationDeadline" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveJobChanges">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Add Job Modal -->
+    <div class="modal fade" id="newJobModal" tabindex="-1" role="dialog" aria-labelledby="newJobModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newJobModalLabel">Post a New Job</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="newJobForm">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="newJobTitle">Job Title*</label>
+                                    <input type="text" id="newJobTitle" name="newJobTitle" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="newCompanyName">Company Name*</label>
+                                    <input type="text" id="newCompanyName" name="newCompanyName" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="newCompanyLogo">Company Logo URL</label>
+                                    <input type="url" id="newCompanyLogo" name="newCompanyLogo" class="form-control" placeholder="https://example.com/logo.png">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="newCompanyPhoto">Company Photo URL</label>
+                                    <input type="url" id="newCompanyPhoto" name="newCompanyPhoto" class="form-control" placeholder="https://example.com/company-photo.jpg">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="newCompanyWebsite">Company Website</label>
+                                    <input type="url" id="newCompanyWebsite" name="newCompanyWebsite" class="form-control" placeholder="https://example.com">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="newJobLocation">Location*</label>
+                                    <input type="text" id="newJobLocation" name="newJobLocation" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="newSalary">Salary Range*</label>
+                                    <input type="text" id="newSalary" name="newSalary" class="form-control" placeholder="$20k - $25k" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="newJobType">Job Type*</label>
+                                    <select id="newJobType" name="newJobType" class="form-control" required>
+                                        <option value="">Select Job Type</option>
+                                        <option value="Full Time">Full Time</option>
+                                        <option value="Part Time">Part Time</option>
+                                        <option value="Intern">Intern</option>
+                                        <option value="Remote">Remote</option>
+                                        <option value="Contract">Contract</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="newJobCategory">Category*</label>
+                                    <select id="newJobCategory" name="newJobCategory" class="form-control" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Healthcare">Healthcare</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="newJobDescription">Job Description*</label>
+                                    <textarea id="newJobDescription" name="newJobDescription" class="form-control" rows="6" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="newRequiredSkills">Required Skills</label>
+                                    <input type="text" id="newRequiredSkills" name="newRequiredSkills" class="form-control" placeholder="e.g. JavaScript, React, Node.js">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="newApplicationDeadline">Application Deadline</label>
+                                    <input type="date" id="newApplicationDeadline" name="newApplicationDeadline" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveNewJob">Post Job</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Constants
+            const ITEMS_PER_PAGE = 5;
+            
+            // State variables
+            let allJobs = [];
+            let filteredJobs = [];
+            let currentPage = 1;
+            let jobToDelete = null;
+            
+            // DOM Elements
+            const jobsList = document.getElementById('jobsList');
+            const pagination = document.getElementById('pagination');
+            const searchInput = document.getElementById('searchJobs');
+            const categoryFilter = document.getElementById('filterCategory');
+            const typeFilter = document.getElementById('filterType');
+            const resetFiltersBtn = document.getElementById('resetFilters');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            const saveJobChangesBtn = document.getElementById('saveJobChanges');
+            const openNewJobModalBtn = document.getElementById('openNewJobModal');
+            const saveNewJobBtn = document.getElementById('saveNewJob');
+            
+            // Load jobs from localStorage
+            function loadJobs() {
+                try {
+                    allJobs = JSON.parse(localStorage.getItem('jobs')) || [];
+                    filteredJobs = [...allJobs];
+                    renderJobs();
+                } catch (error) {
+                    console.error('Error loading jobs:', error);
+                    showErrorMessage('Failed to load jobs. Please refresh the page and try again.');
+                }
+            }
+            
+            // Filter jobs based on search and filter criteria
+            function filterJobs() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const categoryValue = categoryFilter.value;
+                const typeValue = typeFilter.value;
+                
+                filteredJobs = allJobs.filter(job => {
+                    const matchesSearch = 
+                        job.jobTitle.toLowerCase().includes(searchTerm) ||
+                        job.companyName.toLowerCase().includes(searchTerm) ||
+                        job.jobLocation.toLowerCase().includes(searchTerm) ||
+                        (job.jobDescription && job.jobDescription.toLowerCase().includes(searchTerm));
+                    
+                    const matchesCategory = !categoryValue || job.jobCategory === categoryValue;
+                    const matchesType = !typeValue || job.jobType === typeValue;
+                    
+                    return matchesSearch && matchesCategory && matchesType;
+                });
+                
+                currentPage = 1;
+                renderJobs();
+            }
+            
+            // Render jobs for the current page
+            function renderJobs() {
+                if (filteredJobs.length === 0) {
+                    // Show empty state
+                    jobsList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="lni lni-briefcase"></i>
+                            <h3>No jobs found</h3>
+                            <p>Try adjusting your search or filters, or post a new job.</p>
+                            <button id="emptyStateNewJob" class="btn btn-primary mt-3">Post a New Job</button>
+                        </div>
+                    `;
+                    
+                    // Add event listener for empty state button
+                    document.getElementById('emptyStateNewJob').addEventListener('click', function() {
+                        $('#newJobModal').modal('show');
+                    });
+                    
+                    pagination.innerHTML = '';
+                    return;
+                }
+                
+                // Calculate pagination
+                const totalPages = Math.ceil(filteredJobs.length / ITEMS_PER_PAGE);
+                const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+                const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredJobs.length);
+                const currentJobs = filteredJobs.slice(startIndex, endIndex);
+                
+                // Render job cards
+                jobsList.innerHTML = '';
+                currentJobs.forEach(job => {
+                    // Format date for display
+                    const postedDate = job.postingDate ? new Date(job.postingDate) : new Date();
+                    const formattedDate = postedDate.toLocaleDateString();
+                    
+                    // Format deadline if it exists
+                    let deadlineDisplay = '';
+                    if (job.applicationDeadline) {
+                        const deadline = new Date(job.applicationDeadline);
+                        const formattedDeadline = deadline.toLocaleDateString();
+                        deadlineDisplay = `<span class="badge badge-warning job-badge">Deadline: ${formattedDeadline}</span>`;
+                    }
+                    
+                    // Format skills if they exist
+                    let skillsDisplay = '';
+                    if (job.requiredSkills) {
+                        const skills = job.requiredSkills.split(',').map(skill => skill.trim());
+                        skillsDisplay = '<div class="job-skills">';
+                        skills.forEach(skill => {
+                            skillsDisplay += `<span class="job-skill">${skill}</span>`;
+                        });
+                        skillsDisplay += '</div>';
+                    }
+                    
+                    // Use default image if no logo provided
+                    const logoUrl = job.companyLogo || 'https://via.placeholder.com/50?text=Logo';
+                    
+                    // Use company photo or placeholder
+                    const photoUrl = job.companyPhoto || 'https://via.placeholder.com/800x200?text=Company+Photo';
+                    
+                    // Create job card HTML
+                    const jobCard = document.createElement('div');
+                    jobCard.className = 'job-card';
+                    jobCard.innerHTML = `
+                        <div class="company-photo-container">
+                            <img src="${photoUrl}" alt="${job.companyName} photo" class="company-photo">
+                        </div>
+                        <div class="job-header">
+                            <div>
+                                <h4>${job.jobTitle}</h4>
+                                <p class="mb-0">${job.companyName}</p>
+                            </div>
+                            <img src="${logoUrl}" alt="${job.companyName} logo" class="company-logo">
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><i class="lni lni-map-marker"></i> ${job.jobLocation}</p>
+                                    <p><i class="lni lni-dollar"></i> ${job.salary}</p>
+                                </div>
+                                <div class="col-md-6">
+                                  <p><i class="lni lni-briefcase"></i> ${job.jobType}</p>
+                                  <p><i class="lni lni-calendar"></i> Posted: ${formattedDate}</p>
+                              </div>
+                          </div>
+                          <div class="badges mb-3">
+                              <span class="badge badge-primary job-badge">${job.jobType}</span>
+                              <span class="badge badge-info job-badge">${job.jobCategory}</span>
+                              ${deadlineDisplay}
+                          </div>
+                          <div class="scrollable-description">
+                              <h5>Description</h5>
+                              <p>${job.jobDescription}</p>
+                          </div>
+                          ${skillsDisplay}
+                      </div>
+                      <div class="card-footer">
+                          <div class="job-actions">
+                              <button class="btn btn-primary btn-sm view-job" data-id="${job.id}">View Details</button>
+                              <button class="btn btn-info btn-sm edit-job" data-id="${job.id}">Edit</button>
+                              <button class="btn btn-danger btn-sm delete-job" data-id="${job.id}">Delete</button>
+                          </div>
+                      </div>
+                  `;
+                  
+                  jobsList.appendChild(jobCard);
+              });
+              
+              // Add event listeners to buttons
+              document.querySelectorAll('.edit-job').forEach(button => {
+                  button.addEventListener('click', function() {
+                      const jobId = this.getAttribute('data-id');
+                      openEditJobModal(jobId);
+                  });
+              });
+              
+              document.querySelectorAll('.delete-job').forEach(button => {
+                  button.addEventListener('click', function() {
+                      const jobId = this.getAttribute('data-id');
+                      openDeleteConfirmation(jobId);
+                  });
+              });
+              
+              document.querySelectorAll('.view-job').forEach(button => {
+                  button.addEventListener('click', function() {
+                      const jobId = this.getAttribute('data-id');
+                      // Redirect to job details page
+                      window.location.href = `job-details.html?id=${jobId}`;
+                  });
+              });
+              
+              // Render pagination
+              renderPagination(totalPages);
+          }
+          
+          // Render pagination controls
+          function renderPagination(totalPages) {
+              if (totalPages <= 1) {
+                  pagination.innerHTML = '';
+                  return;
+              }
+              
+              let paginationHTML = `
+                  <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                      <a class="page-link" href="#" data-page="${currentPage - 1}" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                      </a>
+                  </li>
+              `;
+              
+              for (let i = 1; i <= totalPages; i++) {
+                  paginationHTML += `
+                      <li class="page-item ${i === currentPage ? 'active' : ''}">
+                          <a class="page-link" href="#" data-page="${i}">${i}</a>
+                      </li>
+                  `;
+              }
+              
+              paginationHTML += `
+                  <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                      <a class="page-link" href="#" data-page="${currentPage + 1}" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                      </a>
+                  </li>
+              `;
+              
+              pagination.innerHTML = paginationHTML;
+              
+              // Add event listeners to pagination buttons
+              document.querySelectorAll('.page-link').forEach(link => {
+                  link.addEventListener('click', function(e) {
+                      e.preventDefault();
+                      const page = parseInt(this.getAttribute('data-page'));
+                      if (page !== currentPage && page >= 1 && page <= totalPages) {
+                          currentPage = page;
+                          renderJobs();
+                      }
+                  });
+              });
+          }
+          
+          // Open edit job modal
+          function openEditJobModal(jobId) {
+              const job = allJobs.find(job => job.id === jobId);
+              if (!job) return;
+              
+              // Populate form fields
+              document.getElementById('editJobId').value = job.id;
+              document.getElementById('editJobTitle').value = job.jobTitle;
+              document.getElementById('editCompanyName').value = job.companyName;
+              document.getElementById('editCompanyLogo').value = job.companyLogo || '';
+              document.getElementById('editCompanyPhoto').value = job.companyPhoto || '';
+              document.getElementById('editCompanyWebsite').value = job.companyWebsite || '';
+              document.getElementById('editJobLocation').value = job.jobLocation;
+              document.getElementById('editSalary').value = job.salary;
+              document.getElementById('editJobType').value = job.jobType;
+              document.getElementById('editJobCategory').value = job.jobCategory;
+              document.getElementById('editJobDescription').value = job.jobDescription;
+              document.getElementById('editRequiredSkills').value = job.requiredSkills || '';
+              
+              if (job.applicationDeadline) {
+                  document.getElementById('editApplicationDeadline').value = job.applicationDeadline;
+              } else {
+                  document.getElementById('editApplicationDeadline').value = '';
+              }
+              
+              // Show modal
+              $('#editJobModal').modal('show');
+          }
+          
+          // Open delete confirmation modal
+          function openDeleteConfirmation(jobId) {
+              const job = allJobs.find(job => job.id === jobId);
+              if (!job) return;
+              
+              // Set job to delete
+              jobToDelete = job;
+              
+              // Update modal content
+              document.getElementById('deleteJobTitle').textContent = job.jobTitle;
+              document.getElementById('deleteCompanyName').textContent = job.companyName;
+              
+              // Show modal
+              $('#confirmDeleteModal').modal('show');
+          }
+          
+          // Save job changes
+          function saveJobChanges() {
+              const jobId = document.getElementById('editJobId').value;
+              const jobIndex = allJobs.findIndex(job => job.id === jobId);
+              
+              if (jobIndex === -1) {
+                  showErrorMessage('Job not found.');
+                  return;
+              }
+              
+              // Validate form
+              const form = document.getElementById('editJobForm');
+              if (!form.checkValidity()) {
+                  form.reportValidity();
+                  return;
+              }
+              
+              // Get form values
+              const updatedJob = {
+                  ...allJobs[jobIndex],
+                  jobTitle: document.getElementById('editJobTitle').value,
+                  companyName: document.getElementById('editCompanyName').value,
+                  companyLogo: document.getElementById('editCompanyLogo').value,
+                  companyPhoto: document.getElementById('editCompanyPhoto').value,
+                  companyWebsite: document.getElementById('editCompanyWebsite').value,
+                  jobLocation: document.getElementById('editJobLocation').value,
+                  salary: document.getElementById('editSalary').value,
+                  jobType: document.getElementById('editJobType').value,
+                  jobCategory: document.getElementById('editJobCategory').value,
+                  jobDescription: document.getElementById('editJobDescription').value,
+                  requiredSkills: document.getElementById('editRequiredSkills').value,
+                  applicationDeadline: document.getElementById('editApplicationDeadline').value,
+                  lastUpdated: new Date().toISOString()
+              };
+              
+              // Update job in array
+              allJobs[jobIndex] = updatedJob;
+              
+              // Save to localStorage
+              localStorage.setItem('jobs', JSON.stringify(allJobs));
+              
+              // Close modal
+              $('#editJobModal').modal('hide');
+              
+              // Update filtered jobs and re-render
+              filterJobs();
+              
+              // Show success message
+              showSuccessMessage('Job updated successfully!');
+          }
+          
+          // Delete job
+          function deleteJob() {
+              if (!jobToDelete) return;
+              
+              // Find job index
+              const jobIndex = allJobs.findIndex(job => job.id === jobToDelete.id);
+              
+              if (jobIndex === -1) {
+                  showErrorMessage('Job not found.');
+                  return;
+              }
+              
+              // Remove job from array
+              allJobs.splice(jobIndex, 1);
+              
+              // Save to localStorage
+              localStorage.setItem('jobs', JSON.stringify(allJobs));
+              
+              // Close modal
+              $('#confirmDeleteModal').modal('hide');
+              
+              // Update filtered jobs and re-render
+              filterJobs();
+              
+              // Show success message
+              showSuccessMessage('Job deleted successfully!');
+          }
+          
+          // Add new job
+          function addNewJob() {
+              // Validate form
+              const form = document.getElementById('newJobForm');
+              if (!form.checkValidity()) {
+                  form.reportValidity();
+                  return;
+              }
+              
+              // Create new job object
+              const newJob = {
+                  id: generateId(),
+                  jobTitle: document.getElementById('newJobTitle').value,
+                  companyName: document.getElementById('newCompanyName').value,
+                  companyLogo: document.getElementById('newCompanyLogo').value,
+                  companyPhoto: document.getElementById('newCompanyPhoto').value,
+                  companyWebsite: document.getElementById('newCompanyWebsite').value,
+                  jobLocation: document.getElementById('newJobLocation').value,
+                  salary: document.getElementById('newSalary').value,
+                  jobType: document.getElementById('newJobType').value,
+                  jobCategory: document.getElementById('newJobCategory').value,
+                  jobDescription: document.getElementById('newJobDescription').value,
+                  requiredSkills: document.getElementById('newRequiredSkills').value,
+                  applicationDeadline: document.getElementById('newApplicationDeadline').value,
+                  postingDate: new Date().toISOString(),
+                  lastUpdated: new Date().toISOString()
+              };
+              
+              // Add job to array
+              allJobs.unshift(newJob);
+              
+              // Save to localStorage
+              localStorage.setItem('jobs', JSON.stringify(allJobs));
+              
+              // Reset form
+              form.reset();
+              
+              // Close modal
+              $('#newJobModal').modal('hide');
+              
+              // Update filtered jobs and re-render
+              filterJobs();
+              
+              // Show success message
+              showSuccessMessage('Job posted successfully!');
+          }
+          
+          // Generate unique ID
+          function generateId() {
+              return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+          }
+          
+          // Show success message
+          function showSuccessMessage(message) {
+              // Create toast element
+              const toast = document.createElement('div');
+              toast.className = 'alert alert-success alert-dismissible fade show';
+              toast.setAttribute('role', 'alert');
+              toast.style.position = 'fixed';
+              toast.style.top = '20px';
+              toast.style.right = '20px';
+              toast.style.zIndex = '9999';
+              toast.style.maxWidth = '300px';
+              
+              toast.innerHTML = `
+                  ${message}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              `;
+              
+              // Append to body
+              document.body.appendChild(toast);
+              
+              // Auto hide after 3 seconds
+              setTimeout(() => {
+                  toast.remove();
+              }, 3000);
+          }
+          
+          // Show error message
+          function showErrorMessage(message) {
+              // Create toast element
+              const toast = document.createElement('div');
+              toast.className = 'alert alert-danger alert-dismissible fade show';
+              toast.setAttribute('role', 'alert');
+              toast.style.position = 'fixed';
+              toast.style.top = '20px';
+              toast.style.right = '20px';
+              toast.style.zIndex = '9999';
+              toast.style.maxWidth = '300px';
+              
+              toast.innerHTML = `
+                  ${message}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              `;
+              
+              // Append to body
+              document.body.appendChild(toast);
+              
+              // Auto hide after 3 seconds
+              setTimeout(() => {
+                  toast.remove();
+              }, 3000);
+          }
+          
+          // Event Listeners
+          searchInput.addEventListener('input', filterJobs);
+          categoryFilter.addEventListener('change', filterJobs);
+          typeFilter.addEventListener('change', filterJobs);
+          resetFiltersBtn.addEventListener('click', function() {
+              searchInput.value = '';
+              categoryFilter.value = '';
+              typeFilter.value = '';
+              filterJobs();
+          });
+          
+          confirmDeleteBtn.addEventListener('click', deleteJob);
+          saveJobChangesBtn.addEventListener('click', saveJobChanges);
+          
+          openNewJobModalBtn.addEventListener('click', function() {
+              $('#newJobModal').modal('show');
+          });
+          
+          saveNewJobBtn.addEventListener('click', addNewJob);
+          
+          // Initialize
+          loadJobs();
+          
+          // Placeholder data for testing (uncomment if needed)
+          /*
+          if (allJobs.length === 0) {
+              allJobs = [
+                  {
+                      id: 'job1',
+                      jobTitle: 'Senior Frontend Developer',
+                      companyName: 'Tech Solutions Inc.',
+                      companyLogo: 'https://via.placeholder.com/50?text=TS',
+                      companyPhoto: 'https://via.placeholder.com/800x200?text=Tech+Solutions',
+                      companyWebsite: 'https://techsolutions.example.com',
+                      jobLocation: 'New York, NY',
+                      salary: '$80k - $120k',
+                      jobType: 'Full Time',
+                      jobCategory: 'Technology',
+                      jobDescription: 'We are looking for an experienced Frontend Developer to join our team...',
+                      requiredSkills: 'JavaScript, React, Vue, HTML5, CSS3',
+                      applicationDeadline: '2023-12-31',
+                      postingDate: '2023-07-15T12:00:00.000Z',
+                      lastUpdated: '2023-07-15T12:00:00.000Z'
+                  },
+                  // Add more sample jobs as needed
+              ];
+              localStorage.setItem('jobs', JSON.stringify(allJobs));
+              filterJobs();
+          }
+          */
+      });
+      $(document).ready(function() {
+        // Handle job submission
+        $('#postJobForm').on('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Get form data
+            const jobTitle = $('#jobTitle').val();
+            const companyName = $('#companyName').val();
+            const jobLocation = $('#jobLocation').val();
+            const jobType = $('#jobType').val();
+            const jobCategory = $('#jobCategory').val();
+            const jobDescription = $('#jobDescription').val();
+            
+            // Validate form (basic validation)
+            if (!jobTitle || !companyName || !jobDescription) {
+                alert('Please fill in all required fields');
+                return false;
+            }
+            
+            // In a real application, you would submit this data to your server via AJAX
+            // For demo purposes, we'll simulate a successful submission
+            
+            // Create job post object
+            const jobPost = {
+                id: generateJobId(),
+                title: jobTitle,
+                company: companyName,
+                location: jobLocation,
+                type: jobType,
+                category: jobCategory,
+                description: jobDescription,
+                postedDate: new Date().toISOString()
+            };
+            
+            // Save job to local storage (simulating database)
+            saveJob(jobPost);
+            
+            // Create notification
+            createNotification(jobPost);
+            
+            // Show success message
+            showSuccessMessage('Job has been posted successfully!');
+            
+            // Redirect to jobs page after a delay
+            setTimeout(function() {
+                window.location.href = 'jobs.html';
+            }, 2000);
+        });
+        
+        // Generate a unique job ID
+        function generateJobId() {
+            return 'job_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+        }
+        
+        // Save job to local storage
+        function saveJob(job) {
+            // Get existing jobs
+            let jobs = JSON.parse(localStorage.getItem('hirewise_jobs') || '[]');
+            
+            // Add new job
+            jobs.push(job);
+            
+            // Save back to local storage
+            localStorage.setItem('hirewise_jobs', JSON.stringify(jobs));
+        }
+        
+        // Create notification
+        function createNotification(job) {
+            // Get existing notifications
+            let notifications = JSON.parse(localStorage.getItem('hirewise_notifications') || '[]');
+            
+            // Create new notification
+            const notification = {
+                id: 'notif_' + Date.now(),
+                type: 'job',
+                title: `New Job Posted: ${job.title}`,
+                message: `You've successfully posted a new job for ${job.title} at ${job.company}.`,
+                timestamp: new Date().toISOString(),
+                isRead: false,
+                relatedId: job.id,
+                icon: 'lni-briefcase'
+            };
+            
+            // Add notification to beginning of array
+            notifications.unshift(notification);
+            
+            // Save back to local storage
+            localStorage.setItem('hirewise_notifications', JSON.stringify(notifications));
+            
+            // Update unread count in session storage for immediate use
+            const unreadCount = notifications.filter(n => !n.isRead).length;
+            sessionStorage.setItem('hirewise_unread_notifications', unreadCount);
+        }
+        
+        // Show success message
+        function showSuccessMessage(message) {
+            const successAlert = `
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+            
+            // Insert alert before the form
+            $('#postJobForm').before(successAlert);
+        }
+    });
+  </script>
+</body>
+</html>

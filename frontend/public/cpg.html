@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Career Path Guidance</title>
+    <style>
+        /* Modern UI Styling with Dark Theme */
+        :root {
+            --primary: #ff9800;
+            --primary-dark: #e68900;
+            --background: #121212;
+            --card-bg: #1e1e1e;
+            --input-bg: #252525;
+            --text: #f5f5f5;
+            --text-secondary: #aaaaaa;
+            --border: #444444;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --info: #2196f3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Roboto', 'Arial', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.6;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .tag-input-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .tag-input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            outline: none;
+            font-size: 16px;
+        }
+
+        .tag-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+            min-height: 40px;
+        }
+
+        .tag {
+            background: var(--primary);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .tag-close {
+            margin-left: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .experience-level {
+            margin: 15px 0;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 8px;
+            accent-color: var(--primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+            justify-content: center;
+        }
+
+        button {
+            background: var(--primary);
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 140px;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        button.secondary:hover {
+            background: rgba(255, 152, 0, 0.1);
+        }
+
+        #career-guidance {
+            margin-top: 25px;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        #career-guidance.active {
+            opacity: 1;
+            height: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .career-path {
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid transparent;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .career-path:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .career-path-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .match-score {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .high-match {
+            border-left-color: var(--success);
+        }
+
+        .medium-match {
+            border-left-color: var(--warning);
+        }
+
+        .low-match {
+            border-left-color: var(--info);
+        }
+
+        .career-details {
+            margin-top: 15px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .matched-skill {
+            background: rgba(255, 152, 0, 0.3);
+            font-weight: bold;
+        }
+
+        .growth-path {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .growth-path h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .growth-steps {
+            margin-left: 20px;
+        }
+
+        .growth-steps li {
+            margin-bottom: 8px;
+        }
+
+        .salary-range {
+            margin-top: 15px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 5px 0 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .suggestions-section {
+            margin-top: 30px;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 152, 0, 0.1);
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 30px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI-Powered Career Path Guidance</h1>
+            <p>Discover personalized career recommendations based on your skills, interests, and experience level</p>
+        </header>
+
+        <div class="input-section">
+            <label for="skills-input">Enter your skills & interests:</label>
+            <div class="tag-input-container">
+                <input type="text" id="skills-input" class="tag-input" placeholder="Type a skill and press Enter (e.g., Java, Python, Machine Learning)" />
+                <div id="tags-container" class="tags-container"></div>
+            </div>
+
+            <div class="experience-level">
+                <label>Select your experience level:</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="experience" value="beginner" checked /> Beginner
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="experience" value="intermediate" /> Intermediate
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="experience" value="advanced" /> Advanced
+                    </label>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button id="suggest-btn" onclick="suggestCareerPaths()">
+                    Get Career Paths
+                </button>
+                <button id="reset-btn" class="secondary" onclick="resetForm()">
+                    Reset
+                </button>
+            </div>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+
+        <div id="career-guidance"></div>
+    </div>
+
+    <script>
+        // Global variables
+        let userSkills = [];
+        
+        // Career path database - extensive list with detailed information
+        const careerPaths = [
+            {
+                path: "Software Engineer",
+                requiredSkills: ["java", "python", "c++", "c#", "javascript", "algorithms", "data structures", "software development", "programming"],
+                niceToHaveSkills: ["cloud computing", "git", "agile", "testing", "devops", "ci/cd"],
+                growth: [
+                    "Master Data Structures and Algorithms",
+                    "Learn System Design principles",
+                    "Explore Cloud Computing (AWS, Azure, GCP)",
+                    "Develop expertise in a specialized domain (e.g., Mobile, Web, AI)",
+                    "Gain experience with DevOps and CI/CD pipelines"
+                ],
+                salaryRange: {
+                    beginner: "$70,000 - $95,000",
+                    intermediate: "$95,000 - $130,000",
+                    advanced: "$130,000 - $200,000+"
+                },
+                demandScore: 0.9 // Scale 0-1
+            },
+            {
+                path: "Data Scientist",
+                requiredSkills: ["python", "r", "statistics", "machine learning", "data analysis", "sql", "data visualization"],
+                niceToHaveSkills: ["deep learning", "big data", "hadoop", "spark", "tensorflow", "pytorch"],
+                growth: [
+                    "Strengthen your foundation in statistics and mathematics",
+                    "Gain expertise in Deep Learning frameworks (TensorFlow, PyTorch)",
+                    "Master Big Data technologies (Hadoop, Spark)",
+                    "Develop domain expertise (finance, healthcare, etc.)",
+                    "Learn productionizing ML models (MLOps)"
+                ],
+                salaryRange: {
+                    beginner: "$75,000 - $100,000",
+                    intermediate: "$100,000 - $140,000",
+                    advanced: "$140,000 - $210,000+"
+                },
+                demandScore: 0.85
+            },
+            {
+                path: "Web Developer",
+                requiredSkills: ["html", "css", "javascript", "react", "angular", "vue", "node.js", "responsive design", "web development"],
+                niceToHaveSkills: ["typescript", "webpack", "sass", "graphql", "next.js", "gatsby", "svelte"],
+                growth: [
+                    "Master modern JavaScript frameworks (React, Vue, Angular)",
+                    "Learn server-side rendering and advanced frontend concepts",
+                    "Develop backend skills with Node.js or another backend technology",
+                    "Gain experience with databases and API design",
+                    "Explore JAMstack and modern deployment techniques"
+                ],
+                salaryRange: {
+                    beginner: "$65,000 - $90,000",
+                    intermediate: "$90,000 - $120,000",
+                    advanced: "$120,000 - $180,000+"
+                },
+                demandScore: 0.8
+            },
+            {
+                path: "Cybersecurity Analyst",
+                requiredSkills: ["network security", "ethical hacking", "linux", "security tools", "cryptography", "risk assessment"],
+                niceToHaveSkills: ["penetration testing", "incident response", "security+", "cissp", "python", "cloud security"],
+                growth: [
+                    "Obtain industry certifications (Security+, CEH, CISSP)",
+                    "Gain hands-on experience with security tools and frameworks",
+                    "Learn threat intelligence and hunting techniques",
+                    "Practice in virtual labs and CTF competitions",
+                    "Develop specialization in areas like cloud security or IoT security"
+                ],
+                salaryRange: {
+                    beginner: "$70,000 - $95,000",
+                    intermediate: "$95,000 - $130,000",
+                    advanced: "$130,000 - $190,000+"
+                },
+                demandScore: 0.9
+            },
+            {
+                path: "Cloud Engineer",
+                requiredSkills: ["aws", "azure", "gcp", "cloud computing", "linux", "networking", "infrastructure as code", "virtualization"],
+                niceToHaveSkills: ["docker", "kubernetes", "terraform", "ansible", "devops", "python", "shell scripting"],
+                growth: [
+                    "Obtain cloud certifications (AWS Solutions Architect, Azure Administrator, etc.)",
+                    "Master container orchestration with Kubernetes",
+                    "Learn Infrastructure as Code (Terraform, CloudFormation, etc.)",
+                    "Develop automation skills with CI/CD pipelines",
+                    "Gain expertise in cloud security and compliance"
+                ],
+                salaryRange: {
+                    beginner: "$80,000 - $105,000",
+                    intermediate: "$105,000 - $140,000",
+                    advanced: "$140,000 - $200,000+"
+                },
+                demandScore: 0.95
+            },
+            {
+                path: "DevOps Engineer",
+                requiredSkills: ["continuous integration", "continuous deployment", "docker", "kubernetes", "automation", "linux", "git"],
+                niceToHaveSkills: ["aws", "azure", "terraform", "ansible", "jenkins", "monitoring", "python", "bash"],
+                growth: [
+                    "Master container orchestration and microservices architecture",
+                    "Learn Infrastructure as Code and configuration management",
+                    "Develop expertise in monitoring and observability tools",
+                    "Gain advanced knowledge of CI/CD tooling and practices",
+                    "Explore SRE practices and principles"
+                ],
+                salaryRange: {
+                    beginner: "$80,000 - $110,000",
+                    intermediate: "$110,000 - $145,000",
+                    advanced: "$145,000 - $210,000+"
+                },
+                demandScore: 0.9
+            },
+            {
+                path: "AI/ML Engineer",
+                requiredSkills: ["python", "machine learning", "deep learning", "neural networks", "tensorflow", "pytorch", "nlp"],
+                niceToHaveSkills: ["computer vision", "reinforcement learning", "mlops", "data engineering", "mathematics", "statistics"],
+                growth: [
+                    "Deepen understanding of ML algorithms and model architecture",
+                    "Learn to deploy and scale ML models in production",
+                    "Gain expertise in specialized domains (NLP, Computer Vision, etc.)",
+                    "Develop skills in MLOps and experiment tracking",
+                    "Keep up with research papers and implement state-of-the-art techniques"
+                ],
+                salaryRange: {
+                    beginner: "$85,000 - $115,000",
+                    intermediate: "$115,000 - $150,000",
+                    advanced: "$150,000 - $220,000+"
+                },
+                demandScore: 0.85
+            },
+            {
+                path: "Mobile App Developer",
+                requiredSkills: ["android", "ios", "swift", "kotlin", "java", "mobile development", "ui/ux", "react native", "flutter"],
+                niceToHaveSkills: ["firebase", "app architecture", "rest apis", "graphql", "mobile security", "app store optimization"],
+                growth: [
+                    "Master platform-specific development (Android/iOS) or cross-platform frameworks",
+                    "Learn app architecture patterns (MVVM, Clean Architecture, etc.)",
+                    "Develop expertise in mobile UI/UX design principles",
+                    "Gain experience with backend integration and API consumption",
+                    "Explore app performance optimization and security"
+                ],
+                salaryRange: {
+                    beginner: "$70,000 - $95,000",
+                    intermediate: "$95,000 - $130,000",
+                    advanced: "$130,000 - $185,000+"
+                },
+                demandScore: 0.8
+            },
+            {
+                path: "Blockchain Developer",
+                requiredSkills: ["blockchain", "smart contracts", "solidity", "ethereum", "web3", "cryptography", "javascript"],
+                niceToHaveSkills: ["defi", "nft", "consensus algorithms", "rust", "go", "distributed systems", "security"],
+                growth: [
+                    "Master smart contract development and security best practices",
+                    "Learn multiple blockchain platforms (Ethereum, Solana, etc.)",
+                    "Develop expertise in decentralized applications (dApps)",
+                    "Gain knowledge of consensus algorithms and cryptography",
+                    "Explore emerging areas like DeFi, NFTs, and DAOs"
+                ],
+                salaryRange: {
+                    beginner: "$80,000 - $110,000",
+                    intermediate: "$110,000 - $150,000",
+                    advanced: "$150,000 - $220,000+"
+                },
+                demandScore: 0.75
+            },
+            {
+                path: "UI/UX Designer",
+                requiredSkills: ["ui design", "ux design", "figma", "sketch", "adobe xd", "wireframing", "prototyping", "user research"],
+                niceToHaveSkills: ["html", "css", "javascript", "design systems", "accessibility", "usability testing", "interaction design"],
+                growth: [
+                    "Build a strong portfolio showcasing diverse projects",
+                    "Develop expertise in user research methodologies",
+                    "Learn design systems creation and management",
+                    "Gain knowledge of front-end development basics",
+                    "Master design tools and prototyping techniques"
+                ],
+                salaryRange: {
+                    beginner: "$65,000 - $85,000",
+                    intermediate: "$85,000 - $120,000",
+                    advanced: "$120,000 - $170,000+"
+                },
+                demandScore: 0.8
+            }
+        ];
+
+        // DOM Elements
+        const skillsInput = document.getElementById('skills-input');
+        const tagsContainer = document.getElementById('tags-container');
+        const careerGuidance = document.getElementById('career-guidance');
+        const loadingElement = document.getElementById('loading');
+
+        // Initialize event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTagsInput();
+        });
+
+        // Initialize tags input functionality
+        function initializeTagsInput() {
+            skillsInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && this.value.trim() !== '') {
+                    e.preventDefault();
+                    addTag(this.value.trim());
+                    this.value = '';
+                }
+            });
+
+            tagsContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('tag-close')) {
+                    const tagElement = e.target.parentElement;
+                    const tag = tagElement.textContent.slice(0, -1).trim();
+                    removeTag(tag);
+                    tagElement.remove();
+                }
+            });
+        }
+
+        // Add a tag to the list
+        function addTag(tag) {
+            if (userSkills.includes(tag.toLowerCase())) return;
+            
+            userSkills.push(tag.toLowerCase());
+            
+            const tagElement = document.createElement('div');
+            tagElement.classList.add('tag');
+            tagElement.innerHTML = `${tag} <span class="tag-close">×</span>`;
+            tagsContainer.appendChild(tagElement);
+        }
+
+        // Remove a tag from the list
+        function removeTag(tag) {
+            userSkills = userSkills.filter(skill => skill.toLowerCase() !== tag.toLowerCase());
+        }
+
+        // Reset the form
+        function resetForm() {
+            userSkills = [];
+            tagsContainer.innerHTML = '';
+            careerGuidance.innerHTML = '';
+            careerGuidance.classList.remove('active');
+            
+            document.querySelector('input[name="experience"][value="beginner"]').checked = true;
+        }
+
+        // Calculate match score with weighted algorithm
+        function calculateMatchScore(path, userSkillsList, experienceLevel) {
+            const requiredMatches = path.requiredSkills.filter(skill => 
+                userSkillsList.some(userSkill => userSkill.toLowerCase() === skill.toLowerCase())
+            ).length;
+            
+            const niceToHaveMatches = path.niceToHaveSkills.filter(skill => 
+                userSkillsList.some(userSkill => userSkill.toLowerCase() === skill.toLowerCase())
+            ).length;
+            
+            // Weighted score calculation
+            const requiredWeight = 1.5;
+            const niceToHaveWeight = 0.5;
+            
+            const maxPossibleScore = (path.requiredSkills.length * requiredWeight) + 
+                                    (path.niceToHaveSkills.length * niceToHaveWeight);
+            
+            const userScore = (requiredMatches * requiredWeight) + (niceToHaveMatches * niceToHaveWeight);
+            
+            // Normalize to percentage (0-100)
+            let percentageScore = Math.round((userScore / maxPossibleScore) * 100);
+            
+            // Apply experience multiplier
+            const experienceMultiplier = {
+                'beginner': 1,
+                'intermediate': 1.1,
+                'advanced': 1.2
+            };
+            
+            percentageScore = Math.min(100, Math.round(percentageScore * experienceMultiplier[experienceLevel]));
+            
+            return {
+                score: percentageScore,
+                requiredMatches,
+                niceToHaveMatches,
+                totalRequired: path.requiredSkills.length,
+                totalNiceToHave: path.niceToHaveSkills.length,
+                matchedSkills: [...path.requiredSkills.filter(skill => 
+                    userSkillsList.some(userSkill => userSkill.toLowerCase() === skill.toLowerCase())
+                ), ...path.niceToHaveSkills.filter(skill => 
+                    userSkillsList.some(userSkill => userSkill.toLowerCase() === skill.toLowerCase())
+                )]
+            };
+        }
+
+        // Display loading state
+        function showLoading() {
+            loadingElement.style.display = 'flex';
+            careerGuidance.classList.remove('active');
+            careerGuidance.innerHTML = '';
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            loadingElement.style.display = 'none';
+            careerGuidance.classList.add('active');
+        }
+
+        // Suggest career paths based on user skills
+        function suggestCareerPaths() {
+            if (userSkills.length === 0) {
+                alert('Please enter at least one skill or interest!');
+                return;
+            }
+
+            showLoading();
+
+            // Simulate API call delay
+            setTimeout(() => {
+                const experienceLevel = document.querySelector('input[name="experience"]:checked').value;
+                
+                // Calculate match scores for each career path
+                let suggestedPaths = careerPaths.map(path => {
+                    const matchResults = calculateMatchScore(path, userSkills, experienceLevel);
+                    return { 
+                        ...path, 
+                        matchResults,
+                        matchScore: matchResults.score
+                    };
+                })
+                .sort((a, b) => b.matchScore - a.matchScore);
+                
+                // Filter out low-matching paths (optional)
+                suggestedPaths = suggestedPaths.filter(path => path.matchScore > 0);
+                
+                renderResults(suggestedPaths, experienceLevel);
+                hideLoading();
+            }, 1500);
+        }
+
+        // Render the career path results
+        function renderResults(suggestedPaths, experienceLevel) {
+            if (suggestedPaths.length === 0) {
+                careerGuidance.innerHTML = `
+                    <div class="no-results">
+                        <h3>No matches found</h3>
+                        <p>Try adding more skills or broadening your interests to get career recommendations.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let output = `<h3>Recommended Career Paths</h3>`;
+            
+            suggestedPaths.forEach((path, index) => {
+                // Determine match level for styling
+                let matchLevel = 'low-match';
+                if (path.matchScore >= 70) matchLevel = 'high-match';
+                else if (path.matchScore >= 40) matchLevel = 'medium-match';
+                
+                // Animation delay for staggered entrance
+                const delay = index * 0.1;
+                
+                output += `
+                    <div class="career-path ${matchLevel} fade-in" style="animation-delay: ${delay}s">
+                        <div class="career-path-header">
+                            <h3>${path.path}</h3>
+                            <span class="match-score">${path.matchScore}% Match</span>
+                        </div>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${path.matchScore}%"></div>
+                        </div>
+                        
+                        <div class="career-details">
+                            <p>You matched ${path.matchResults.requiredMatches} of ${path.matchResults.totalRequired} required skills and 
+                               ${path.matchResults.niceToHaveMatches} of ${path.matchResults.totalNiceToHave} nice-to-have skills.</p>
+                            
+                            <div class="skill-tags">
+                                ${path.requiredSkills.map(skill => `
+                                    <span class="skill-tag ${path.matchResults.matchedSkills.includes(skill) ? 'matched-skill' : ''}">
+                                        ${skill}
+                                    </span>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="growth-path">
+                                <h4>Growth Path</h4>
+                                <ul class="growth-steps">
+                                    ${path.growth.map(step => `<li>${step}</li>`).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="salary-range">
+                                <h4>Expected Salary Range (${experienceLevel.charAt(0).toUpperCase() + experienceLevel.slice(1)})</h4>
+                                <p>${path.salaryRange[experienceLevel]}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Add suggestions section
+            output += `
+                <div class="suggestions-section">
+                    <h3>Next Steps</h3>
+                    <p>Based on your matches, consider focusing on these skills to enhance your career prospects:</p>
+                    <ul class="growth-steps">
+                        ${suggestedPaths[0]?.requiredSkills
+                            .filter(skill => !suggestedPaths[0].matchResults.matchedSkills.includes(skill))
+                            .slice(0, 3)
+                            .map(skill => `<li>Learn ${skill.charAt(0).toUpperCase() + skill.slice(1)}</li>`)
+                            .join('')}
+                    </ul>
+                </div>
+            `;
+            
+            careerGuidance.innerHTML = output;
+        }
+
+        // Advanced feature: Add sample skills
+        function addSampleSkills() {
+            resetForm();
+            
+            const sampleSkills = ["javascript", "react", "html", "css", "node.js"];
+            sampleSkills.forEach(skill => addTag(skill));
+        }
+    </script>
+</body>
+</html>

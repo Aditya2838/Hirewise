@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="sky/src/assets/css/style.css">
+    <title>Hirewise - Resume</title>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+            <a class="navbar-brand brand-logo me-5" href="index.html"><img src="../../images/w.jpeg" style="width: 100%;" class="me-2" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../images/w.jpeg" style="width: 100%;" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="icon-menu"></span>
+            </button>
+            <ul class="navbar-nav mr-lg-2">
+                <li class="nav-item nav-search d-none d-lg-block">
+                    <div class="input-group">
+                        <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                            <span class="input-group-text" id="search">
+                                <i class="icon-search"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                        <i class="icon-bell mx-0"></i>
+                        <span class="count"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                        <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-success">
+                                    <i class="ti-info-alt mx-0"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted"> Just now </p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-warning">
+                                    <i class="ti-settings mx-0"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted"> Private message </p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-info">
+                                    <i class="ti-user mx-0"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted"> 2 days ago </p>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                        <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png" alt="profile" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item">
+                            <i class="ti-settings text-primary"></i> Settings </a>
+                        <a href="../../index.html" class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i> Logout </a>
+                    </div>
+                </li>
+                <li class="nav-item nav-settings d-none d-lg-flex">
+                    <a class="nav-link" href="#">
+                        <i class="icon-ellipsis"></i>
+                    </a>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Resume</h1>
+                        <p>Your resume showcases your skills, experience, and qualifications to potential employers. Create a strong profile to stand out in the job market.</p>
+                    </div>
+                    <ul class="breadcrumb-nav">
+                        <li><a href="sky/src/index.html" style="text-decoration: none;">Home</a></li>
+                        <li>Resume</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="resume section">
+        <div class="container">
+            <div class="resume-inner">
+                <div class="row">
+                    <!-- Sidebar -->
+                    <div class="col-lg-4 col-12">
+                        <div class="dashbord-sidebar">
+                            <ul>
+                                <li class="heading">Manage Account</li>
+                                <li><a class="active" href="resume.html" style="text-decoration: none;"><i class="lni lni-clipboard"></i> My Resume</a></li>
+                                <li><a href="bookmarked.html" style="text-decoration: none;"><i class="lni lni-bookmark"></i> Bookmarked Jobs</a></li>
+                                <li><a href="notifications.html" style="text-decoration: none;"><i class="lni lni-alarm"></i> Notifications <span class="notifi">5</span></a></li>
+                                <li><a href="manage-applications.html" style="text-decoration: none;"><i class="lni lni-envelope"></i> Manage Applications</a></li>
+                                <li><a href="manage-resumes.html" style="text-decoration: none;"><i class="lni lni-files"></i> Manage Resumes</a></li>
+                                <li><a href="job-alerts.html" style="text-decoration: none;"><i class="lni lni-briefcase"></i> Job Alerts</a></li>
+                                <li><a href="change-password.html" style="text-decoration: none;"><i class="lni lni-lock"></i> Change Password</a></li>
+                                <li><a href="index.html" style="text-decoration: none;"><i class="lni lni-upload"></i> Sign Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Resume Content -->
+                    <div class="col-lg-8 col-12">
+                        <div class="inner-content">
+                            <div class="resume-wrapper">
+                                <!-- No Resume Message (shown when no resume exists) -->
+                                <div id="no-resume-message" style="display: none;">
+                                    <div class="alert alert-info">
+                                        <h4>No Resume Found</h4>
+                                        <p>You haven't created a resume yet. Please add your resume details.</p>
+                                        <a href="add-resume.html" class="btn btn-primary mt-3">Create Resume</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Resume Content (shown when resume exists) -->
+                                <div id="resume-content">
+                                    <!-- Personal Info Section -->
+                                    <div class="personal-top-content">
+                                        <div class="row">
+                                            <div class="col-lg-5 col-md-5 col-12">
+                                                <div class="name-head">
+                                                    <a class="mb-2" href="#"><img id="profile-image" class="circle-54" src="images/sh.jpeg" alt="" style="width: 100px;"></a>
+                                                    <h4><a id="fullname" class="name" href="#" style="text-decoration: none;">Loading...</a></h4>
+                                                    <p><a id="job-title" class="deg" href="#" style="text-decoration: none;">Loading...</a></p>
+                                                    <ul class="social">
+                                                        <li><a href="#"><i class="lni lni-facebook-original"></i></a></li>
+                                                        <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                                        <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                                        <li><a href="#"><i class="lni lni-dribbble"></i></a></li>
+                                                        <li><a href="#"><i class="lni lni-pinterest"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-7 col-md-7 col-12">
+                                                <div class="content-right">
+                                                    <h5 class="title-main">Contact Info</h5>
+                                                    <!-- Location -->
+                                                    <div class="single-list">
+                                                        <h5 class="title">Location</h5>
+                                                        <p id="location">Loading...</p>
+                                                    </div>
+                                                    <!-- Email -->
+                                                    <div class="single-list">
+                                                        <h5 class="title">E-mail</h5>
+                                                        <p id="email">Loading...</p>
+                                                    </div>
+                                                    <!-- Phone -->
+                                                    <div class="single-list">
+                                                        <h5 class="title">Phone</h5>
+                                                        <p id="phone">Loading...</p>
+                                                    </div>
+                                                    <!-- Website -->
+                                                    <div class="single-list">
+                                                        <h5 class="title">Website</h5>
+                                                        <p><a id="website" href="#" style="text-decoration: none;">Loading...</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- About Section -->
+                                    <div class="single-section">
+                                        <h4>About</h4>
+                                        <p id="about" class="font-size-4 mb-8">Loading...</p>
+                                    </div>
+                                    
+                                    <!-- Skills Section -->
+                                    <div class="single-section skill">
+                                        <h4>Skills</h4>
+                                        <ul id="skills-list" class="list-unstyled d-flex align-items-center flex-wrap">
+                                            <!-- Skills will be added here dynamically -->
+                                        </ul>
+                                    </div>
+                                    
+                                    <!-- Work Experience Section -->
+                                    <div class="single-section experience">
+                                        <h4>Work Experience</h4>
+                                        <div id="experience-container">
+                                            <!-- Experience items will be added here dynamically -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Education Section -->
+                                    <div class="single-section education">
+                                        <h4>Education</h4>
+                                        <div id="education-container">
+                                            <!-- Education items will be added here dynamically -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Certifications Section -->
+                                    <div class="single-section certifications">
+                                        <h4>Certifications</h4>
+                                        <div id="certifications-container">
+                                            <!-- Certification items will be added here dynamically -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Projects Section -->
+                                    <div class="single-section projects">
+                                        <h4>Projects</h4>
+                                        <div id="projects-container">
+                                            <!-- Project items will be added here dynamically -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Resume Actions -->
+                                    <div class="resume-actions mt-4">
+                                        <button class="btn btn-primary download-btn">Download Resume</button>
+                                        <a href="add-resume.html" class="btn btn-outline-primary ml-2 edit-btn">Edit Resume</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll to top button -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Check if we're on the resume page
+          if (!document.getElementById('resumeDisplay')) {
+              return;
+          }
+          
+          // Retrieve resume data from localStorage
+          const resumeDataString = localStorage.getItem('resumeData');
+          
+          if (!resumeDataString) {
+              document.getElementById('resumeDisplay').innerHTML = `
+                  <div class="alert alert-warning">
+                      <h4>No Resume Found</h4>
+                      <p>You haven't created a resume yet. <a href="add-resume.html">Create one now</a>.</p>
+                  </div>
+              `;
+              return;
+          }
+          
+          const resumeData = JSON.parse(resumeDataString);
+          const { personalInfo, skills, experiences, education, certificates, projects, socialLinks, additionalInfo } = resumeData;
+          
+          // Build HTML for resume display
+          let resumeHTML = `
+              <div class="resume-header mb-5">
+                  <div class="row align-items-center">
+                      <div class="col-md-2 text-center mb-3 mb-md-0">
+                          ${personalInfo.profileImage ? 
+                              `<img src="${personalInfo.profileImage}" alt="${personalInfo.fullName}" class="img-fluid rounded-circle" style="max-width: 150px;">` : 
+                              `<div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 150px; height: 150px; font-size: 3rem;">
+                                  ${personalInfo.fullName.charAt(0)}
+                              </div>`
+                          }
+                      </div>
+                      <div class="col-md-10">
+                          <h1>${personalInfo.fullName}</h1>
+                          <h3 class="text-secondary">${personalInfo.jobTitle}</h3>
+                          <div class="row mt-3">
+                              <div class="col-md-6">
+                                  <p><i class="lni lni-envelope me-2"></i> ${personalInfo.email}</p>
+                                  <p><i class="lni lni-phone me-2"></i> ${personalInfo.phone}</p>
+                              </div>
+                              <div class="col-md-6">
+                                  <p><i class="lni lni-map-marker me-2"></i> ${personalInfo.location}</p>
+                                  ${personalInfo.website ? `<p><i class="lni lni-website me-2"></i> <a href="${personalInfo.website}" target="_blank">${personalInfo.website}</a></p>` : ''}
+                              </div>
+                          </div>
+                          <div class="social-links mt-2">
+                              ${socialLinks.linkedin ? `<a href="${socialLinks.linkedin}" target="_blank" class="me-2"><i class="lni lni-linkedin-original fs-4"></i></a>` : ''}
+                              ${socialLinks.github ? `<a href="${socialLinks.github}" target="_blank" class="me-2"><i class="lni lni-github-original fs-4"></i></a>` : ''}
+                              ${socialLinks.twitter ? `<a href="${socialLinks.twitter}" target="_blank" class="me-2"><i class="lni lni-twitter-original fs-4"></i></a>` : ''}
+                              ${socialLinks.instagram ? `<a href="${socialLinks.instagram}" target="_blank" class="me-2"><i class="lni lni-instagram-original fs-4"></i></a>` : ''}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <!-- About Section -->
+              <div class="resume-section mb-5">
+                  <h2 class="border-bottom pb-2 mb-4">About</h2>
+                  <p>${personalInfo.about}</p>
+              </div>
+              
+              <!-- Skills Section -->
+              <div class="resume-section mb-5">
+                  <h2 class="border-bottom pb-2 mb-4">Skills</h2>
+                  <div class="skills-container">
+                      ${skills.map(skill => `<span class="badge bg-primary me-2 mb-2 p-2">${skill}</span>`).join('')}
+                  </div>
+              </div>
+              
+              <!-- Work Experience Section -->
+              <div class="resume-section mb-5">
+                  <h2 class="border-bottom pb-2 mb-4">Work Experience</h2>
+                  ${experiences.map(exp => `
+                      <div class="experience-item mb-4">
+                          <div class="row">
+                              ${exp.logo ? `
+                                  <div class="col-md-1 text-center mb-2 mb-md-0">
+                                      <img src="${exp.logo}" alt="${exp.company}" class="img-fluid" style="max-width: 60px;">
+                                  </div>
+                                  <div class="col-md-11">
+                              ` : `<div class="col-12">`}
+                                  <h4>${exp.jobTitle}</h4>
+                                  <h5>${exp.company}</h5>
+                                  <div class="text-muted mb-2">
+                                      <span><i class="lni lni-calendar me-2"></i>${exp.duration}</span>
+                                      <span class="ms-3"><i class="lni lni-map-marker me-2"></i>${exp.location}</span>
+                                  </div>
+                                  <p>${exp.description}</p>
+                              </div>
+                          </div>
+                      </div>
+                  `).join('')}
+              </div>
+              
+              <!-- Education Section -->
+              <div class="resume-section mb-5">
+                  <h2 class="border-bottom pb-2 mb-4">Education</h2>
+                  ${education.map(edu => `
+                      <div class="education-item mb-4">
+                          <div class="row">
+                              ${edu.logo ? `
+                                  <div class="col-md-1 text-center mb-2 mb-md-0">
+                                      <img src="${edu.logo}" alt="${edu.institution}" class="img-fluid" style="max-width: 60px;">
+                                  </div>
+                                  <div class="col-md-11">
+                              ` : `<div class="col-12">`}
+                                  <h4>${edu.degree}</h4>
+                                  <h5>${edu.institution}</h5>
+                                  <div class="text-muted mb-2">
+                                      <span><i class="lni lni-calendar me-2"></i>${edu.duration}</span>
+                                      <span class="ms-3"><i class="lni lni-map-marker me-2"></i>${edu.location}</span>
+                                  </div>
+                                  <p>${edu.description}</p>
+                              </div>
+                          </div>
+                      </div>
+                  `).join('')}
+              </div>
+          `;
+          
+          // Certificates Section (if any)
+          if (certificates && certificates.length > 0) {
+              resumeHTML += `
+                  <div class="resume-section mb-5">
+                      <h2 class="border-bottom pb-2 mb-4">Certificates</h2>
+                      <div class="row">
+                          ${certificates.map(cert => `
+                              <div class="col-md-6 mb-4">
+                                  <div class="card h-100">
+                                      <div class="card-body">
+                                          <div class="d-flex align-items-center mb-3">
+                                              ${cert.logo ? `<img src="${cert.logo}" alt="${cert.organization}" class="me-3" style="max-width: 40px;">` : ''}
+                                              <h5 class="card-title mb-0">${cert.name}</h5>
+                                          </div>
+                                          <h6 class="card-subtitle mb-2 text-muted">${cert.organization}</h6>
+                                          <p class="card-text">
+                                              <small><i class="lni lni-calendar me-2"></i>${cert.date}</small>
+                                              ${cert.id ? `<br><small><i class="lni lni-keyword-research me-2"></i>Credential ID: ${cert.id}</small>` : ''}
+                                          </p>
+                                          <p>${cert.description || ''}</p>
+                                          ${cert.url ? `<a href="${cert.url}" target="_blank" class="btn btn-sm btn-outline-primary">View Certificate</a>` : ''}
+                                      </div>
+                                  </div>
+                              </div>
+                          `).join('')}
+                      </div>
+                  </div>
+              `;
+          }
+          
+          // Projects Section (if any)
+          if (projects && projects.length > 0) {
+              resumeHTML += `
+                  <div class="resume-section mb-5">
+                      <h2 class="border-bottom pb-2 mb-4">Projects</h2>
+                      <div class="row">
+                          ${projects.map(project => `
+                              <div class="col-md-6 mb-4">
+                                  <div class="card h-100">
+                                      ${project.image ? `<img src="${project.image}" class="card-img-top" alt="${project.name}">` : ''}
+                                      <div class="card-body">
+                                          <h5 class="card-title">${project.name}</h5>
+                                          <h6 class="card-subtitle mb-2 text-muted"><i class="lni lni-calendar me-2"></i>${project.duration}</h6>
+                                          <p class="card-text">${project.description}</p>
+                                          <p>
+                                              ${project.technologies && project.technologies.length > 0 ? 
+                                                project.technologies.map(tech => `<span class="badge bg-secondary me-1">${tech}</span>`).join('') : ''}
+                                          </p>
+                                          <div class="mt-3">
+                                              ${project.url ? `<a href="${project.url}" target="_blank" class="btn btn-sm btn-outline-primary me-2">Live Demo</a>` : ''}
+                                              ${project.github ? `<a href="${project.github}" target="_blank" class="btn btn-sm btn-outline-dark"><i class="lni lni-github-original me-1"></i>GitHub</a>` : ''}
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          `).join('')}
+                      </div>
+                  </div>
+              `;
+          }
+          
+          // Additional Information Section
+          if (additionalInfo.languages.length > 0 || additionalInfo.interests.length > 0 || additionalInfo.achievements) {
+              resumeHTML += `
+                  <div class="resume-section mb-5">
+                      <h2 class="border-bottom pb-2 mb-4">Additional Information</h2>
+                      <div class="row">
+                          ${additionalInfo.languages.length > 0 ? `
+                              <div class="col-md-4 mb-4">
+                                  <h5>Languages</h5>
+                                  <ul class="list-unstyled">
+                                      ${additionalInfo.languages.map(lang => `<li><i class="lni lni-checkmark me-2"></i>${lang}</li>`).join('')}
+                                  </ul>
+                              </div>
+                          ` : ''}
+                          
+                          ${additionalInfo.interests.length > 0 ? `
+                              <div class="col-md-4 mb-4">
+                                  <h5>Interests</h5>
+                                  <ul class="list-unstyled">
+                                      ${additionalInfo.interests.map(interest => `<li><i class="lni lni-checkmark me-2"></i>${interest}</li>`).join('')}
+                                  </ul>
+                              </div>
+                          ` : ''}
+                          
+                          ${additionalInfo.achievements ? `
+                              <div class="col-md-4 mb-4">
+                                  <h5>Achievements</h5>
+                                  <div>${additionalInfo.achievements}</div>
+                              </div>
+                          ` : ''}
+                      </div>
+                  </div>
+              `;
+          }
+          
+          // Set the HTML content to the resumeDisplay element
+          document.getElementById('resumeDisplay').innerHTML = resumeHTML;
+          
+          // Add print and download buttons functionality
+          if (document.getElementById('printButton')) {
+              document.getElementById('printButton').addEventListener('click', function() {
+                  window.print();
+              });
+          }
+          
+          if (document.getElementById('downloadButton')) {
+              document.getElementById('downloadButton').addEventListener('click', function() {
+                  alert('PDF download functionality would be implemented here.');
+                  // In a real application, this would generate a PDF document
+                  // For example, using libraries like jsPDF or html2pdf
+              });
+          }
+          
+          if (document.getElementById('editButton')) {
+              document.getElementById('editButton').addEventListener('click', function() {
+                  window.location.href = 'add-resume.html';
+              });
+          }
+      });
+    </script>
+    
+    </body>
+    </html>

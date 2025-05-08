@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="styles.css">
+          <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+          <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
+          <link rel="stylesheet" href="sky/src/assets/vendors/feather/feather.css">
+            <link rel="stylesheet" href="sky/src/assets/vendors/ti-icons/css/themify-icons.css">
+            <link rel="stylesheet" href="sky/src/assets/vendors/css/vendor.bundle.base.css">
+            <link rel="stylesheet" href="sky/src/assets/vendors/font-awesome/css/font-awesome.min.css">
+            <link rel="stylesheet" href="sky/src/assets/vendors/mdi/css/materialdesignicons.min.css">
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+          <style>
+           /* Dropdown menu styles */
+.dropdown-menu {
+    display: none;
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    min-width: 10rem !important;
+    padding: 0.5rem 0 !important;
+    margin: 0.125rem 0 0 !important;
+    background-color: #fff !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 0.25rem !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175) !important;
+  }
+  
+  .dropdown-toggle::after {
+    display: inline-block !important;
+    margin-left: 0.255em !important;
+    vertical-align: 0.255em !important;
+    content: "" !important;
+    border-top: 0.3em solid !important;
+    border-right: 0.3em solid transparent !important;
+    border-bottom: 0 !important;
+    border-left: 0.3em solid transparent !important;
+  }
+  
+  .dropdown-menu-right {
+    right: 0 !important;
+    left: auto !important;
+  }
+  
+  .dropdown-menu.show {
+    display: block !important;
+  }
+  
+  /* Dropdown item styles */
+  .dropdown-item {
+    display: block !important;
+    width: 100% !important;
+    padding: 0.25rem 1.5rem !important;
+    clear: both !important;
+    font-weight: 400 !important;
+    color: #212529 !important;
+    text-align: inherit !important;
+    white-space: nowrap !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    text-decoration: none !important;
+  }
+  
+  .dropdown-item:hover, .dropdown-item:focus {
+    color: #16181b !important;
+    text-decoration: none !important;
+    background-color: #f8f9fa !important;
+  }
+  
+  /* Preview item styles */
+  .preview-item {
+    display: flex !important;
+    padding: 0.75rem 1.5rem !important;
+    cursor: pointer !important;
+    border-bottom: 1px solid #f3f3f3 !important;
+  }
+  
+  .preview-item:last-child {
+    border-bottom: none !important;
+  }
+  
+  .preview-item:hover {
+    background-color: #f8f9fa !important;
+  }
+  
+  .preview-thumbnail {
+    margin-right: 0.75rem !important;
+  }
+  
+  .preview-icon {
+    width: 36px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+  }
+  
+  .preview-icon i {
+    font-size: 18px !important;
+    color: #fff !important;
+  }
+  
+  .bg-success {
+    background-color: #1bcfb4 !important;
+  }
+  
+  .bg-warning {
+    background-color: #fed713 !important;
+  }
+  
+  .bg-info {
+    background-color: #198ae3 !important;
+  }
+  
+  .preview-item-content {
+    flex-grow: 1 !important;
+  }
+  
+  .preview-subject {
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    margin-bottom: 0.25rem !important;
+  }
+  
+  .small-text {
+    font-size: 0.75rem !important;
+  }
+  
+  .dropdown-header {
+    display: block !important;
+    padding: 0.5rem 1.5rem !important;
+    margin-bottom: 0 !important;
+    font-size: 0.875rem !important;
+    color: #6c757d !important;
+    white-space: nowrap !important;
+  }
+  
+  /* Profile dropdown styles */
+  .nav-profile img {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+  }
+  
+  .nav-profile .dropdown-menu {
+    min-width: 200px !important;
+  }
+  
+  .text-primary {
+    color: #4B49AC !important;
+  }
+  .notification-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+.notification-item:hover {
+    background-color: #f9f9f9;
+}
+.notification-item.unread {
+    background-color: #f0f7ff;
+}
+.notification-item.unread:hover {
+    background-color: #e6f2ff;
+}
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+.notification-icon i {
+    color: #ffffff;
+    font-size: 18px;
+}
+.notification-content {
+    flex: 1;
+}
+.notification-meta {
+    font-size: 12px;
+    color: #6c757d;
+}
+.notification-actions {
+    display: flex;
+    gap: 10px;
+}
+.notification-time {
+    white-space: nowrap;
+    font-size: 12px;
+    color: #6c757d;
+    margin-left: 15px;
+}
+.notification-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #007bff;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+.notification-filter {
+    margin-bottom: 20px;
+}
+.empty-state {
+    text-align: center;
+    padding: 50px 0;
+}
+.empty-state i {
+    font-size: 50px;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff5858;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1050;
+}
+.toast {
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.toast.show {
+    opacity: 1;
+}
+  
+  /* Make sure dropdown works with Bootstrap 5 */
+  [data-bs-toggle="dropdown"] {
+    cursor: pointer !important;
+  } 
+          </style>
+        
+        <!-- Bootstrap & jQuery CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+        <link href="sky/src/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">  
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+          <!-- Plugin css for this page -->
+          <!-- <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> -->
+          <link rel="stylesheet" href="sky/src/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
+          <link rel="stylesheet" href="sky/src/assets/vendors/ti-icons/css/themify-icons.css">
+          <link rel="stylesheet" type="text/css" href="sky/src/assets/js/select.dataTables.min.css">
+          <!-- End plugin css for this page -->
+          <!-- inject:css -->
+          <link rel="stylesheet" href="sky/src/assets/css/style.css">
+          <!-- endinject -->
+          <link rel="shortcut icon" href="sky/src/assets/images/favicon.png" />
+        <link rel="stylesheet" href="sky/src/assets/css/style.css">
+          <title>Hirewise</title>
+          <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+          <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
+        
+        <!-- Bootstrap & jQuery CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+        <link href="sky/src/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="apple-touch-icon" href="sky/src/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+        <link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    </head>
+        
+   
+      <body>
+        
+    <div class="container-scroller">
+        <!-- Navbar -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+                <a class="navbar-brand brand-logo me-5" href="sky/src/index.html">
+                    <img src="images/w.jpeg" class="me-2" alt="logo" style="width: 100%;" />
+                </a>
+                <a class="navbar-brand brand-logo-mini" href="sky/src/index.html">
+                    <img src="images/w.jpeg" alt="logo" style="width: 100%;" />
+                </a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item nav-search d-none d-lg-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                <span class="input-group-text" id="search">
+                                    <i class="icon-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                            <i class="icon-bell mx-0"></i>
+                            <span class="count"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="ti-info-alt mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">Just now</p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="ti-settings mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">Private message</p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="ti-user mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0 text-muted">2 days ago</p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                            <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item">
+                                <i class="ti-settings text-primary"></i> Settings
+                            </a>
+                            <a href="index.html" class="dropdown-item">
+                                <i class="ti-power-off text-primary"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-settings d-none d-lg-flex">
+                        <a class="nav-link" href="#">
+                            <i class="icon-ellipsis"></i>
+                        </a>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+        </nav>
+        
+<body>
+    <!-- Start Breadcrumbs -->
+    <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Notifications</h1>
+                        <p>Stay updated on job postings and applicant activities</p>
+                    </div>
+                    <ul class="breadcrumb-nav" style="text-decoration: none;">
+                        <li><a href="sky/src/index.html" style="text-decoration: none;">Home</a></li>
+                        <li>Notifications</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Start Notifications Section -->
+    <section class="notifications-section section" style="background-color: white;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>All Notifications</h2>
+                        <p>Keep track of all activities related to your jobs</p>
+                    </div>
+                </div>
+            </div>
+           <!-- Main Content -->
+    <div class="resume section" style="background-color: white;" >
+
+            <div class="resume-inner">
+                <div class="row">
+                    <!-- Sidebar -->
+                    <div class="col-lg-4 col-12">
+                        <div class="dashbord-sidebar">
+                            <ul>
+                                <li class="heading">Manage Account</li>
+                                <li><a class="active" href="resume.html" style="text-decoration: none;"><i class="lni lni-clipboard"></i> My Resume</a></li>
+                               
+                                <li><a href="notifications.html" style="text-decoration: none;"><i class="lni lni-alarm"></i> Notifications <span class="notifi">5</span></a></li>
+
+                                <li><a href="change-password.html" style="text-decoration: none;"><i class="lni lni-lock"></i> Change Password</a></li>
+                                <li><a href="index.html" style="text-decoration: none;"><i class="lni lni-upload"></i> Sign Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Content Section -->
+                    <div class="col-lg-8 col-12">
+                        <h2>Notifications</h2>
+                        <p>Stay updated on job postings and applicant activities</p>
+                        
+                        <!-- Filters -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <select id="notificationTypeFilter" class="form-control d-inline-block w-auto">
+                                    <option value="all">All Types</option>
+                                    <option value="job">Job Postings</option>
+                                    <option value="application">Applications</option>
+                                    <option value="system">System</option>
+                                </select>
+                                <select id="notificationStatusFilter" class="form-control d-inline-block w-auto">
+                                    <option value="all">All Status</option>
+                                    <option value="unread">Unread Only</option>
+                                    <option value="read">Read Only</option>
+                                </select>
+                            </div>
+                            <button id="markAllRead" class="btn btn-outline-primary">
+                                <i class="lni lni-checkmark-circle"></i> Mark All as Read
+                            </button>
+                        </div>
+            
+                        <!-- Notification List -->
+                        <div id="notificationsList">
+                            <!-- Notifications will be dynamically inserted here -->
+                        </div>
+            
+                        <!-- Empty State -->
+                        <div id="emptyState" class="text-center p-4" style="display: none;">
+                            <i class="lni lni-inbox fa-3x"></i>
+                            <h4>No notifications found</h4>
+                            <p>You don’t have any notifications matching your current filters.</p>
+                        </div>
+            
+                        <!-- Pagination -->
+                        <nav aria-label="Notifications Pagination">
+                            <ul class="pagination justify-content-center">
+                                <!-- Pagination dynamically inserted here -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            
+
+
+         
+    </section>
+    <!-- End Notifications Section -->
+
+    <!-- Toast Container for Real-time Notifications -->
+    <div class="toast-container"></div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        $(document).ready(function() {
+            // Constants
+            const PAGE_SIZE = 5; // Number of notifications per page
+            let currentPage = 1;
+            
+            // Initialize event listeners for job post changes
+            initJobNotifications();
+            
+            // Load notifications
+            displayNotifications(currentPage);
+            updateNotificationBadge();
+            loadHeaderNotifications();
+            
+            // Event listeners
+            $('#notificationTypeFilter, #notificationStatusFilter').on('change', function() {
+                filterNotifications();
+            });
+            
+            $('#markAllRead').on('click', function() {
+                markAllAsRead();
+            });
+            
+            $(document).on('click', '.pagination .page-link', function(e) {
+                e.preventDefault();
+                
+                const pageNumber = $(this).data('page');
+                
+                if (pageNumber) {
+                    currentPage = pageNumber;
+                    displayNotifications(currentPage);
+                }
+            });
+            
+            $(document).on('click', '#nextPage', function(e) {
+                e.preventDefault();
+                
+                if (!$(this).hasClass('disabled')) {
+                    currentPage++;
+                    displayNotifications(currentPage);
+                }
+            });
+            
+            $(document).on('click', '#prevPage', function(e) {
+                e.preventDefault();
+                
+                if (!$(this).hasClass('disabled')) {
+                    currentPage--;
+                    displayNotifications(currentPage);
+                }
+            });
+            
+            $(document).on('click', '.mark-read-btn', function() {
+                const notificationId = $(this).closest('.notification-item').data('id');
+                markAsRead(notificationId);
+            });
+            
+            $(document).on('click', '.view-details-btn', function() {
+                const relatedId = $(this).data('related-id');
+                const type = $(this).data('type');
+                
+                // Mark as read when viewing details
+                const notificationId = $(this).closest('.notification-item').data('id');
+                markAsRead(notificationId);
+                
+                // Redirect based on notification type
+                switch (type) {
+                    case 'job':
+                        window.location.href = `job-details.html?id=${relatedId}`;
+                        break;
+                    case 'application':
+                        window.location.href = `candidate-profile.html?id=${relatedId}`;
+                        break;
+                    case 'system':
+                        window.location.href = `system-status.html`;
+                        break;
+                    default:
+                        window.location.href = `notifications.html?id=${relatedId}`;
+                }
+            });
+            
+            // Functions
+            
+            function initJobNotifications() {
+                // Check for new job posts on page load
+                checkForNewJobPosts();
+                
+                // Set up storage event listener for cross-tab notifications
+                window.addEventListener('storage', function(e) {
+                    if (e.key === 'hirewise_jobs') {
+                        checkForNewJobPosts();
+                    }
+                });
+            }
+            
+            function checkForNewJobPosts() {
+                const jobs = JSON.parse(localStorage.getItem('hirewise_jobs') || '[]');
+                const lastCheckTime = localStorage.getItem('last_job_check_time') || '0';
+                const currentTime = new Date().getTime();
+                
+                // Update last check time
+                localStorage.setItem('last_job_check_time', currentTime);
+                
+                // Check for new jobs posted since last check
+                const newJobs = jobs.filter(job => {
+                    const jobTime = new Date(job.posted_date || job.createdAt).getTime();
+                    return jobTime > parseInt(lastCheckTime);
+                });
+                
+                // Create notifications for new jobs
+                newJobs.forEach(job => {
+                    createJobNotification(job);
+                });
+                
+                // Check for expiring jobs
+                const expiringJobs = jobs.filter(job => {
+                    if (!job.expiry_date) return false;
+                    
+                    const expiryDate = new Date(job.expiry_date).getTime();
+                    const twoDaysFromNow = currentTime + (2 * 24 * 60 * 60 * 1000);
+                    
+                    return expiryDate > currentTime && expiryDate < twoDaysFromNow;
+                });
+                
+                // Create notifications for expiring jobs
+                expiringJobs.forEach(job => {
+                    createJobExpiryNotification(job);
+                });
+            }
+            
+            function createJobNotification(job) {
+                const notificationId = 'notif_' + generateUniqueId();
+                const timestamp = new Date().toISOString();
+                
+                const notification = {
+                    id: notificationId,
+                    type: 'job',
+                    title: `New Job Posted: ${job.title || job.position}`,
+                    message: `You've successfully posted a new job for ${job.title || job.position} at ${job.company || 'your company'}.`,
+                    timestamp: timestamp,
+                    isRead: false,
+                    relatedId: job.id || job.job_id,
+                    icon: 'lni-briefcase'
+                };
+                
+                addNotification(notification);
+                showToast(notification.title, notification.message);
+                updateNotificationBadge();
+                loadHeaderNotifications();
+            }
+            
+            function createJobExpiryNotification(job) {
+                const notificationId = 'notif_' + generateUniqueId();
+                const timestamp = new Date().toISOString();
+                const expiryDate = new Date(job.expiry_date);
+                const daysUntilExpiry = Math.ceil((expiryDate - new Date()) / (1000 * 60 * 60 * 24));
+                
+                const notification = {
+                    id: notificationId,
+                    type: 'job',
+                    title: `Job Posting Expiring Soon`,
+                    message: `Your job posting for "${job.title || job.position}" will expire in ${daysUntilExpiry} days. Consider renewing it.`,
+                    timestamp: timestamp,
+                    isRead: false,
+                    relatedId: job.id || job.job_id,
+                    icon: 'lni-alarm'
+                };
+                
+                // Check if we already have a similar notification
+                const existingNotifications = loadNotifications();
+                const isDuplicate = existingNotifications.some(n => 
+                    n.relatedId === notification.relatedId && 
+                    n.icon === 'lni-alarm' && 
+                    n.isRead === false
+                );
+                
+                if (!isDuplicate) {
+                    addNotification(notification);
+                    showToast(notification.title, notification.message);
+                    updateNotificationBadge();
+                    loadHeaderNotifications();
+                }
+            }
+            
+            function addNotification(notification) {
+                const notifications = loadNotifications();
+                notifications.unshift(notification); // Add to beginning of array
+                localStorage.setItem('hirewise_notifications', JSON.stringify(notifications));
+            }
+            
+            function loadNotifications() {
+                let notifications = JSON.parse(localStorage.getItem('hirewise_notifications') || '[]');
+                
+                // If no notifications exist, create some sample ones
+                if (notifications.length === 0) {
+                    createSampleNotifications();
+                    notifications = JSON.parse(localStorage.getItem('hirewise_notifications') || '[]');
+                }
+                
+                return notifications;
+            }
+            
+            function createSampleNotifications() {
+                const sampleNotifications = [
+                    {
+                        id: 'notif_sample1',
+                        type: 'job',
+                        title: 'New Job Posted: Senior Developer',
+                        message: 'You\'ve successfully posted a new job for Senior Developer at Tech Solutions Inc.',
+                        timestamp: new Date(new Date().getTime() - 5 * 60000).toISOString(), // 5 minutes ago
+                        isRead: false,
+                        relatedId: 'job_sample1',
+                        icon: 'lni-briefcase'
+                    },
+                    {
+                        id: 'notif_sample2',
+                        type: 'application',
+                        title: 'New Application Received',
+                        message: 'John Doe has applied for the Frontend Developer position at your company.',
+                        timestamp: new Date(new Date().getTime() - 60 * 60000).toISOString(), // 1 hour ago
+                        isRead: false,
+                        relatedId: 'application_sample1',
+                        icon: 'lni-user'
+                    },
+                    {
+                        id: 'notif_sample3',
+                        type: 'job',
+                        title: 'Job Posting Expiring Soon',
+                        message: 'Your job posting for "UI/UX Designer" will expire in 2 days. Consider renewing it.',
+                        timestamp: new Date(new Date().getTime() - 3 * 60 * 60000).toISOString(), // 3 hours ago
+                        isRead: false,
+                        relatedId: 'job_sample2',
+                        icon: 'lni-alarm'
+                    },
+                    {
+                        id: 'notif_sample4',
+                        type: 'job',
+                        title: 'Job Viewed by Candidates',
+                        message: 'Your job posting for "Marketing Specialist" has been viewed by 24 potential candidates.',
+                        timestamp: new Date(new Date().getTime() - 24 * 60 * 60000).toISOString(), // 1 day ago
+                        isRead: true,
+                        relatedId: 'job_sample3',
+                        icon: 'lni-eye'
+                    },
+                    {
+                        id: 'notif_sample5',
+                        type: 'system',
+                        title: 'System Maintenance Complete',
+                        message: 'The scheduled system maintenance has been completed successfully. All features are now available.',
+                        timestamp: new Date(new Date().getTime() - 2 * 24 * 60 * 60000).toISOString(), // 2 days ago
+                        isRead: true,
+                        relatedId: 'system_sample1',
+                        icon: 'lni-cog'
+                    }
+                ];
+                
+                localStorage.setItem('hirewise_notifications', JSON.stringify(sampleNotifications));
+            }
+            
+            function displayNotifications(page = 1) {
+                const notifications = filterNotificationsByCurrentSettings();
+                const startIndex = (page - 1) * PAGE_SIZE;
+                const endIndex = startIndex + PAGE_SIZE;
+                const pageNotifications = notifications.slice(startIndex, endIndex);
+                
+                // Clear current notifications
+                $('#notificationsList').empty();
+                
+                // Check if there are any notifications
+                if (pageNotifications.length === 0) {
+                    $('#emptyState').show();
+                } else {
+                    $('#emptyState').hide();
+                    
+                    // Add notifications to the list
+                    pageNotifications.forEach(notification => {
+                        const notificationElement = createNotificationElement(notification);
+                        $('#notificationsList').append(notificationElement);
+                    });
+                }
+                
+                // Update pagination
+                updatePagination(notifications.length, page);
+            }
+            
+            function filterNotificationsByCurrentSettings() {
+                const typeFilter = $('#notificationTypeFilter').val();
+                const statusFilter = $('#notificationStatusFilter').val();
+                let notifications = loadNotifications();
+                
+                // Apply filters
+                if (typeFilter !== 'all') {
+                    notifications = notifications.filter(notification => notification.type === typeFilter);
+                }
+                
+                if (statusFilter === 'unread') {
+                    notifications = notifications.filter(notification => !notification.isRead);
+                } else if (statusFilter === 'read') {
+                    notifications = notifications.filter(notification => notification.isRead);
+                }
+                
+                return notifications;
+            }
+            
+            function filterNotifications() {
+                currentPage = 1; // Reset to first page when filtering
+                displayNotifications(currentPage);
+            }
+            
+            function createNotificationElement(notification) {
+                // Format timestamp
+                const timestamp = formatTimestamp(notification.timestamp);
+                
+                // Determine background color based on notification type
+                let bgColor = 'bg-primary';
+                if (notification.type === 'application') {
+                    bgColor = 'bg-success';
+                } else if (notification.type === 'system') {
+                    bgColor = 'bg-secondary';
+                } else if (notification.icon === 'lni-alarm') {
+                    bgColor = 'bg-warning';
+                } else if (notification.icon === 'lni-eye') {
+                    bgColor = 'bg-info';
+                }
+                
+                // Create the notification element
+                const notificationItem = $(`
+                    <div class="notification-item ${notification.isRead ? '' : 'unread'} d-flex align-items-start" data-id="${notification.id}">
+                        <div class="notification-icon ${bgColor}">
+                            <i class="lni ${notification.icon}"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">${notification.title}</h6>
+                                ${notification.isRead ? '' : '<div class="notification-dot"></div>'}
+                            </div>
+                            <p class="mb-1">${notification.message}</p>
+                            <div class="notification-meta d-flex justify-content-between align-items-center">
+                                <span>${timestamp}</span>
+                                <div class="notification-actions">
+                                    <button class="btn btn-sm btn-outline-primary view-details-btn" data-related-id="${notification.relatedId}" data-type="${notification.type}">
+                                        ${getActionButtonText(notification.type)}
+                                    </button>
+                                    ${notification.isRead ? '' : '<button class="btn btn-sm btn-light mark-read-btn">Mark as Read</button>'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+                
+                return notificationItem;
+            }
+            
+            function getActionButtonText(type) {
+                switch (type) {
+                    case 'job':
+                        return 'View Job';
+                    case 'application':
+                        return 'View Profile';
+                    case 'system':
+                        return 'System Status';
+                    default:
+                        return 'View Details';
+                }
+            }
+            
+            function formatTimestamp(timestamp) {
+                const now = new Date();
+                const notificationDate = new Date(timestamp);
+                const diffInMilliseconds = now - notificationDate;
+                const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+                const diffInHours = Math.floor(diffInMinutes / 60);
+                const diffInDays = Math.floor(diffInHours / 24);
+                
+                if (diffInMinutes < 1) {
+                    return 'Just now';
+                } else if (diffInMinutes < 60) {
+                    return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+                } else if (diffInHours < 24) {
+                    return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+                } else if (diffInDays < 7) {
+                    return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+                } else {
+                    // Format date as MM/DD/YYYY for dates older than a week
+                    return notificationDate.toLocaleDateString();
+                }
+            }
+            
+            function markAsRead(notificationId) {
+                let notifications = loadNotifications();
+                
+                // Find and update notification
+                const updatedNotifications = notifications.map(notification => {
+                    if (notification.id === notificationId) {
+                        return { ...notification, isRead: true };
+                    }
+                    return notification;
+                });
+                
+                // Save back to localStorage
+                localStorage.setItem('hirewise_notifications', JSON.stringify(updatedNotifications));
+                
+                // Update UI
+                updateNotificationBadge();
+                loadHeaderNotifications();
+                
+                // Refresh notifications display
+                displayNotifications(currentPage);
+            }
+            
+            function markAllAsRead() {
+                let notifications = loadNotifications();
+                
+                // Update all notifications
+                const updatedNotifications = notifications.map(notification => {
+                    return { ...notification, isRead: true };
+                });
+                
+                // Save back to localStorage
+                localStorage.setItem('hirewise_notifications', JSON.stringify(updatedNotifications));
+                
+                // Update UI
+                updateNotificationBadge();
+                loadHeaderNotifications();
+                
+                // Refresh notifications display
+                displayNotifications(currentPage);
+            }
+            
+            function updatePagination(totalItems, currentPage) {
+                const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+                
+                // Update page numbers
+                $('.pagination').empty();
+                
+                // Previous button
+             // Previous button
+const prevBtn = $(`
+<li class="page-item ${currentPage === 1 ? 'disabled' : ''}" id="prevPage">
+    <a class="page-link" href="#" tabindex="-1" ${currentPage === 1 ? 'aria-disabled="true"' : ''}>Previous</a>
+</li>
+`);
+$('.pagination').append(prevBtn);
+
+// Page numbers
+for (let i = 1; i <= totalPages; i++) {
+const pageItem = $(`
+    <li class="page-item ${i === currentPage ? 'active' : ''}">
+        <a class="page-link" href="#" data-page="${i}">${i}</a>
+    </li>
+`);
+$('.pagination').append(pageItem);
+}
+
+// Next button
+const nextBtn = $(`
+<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}" id="nextPage">
+    <a class="page-link" href="#" ${currentPage === totalPages ? 'aria-disabled="true"' : ''}>Next</a>
+</li>
+`);
+$('.pagination').append(nextBtn);
+}
+
+function updateNotificationBadge() {
+const notifications = loadNotifications();
+const unreadCount = notifications.filter(notification => !notification.isRead).length;
+
+$('#notificationBadge').text(unreadCount);
+$('#notificationBadge').toggle(unreadCount > 0);
+}
+
+function loadHeaderNotifications() {
+const notifications = loadNotifications();
+const unreadNotifications = notifications.filter(notification => !notification.isRead)
+    .slice(0, 3); // Show only the latest 3 unread notifications
+
+// Clear current header notifications
+$('#headerNotifications').empty();
+
+if (unreadNotifications.length === 0) {
+    $('#headerNotifications').html('<div class="dropdown-item">No unread notifications</div>');
+} else {
+    // Add notifications to header dropdown
+    unreadNotifications.forEach(notification => {
+        const headerNotificationElement = createHeaderNotificationElement(notification);
+        $('#headerNotifications').append(headerNotificationElement);
+    });
+}
+}
+
+function createHeaderNotificationElement(notification) {
+// Format timestamp
+const timestamp = formatTimestamp(notification.timestamp);
+
+// Create the notification element
+const notificationItem = $(`
+    <a class="dropdown-item" href="#" data-id="${notification.id}">
+        <div class="d-flex align-items-center">
+            <div class="mr-3">
+                <i class="lni ${notification.icon}"></i>
+            </div>
+            <div>
+                <p class="mb-0 font-weight-bold">${notification.title}</p>
+                <small class="text-muted">${timestamp}</small>
+            </div>
+        </div>
+    </a>
+`);
+
+// Add click event to redirect to notification details
+notificationItem.on('click', function(e) {
+    e.preventDefault();
+    
+    // Mark as read
+    markAsRead(notification.id);
+    
+    // Redirect based on notification type
+    switch (notification.type) {
+        case 'job':
+            window.location.href = `job-details.html?id=${notification.relatedId}`;
+            break;
+        case 'application':
+            window.location.href = `candidate-profile.html?id=${notification.relatedId}`;
+            break;
+        case 'system':
+            window.location.href = `system-status.html`;
+            break;
+        default:
+            window.location.href = `notifications.html?id=${notification.relatedId}`;
+    }
+});
+
+return notificationItem;
+}
+
+function showToast(title, message) {
+const toastId = 'toast_' + generateUniqueId();
+
+const toast = $(`
+    <div class="toast" id="${toastId}">
+        <div class="toast-header">
+            <strong class="mr-auto">${title}</strong>
+            <small>Just now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            ${message}
+        </div>
+    </div>
+`);
+
+$('.toast-container').append(toast);
+
+// Show toast
+toast.addClass('show');
+
+// Auto-hide after 5 seconds
+setTimeout(function() {
+    toast.removeClass('show');
+    
+    // Remove from DOM after fade out
+    setTimeout(function() {
+        toast.remove();
+    }, 300);
+}, 5000);
+
+// Add close button functionality
+toast.find('.close').on('click', function() {
+    toast.removeClass('show');
+    
+    // Remove from DOM after fade out
+    setTimeout(function() {
+        toast.remove();
+    }, 300);
+});
+}
+
+function generateUniqueId() {
+return Math.random().toString(36).substr(2, 9) + '_' + new Date().getTime();
+}
+});
+</script>
+</body>
+</html>

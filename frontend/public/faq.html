@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+
+  <title>Hirewise</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.122.0">
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
+
+<!-- Bootstrap & jQuery CDN -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+<link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+
+<link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
+<meta name="theme-color" content="#712cf9">
+ 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Start Header Area -->
+    <div id="loading-area"></div>
+   
+   
+ <!-- Start Header Area -->
+ <header class="header">
+    <div class="navbar-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand logo" href="index.html">
+                            <img class="logo1" src="images/www.JPEG" alt="Logo" width="100%"  />
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                            <ul id="nav" class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a href="index.html">Home</a>
+                                   
+                                </li>
+                                <li class="nav-item"><a href="about-us.html">About Us</a>
+                                   
+                                </li>
+                                <li class="nav-item"><a href="privacy-policy.html">Privacy Policy</a>
+                                   
+                                </li>
+                                <li class="nav-item"><a class="active" href="faq.html">Faq </a>
+                                </li>
+                                <li class="nav-item"><a href="contact.html">Contact </a> </li>
+                            </ul>
+                        </div>
+                        <!-- navbar collapse -->
+                        <div class="button">
+                         <a href="javascript:void(0);" data-toggle="modal" data-target="#login" class="login" style="text-decoration: none;">
+                             <i class="lni lni-lock-alt"></i> Login
+                         </a>
+                         <a href="javascript:void(0);" data-toggle="modal" data-target="#signup" class="btn">Sign Up</a>
+                     </div>
+                     
+                    </nav>
+                    <!-- navbar -->
+                </div>
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- navbar area -->
+</header>
+
+<!-- Login Modal -->
+<div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
+   <div class="modal-dialog max-width-px-840 position-relative">
+       <button type="button" class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper" data-dismiss="modal">
+           <i class="lni lni-close"></i>
+       </button>
+       <div class="login-modal-main">
+           <div class="row no-gutters">
+               <div class="col-12">
+                   <div class="row">
+                       <div class="heading">
+                           <h3>Login From Here</h3>
+                           <p>Log in to continue your account <br> and explore new jobs.</p>
+                       </div>
+                       <div class="social-login">
+                           <ul>
+                               <li><a class="linkedin" href="#" style="text-decoration: none;"><i class="lni lni-linkedin-original"></i> Log in with LinkedIn</a></li>
+                               <li><a class="google" href="#" style="text-decoration: none;"><i class="lni lni-google"></i> Log in with Google</a></li>
+                               <li><a class="facebook" href="#" style="text-decoration: none;"><i class="lni lni-facebook-original"></i> Log in with Facebook</a></li>
+                           </ul>
+                       </div>
+                       <div class="or-devider">
+                           <span>Or</span>
+                       </div>
+                       <form id="login-form">
+                           <div class="form-group">
+                               <label for="email" class="label">E-mail</label>
+                               <input type="email" class="form-control" placeholder="example@gmail.com" id="login-email">
+                           </div>
+                           <div class="form-group">
+                               <label for="password" class="label">Password</label>
+                               <div class="position-relative">
+                                   <input type="password" class="form-control" id="login-password" placeholder="Enter password">
+                               </div>
+                           </div>
+                           <div class="form-group d-flex flex-wrap justify-content-between">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                   <label class="form-check-label" for="flexCheckDefault">Remember password</label>
+                               </div>
+                               <a href="#" class="font-size-3 text-dodger line-height-reset">Forget Password</a>
+                           </div>
+                           <div class="form-group mb-8 button">
+                               <button type="submit" class="btn">Log in</button>
+                           </div>
+                       </form>
+                       <p class="text-center create-new-account">Don’t have an account? <a href="#">Create a free account</a></p>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+<!-- Signup Modal -->
+<div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
+   <div class="modal-dialog max-width-px-840 position-relative">
+       <button type="button" class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper" data-dismiss="modal">
+           <i class="lni lni-close"></i>
+       </button>
+       <div class="login-modal-main">
+           <div class="row no-gutters">
+               <div class="col-12">
+                   <div class="row">
+                       <div class="heading">
+                           <h3>Create a free Account <br> Today</h3>
+                           <p>Create your account to continue <br> and explore new jobs.</p>
+                       </div>
+                       <div class="social-login">
+                           <ul>
+                               <li><a class="linkedin" href="#" style="text-decoration: none;"><i class="lni lni-linkedin-original"></i> Import from LinkedIn</a></li>
+                               <li><a class="google" href="#" style="text-decoration: none;"><i class="lni lni-google"></i> Import from Google</a></li>
+                               <li><a class="facebook" href="#" style="text-decoration: none;"><i class="lni lni-facebook-original"></i> Import from Facebook</a></li>
+                           </ul>
+                       </div>
+                       <div class="or-devider">
+                           <span>Or</span>
+                       </div>
+                       <form id="signup-form">
+                           <div class="form-group">
+                               <label for="email" class="label">E-mail</label>
+                               <input type="email" class="form-control" id="signup-email" placeholder="example@gmail.com">
+                           </div>
+                           <div class="form-group">
+                               <label for="password" class="label">Password</label>
+                               <div class="position-relative">
+                                   <input type="password" class="form-control" id="signup-password" placeholder="Enter password">
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               <label for="confirm-password" class="label">Confirm Password</label>
+                               <div class="position-relative">
+                                   <input type="password" class="form-control" id="signup-confirm-password" placeholder="Enter password">
+                               </div>
+                           </div>
+                           <div class="form-group d-flex flex-wrap justify-content-between">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" value="">
+                                   <label class="form-check-label" for="flexCheckDefault">Agree to the <a href="privacy-policy.html" style="text-decoration: none;">Terms & Conditions</a></label>
+                               </div>
+                           </div>
+                           <div class="form-group mb-8 button">
+                               <button type="submit" class="btn">Sign Up</button>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+<script>document.getElementById("login-form").addEventListener("submit", async (event) => {
+   event.preventDefault();
+   
+   const email = document.getElementById("login-email").value;
+   const password = document.getElementById("login-password").value;
+   localStorage.setItem("userEmail", email); // Store email in localStorage
+  
+   const response = await fetch("http://localhost:5000/auth/login", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({ email, password })
+   });
+   
+   const data = await response.json();
+   if (response.ok) {
+       alert("Login successful!");
+       window.location.href = "sky/src/index.html"; // Change to your desired page
+   } else {
+       alert(data.message);
+   }
+   alert(data.message);
+});
+
+document.getElementById("signup-form").addEventListener("submit", async (event) => {
+   event.preventDefault();
+   
+   const email = document.getElementById("signup-email").value;
+   const password = document.getElementById("signup-password").value;
+   
+   const response = await fetch("http://localhost:5000/signup", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({ email, password })
+   });
+   
+   const data = await response.json();
+   alert(data.message);
+});
+
+</script>
+   <!-- Start Breadcrumbs -->
+   <div class="breadcrumbs overlay">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumbs-content">
+                    <h1 class="page-title">Frequently Asked Questions</h1>
+<p>Find answers to common queries about our platform, job search process, employer features, and security measures. We aim to provide clear and helpful information to enhance your experience with HIREWISE.</p>
+
+                </div>
+                <ul class="breadcrumb-nav">
+                    <li><a href="index.html" style="text-decoration: none;">Home</a></li>
+                    <li>Faq</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumbs -->
+
+<!-- Start Faq Area -->
+<section class="faq-area section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <!-- Item -->
+                <div class="d-flex single-faq wow fadeInUp" data-wow-delay=".2s">
+                    <!-- Badge -->
+                    <div class="cercle">
+                        <span>?</span>
+                    </div>
+                    <div class="content">
+                        <!-- Heading -->
+                        <h4 class="heading">
+                            How does HIREWISE ensure fair and unbiased recruitment?
+                        </h4>
+                        <!-- Text -->
+                        <p class="text">
+                            HIREWISE leverages AI-driven recruitment technology to eliminate biases in the hiring process. Our system focuses on skills, experience, and job compatibility rather than personal demographics, ensuring equal opportunities for all candidates.
+                        </p>
+                    </div>
+                    
+                    
+                </div>
+                <!-- Item -->
+                <div class="d-flex single-faq wow fadeInUp" data-wow-delay=".4s">
+                    <!-- Badge -->
+                    <div class="cercle">
+                        <span>?</span>
+                    </div>
+                    <div class="content">
+                        <!-- Heading -->
+                        <h4 class="heading">
+                            How does HIREWISE help me find a job?
+                        </h4>
+                        <!-- Text -->
+                        <p class="text">
+                            HIREWISE uses AI-powered job matching to connect you with relevant job opportunities based on your skills, experience, and preferences. Our advanced search filters and personalized recommendations make job hunting easier and more efficient.
+                        </p>
+                    </div>
+                    
+                </div>
+                <!-- Item -->
+                <div class="d-flex single-faq wow fadeInUp" data-wow-delay=".4s">
+                    <!-- Badge -->
+                    <div class="cercle">
+                        <span>?</span>
+                    </div>
+                    <div class="content">
+                        <!-- Heading -->
+                        <h4 class="heading">
+                            Is HIREWISE free to use?
+                        </h4>
+                        <!-- Text -->
+                        <p class="text">
+                            Yes, job seekers can use HIREWISE for free to search and apply for jobs. However, premium features such as resume optimization and AI career insights may be available with a subscription.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <!-- Item -->
+                <div class="d-flex single-faq wow fadeInUp" data-wow-delay=".2s">
+                    <!-- Badge -->
+                    <div class="cercle">
+                        <span>?</span>
+                    </div>
+                    <div class="content">
+                        <!-- Heading -->
+                        <h4 class="heading">
+                            How do I create a profile on HIREWISE?
+                        </h4>
+                        <!-- Text -->
+                        <p class="text">
+                            Simply sign up with your email, complete your profile by adding your skills, experience, and resume, and start applying for jobs tailored to your profile.
+                        </p>
+                    </div>
+                </div>
+                <!-- Item -->
+                <div class="d-flex single-faq wow fadeInUp" data-wow-delay=".4s">
+                    <!-- Badge -->
+                    <div class="cercle">
+                        <span>?</span>
+                    </div>
+                    <div class="content">
+                        <!-- Heading -->
+                        <h4 class="heading">
+                            Can I apply for multiple jobs at once?
+                        </h4>
+                        <!-- Text -->
+                        <p class="text">
+                            Yes! You can apply for multiple job listings directly from your HIREWISE dashboard, track your applications, and receive updates from recruiters.
+                        </p>
+                    </div>
+                </div>
+                <!-- Item -->
+                <div class="d-flex single-faq wow fadeInUp" data-wow-delay=".4s">
+                    <!-- Badge -->
+                    <div class="cercle">
+                        <span>?</span>
+                    </div>
+                    <div class="content">
+                        <!-- Heading -->
+                        <h4 class="heading">
+                            How do employers find my profile?
+                        </h4>
+                        <!-- Text -->
+                        <p class="text">
+                            Employers searching for candidates can view your profile based on your skills, experience, and job preferences. Ensuring your profile is complete and updated increases your visibility to recruiters.
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex single-faq wow fadeInUp" data-wow-delay=".4s">
+                    <!-- Badge -->
+                    <div class="cercle">
+                        <span>?</span>
+                    </div>
+                    <div class="content">
+                        <!-- Heading -->
+                        <h4 class="heading">
+                            Is my personal information safe on HIREWISE?
+                        </h4>
+                        <!-- Text -->
+                        <p class="text">
+                            Yes. We prioritize your privacy and use industry-standard security measures to protect your data. We do not share your personal information without your consent.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- / .row -->
+    </div> <!-- / .container -->
+</section>
+<!-- End Faq Area -->
+
+    <!-- Login Modal -->
+    <div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog max-width-px-840 position-relative">
+            <button type="button"
+                class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+                data-dismiss="modal"><i class="lni lni-close"></i></button>
+            <div class="login-modal-main">
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="heading">
+                                <h3>Login From Here</h3>
+                                <p>Log in to continue your account <br> and explore new jobs.</p>
+                            </div>
+                            <div class="social-login">
+                                <ul>
+                                    <li><a class="linkedin" href="#"><i class="lni lni-linkedin-original"></i> Log in
+                                            with LinkedIn</a></li>
+                                    <li><a class="google" href="#"><i class="lni lni-google"></i> Log in with
+                                            Google</a></li>
+                                    <li><a class="facebook" href="#"><i class="lni lni-facebook-original"></i> Log in
+                                            with Facebook</a></li>
+                                </ul>
+                            </div>
+                            <div class="or-devider">
+                                <span>Or</span>
+                            </div>
+                            <form action="/">
+                                <div class="form-group">
+                                    <label for="email" class="label">E-mail</label>
+                                    <input type="email" class="form-control" placeholder="example@gmail.com" id="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="label">Password</label>
+                                    <div class="position-relative">
+                                        <input type="password" class="form-control" id="password"
+                                            placeholder="Enter password">
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex flex-wrap justify-content-between">
+                                    <!-- Default checkbox -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault" />
+                                        <label class="form-check-label" for="flexCheckDefault">Remember password</label>
+                                    </div>
+                                    <a href="" class="font-size-3 text-dodger line-height-reset">Forget Password</a>
+                                </div>
+                                <div class="form-group mb-8 button">
+                                    <button class="btn ">Log in
+                                    </button>
+                                </div>
+                                <p class="text-center create-new-account">Don’t have an account? <a href="#">Create a free account</a></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Login Modal -->
+
+    <!-- Signup Modal -->
+    <div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog max-width-px-840 position-relative">
+            <button type="button"
+                class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+                data-dismiss="modal"><i class="lni lni-close"></i></button>
+            <div class="login-modal-main">
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="heading">
+                                <h3>Create a free Account <br> Today</h3>
+                                <p>Create your account to continue <br> and explore new jobs.</p>
+                            </div>
+                            <div class="social-login">
+                                <ul>
+                                    <li><a class="linkedin" href="#"><i class="lni lni-linkedin-original"></i> Import from LinkedIn</a></li>
+                                    <li><a class="google" href="#"><i class="lni lni-google"></i> Import from
+                                            Google</a></li>
+                                    <li><a class="facebook" href="#"><i class="lni lni-facebook-original"></i> Import from Facebook</a></li>
+                                </ul>
+                            </div>
+                            <div class="or-devider">
+                                <span>Or</span>
+                            </div>
+                            <form action="/">
+                                <div class="form-group">
+                                    <label for="email" class="label">E-mail</label>
+                                    <input type="email" class="form-control" placeholder="example@gmail.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="label">Password</label>
+                                    <div class="position-relative">
+                                        <input type="password" class="form-control"
+                                            placeholder="Enter password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="label">Confirm Password</label>
+                                    <div class="position-relative">
+                                        <input type="password" class="form-control"
+                                            placeholder="Enter password">
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex flex-wrap justify-content-between">
+                                    <!-- Default checkbox -->
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="">
+                                        <label class="form-check-label" for="flexCheckDefault">Agree to the <a
+                                                href="#">Terms & Conditions</a></label>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-8 button">
+                                    <button class="btn ">Sign Up
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Signup Modal -->
+   <!-- Start Footer Area -->
+   <footer class="footer">
+    <!-- Start Middle Top -->
+    <div class="footer-middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Single Widget -->
+                    <div class="f-about single-footer">
+                        <div class="logo">
+                            <a href="index.html"><img src="images/www.jpeg" alt="Logo"></a>
+                        </div>
+                        <p>Hirewise connects job seekers and employers through AI-driven matching, streaming the hiring process for everyone.</p>
+                        <ul class="contact-address">
+                            <li><span>Address:</span> 555 Wall Street, USA, NY</li>
+                            <li><span>Email:</span> example@apus.com</li>
+                            <li><span>Call:</span> 555-555-1234</li>
+                        </ul>
+                        <div class="footer-social">
+                            <ul>
+                                <li><a href="#"><i class="lni lni-facebook-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-pinterest"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Single Widget -->
+                </div>
+                <div class="col-lg-8 col-12">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>For Candidates</h3>
+                                <ul>
+                                    <li><a href="resume.html">User Dashboard</a></li>
+                                    <li><a href="#">CV Packages</a></li>
+                                    <li><a href="#">Jobs Featured</a></li>
+                                    <li><a href="#">Jobs Urgent</a></li>
+                                    <li><a href="#">Candidate List</a></li>
+                                    <li><a href="#">Candidates Grid</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>For Employers</h3>
+                                <ul>
+                                    <li><a href="#">Post New</a></li>
+                                    <li><a href="#">Employer List</a></li>
+                                    <li><a href="#">Employers Grid</a></li>
+                                    <li><a href="#">Job Packages</a></li>
+                                    <li><a href="#">Jobs Listing</a></li>
+                                    <li><a href="#">Jobs Featured</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer newsletter">
+                                <h3>Contact us</h3>
+                                <p>Get in touch to get the latest jobs posted, candidates...</p>
+                                <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                    <input name="EMAIL" placeholder="Your email address" class="common-input"
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Your email address'" required="" type="email">
+                                    <div class="button">
+                                        <button class="btn">Contact Now! <span class="dir-part"></span></button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Footer Middle -->
+    <!-- Start Footer Bottom -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="left">
+                            <p>Designed and Developed by<a href="index.html" rel="nofollow" target="_blank">Hirewise</a></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="right">
+                            <ul>
+                                <li><a href="#">Terms of use</a></li>
+                                <li><a href="#"> Privacy Policy</a></li>
+                                <li><a href="#">Faq</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer Middle -->
+</footer>
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/tiny-slider.js"></script>
+    <script src="assets/js/glightbox.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script type="text/javascript">
+        //====== Clients Logo Slider
+        tns({
+            container: '.client-logo-carousel',
+            slideBy: 'page',
+            autoplay: true,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 15,
+            nav: false,
+            controls: false,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                540: {
+                    items: 2,
+                },
+                768: {
+                    items: 3,
+                },
+                992: {
+                    items: 4,
+                },
+                1170: {
+                    items: 6,
+                }
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

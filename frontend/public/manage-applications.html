@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link rel="stylesheet" href="sky/src/assets/css/style.css">
+    <link rel="shortcut icon" href="sky/src/assets/images/favicon.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <title>Hirewise - Job Notifications</title>
+    <style>
+        .notification-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        .notification-item:hover {
+            background-color: #f9f9f9;
+        }
+        .notification-item.unread {
+            background-color: #f0f7ff;
+        }
+        .notification-item.unread:hover {
+            background-color: #e6f2ff;
+        }
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .notification-icon i {
+            color: #495057;
+            font-size: 18px;
+        }
+        .notification-content {
+            flex: 1;
+        }
+        .notification-meta {
+            font-size: 12px;
+            color: #6c757d;
+        }
+        .notification-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .notification-time {
+            white-space: nowrap;
+            font-size: 12px;
+            color: #6c757d;
+            margin-left: 15px;
+        }
+        .notification-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #007bff;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+        .notification-filter {
+            margin-bottom: 20px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 0;
+        }
+        .empty-state i {
+            font-size: 50px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff5858;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+            <a class="navbar-brand brand-logo me-5" href="index.html"><img src="../../images/w.jpeg" style="width: 100%;" class="me-2" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../images/w.jpeg"  style="width: 100%;" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="icon-menu"></span>
+            </button>
+            <ul class="navbar-nav mr-lg-2">
+                <li class="nav-item nav-search d-none d-lg-block">
+                    <div class="input-group">
+                        <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                            <span class="input-group-text" id="search">
+                                <i class="icon-search"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="lni lni-bell"></i>
+                        <span class="notification-badge" id="notificationBadge">0</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
+                        <h6 class="dropdown-header">Notifications</h6>
+                        <div id="headerNotifications">
+                            <!-- Header notifications will be populated here -->
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-center" href="notifications.html">
+                            See all notifications
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                        <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png" alt="profile" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item">
+                            <i class="ti-settings text-primary"></i> Settings </a>
+                        <a href="../../index.html" class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i> Logout </a>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Start Breadcrumbs -->
+    <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Notifications</h1>
+                        <p>Stay updated on job postings and applicant activities</p>
+                    </div>
+                    <ul class="breadcrumb-nav" style="text-decoration: none;">
+                        <li><a href="index.html" style="text-decoration: none;">Home</a></li>
+                        <li>Notifications</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Start Notifications Section -->
+    <section class="notifications-section section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>All Notifications</h2>
+                        <p>Keep track of all activities related to your jobs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Filters -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="notification-filter d-flex justify-content-between align-items-center">
+                        <div class="form-inline">
+                            <div class="form-group mr-3">
+                                <select id="notificationTypeFilter" class="form-control">
+                                    <option value="all">All Types</option>
+                                    <option value="job">Job Postings</option>
+                                    <option value="application">Applications</option>
+                                    <option value="system">System</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="notificationStatusFilter" class="form-control">
+                                    <option value="all">All Status</option>
+                                    <option value="unread">Unread Only</option>
+                                    <option value="read">Read Only</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="markAllRead" class="btn btn-outline-primary">
+                            <i class="lni lni-checkmark-circle"></i> Mark All as Read
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications List -->
+            <div class="row">
+                <div class="col-12">
+                    <div id="notificationsList" class="notifications-list">
+                        <!-- Notifications will be dynamically populated here -->
+                        
+                        <!-- Empty State (Hidden by default) -->
+                        <div id="emptyState" class="empty-state" style="display: none;">
+                            <i class="lni lni-inbox"></i>
+                            <h4>No notifications found</h4>
+                            <p>You don't have any notifications matching your current filters.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <nav aria-label="Notifications pagination">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled" id="prevPage">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#" data-page="1">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#" data-page="2">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#" data-page="3">3</a></li>
+                            <li class="page-item" id="nextPage">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Notifications Section -->
+
+    <!-- Toast Container for Real-time Notifications -->
+    <div class="toast-container"></div>
+
+    <!-- Footer -->
+ <!-- Footer -->
+ <footer class="footer">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-4 col-md-6 col-12">
+              <div class="footer-widget">
+                  <h3>About Hirewise</h3>
+                  <p>Simplifying the hiring process for employers and job seekers worldwide.</p>
+                  <div class="social-links">
+                      <a href="#"><i class="lni lni-facebook-filled"></i></a>
+                      <a href="#"><i class="lni lni-twitter-original"></i></a>
+                      <a href="#"><i class="lni lni-linkedin-original"></i></a>
+                      <a href="#"><i class="lni lni-instagram-original"></i></a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-12">
+              <div class="footer-widget">
+                  <h3>Quick Links</h3>
+                  <ul class="footer-links">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="jobs.html">Browse Jobs</a></li>
+                      <li><a href="post-job.html">Post a Job</a></li>
+                      <li><a href="candidates.html">Candidates</a></li>
+                      <li><a href="contact.html">Contact Us</a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-12">
+              <div class="footer-widget">
+                  <h3>Contact Info</h3>
+                  <ul class="footer-contact">
+                      <li><i class="lni lni-map-marker"></i> 123 Business Avenue, New York, NY 10001</li>
+                      <li><i class="lni lni-phone"></i> (123) 456-7890</li>
+                      <li><i class="lni lni-envelope"></i> info@hirewise.com</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="copyright-area">
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                  <p class="copyright-text">© 2025 Hirewise. All Rights Reserved.</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</footer>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+  $(document).ready(function() {
+      // Constants
+      const PAGE_SIZE = 5; // Number of notifications per page
+      let currentPage = 1;
+      
+      // Load notifications from localStorage
+      function loadNotifications() {
+          // Get notifications from localStorage
+          let notifications = JSON.parse(localStorage.getItem('hirewise_notifications') || '[]');
+          
+          // If no notifications exist, create some sample ones for demonstration
+          if (notifications.length === 0) {
+              createSampleNotifications();
+              notifications = JSON.parse(localStorage.getItem('hirewise_notifications') || '[]');
+          }
+          
+          return notifications;
+      }
+      
+      // Create sample notifications for demonstration
+      function createSampleNotifications() {
+          const sampleNotifications = [
+              {
+                  id: 'notif_sample1',
+                  type: 'job',
+                  title: 'New Job Posted: Senior Developer',
+                  message: 'You\'ve successfully posted a new job for Senior Developer at Tech Solutions Inc.',
+                  timestamp: new Date(new Date().getTime() - 5 * 60000).toISOString(), // 5 minutes ago
+                  isRead: false,
+                  relatedId: 'job_sample1',
+                  icon: 'lni-briefcase'
+              },
+              {
+                  id: 'notif_sample2',
+                  type: 'application',
+                  title: 'New Application Received',
+                  message: 'John Doe has applied for the Frontend Developer position at your company.',
+                  timestamp: new Date(new Date().getTime() - 60 * 60000).toISOString(), // 1 hour ago
+                  isRead: false,
+                  relatedId: 'application_sample1',
+                  icon: 'lni-user'
+              },
+              {
+                  id: 'notif_sample3',
+                  type: 'job',
+                  title: 'Job Posting Expiring Soon',
+                  message: 'Your job posting for "UI/UX Designer" will expire in 2 days. Consider renewing it.',
+                  timestamp: new Date(new Date().getTime() - 3 * 60 * 60000).toISOString(), // 3 hours ago
+                  isRead: false,
+                  relatedId: 'job_sample2',
+                  icon: 'lni-alarm'
+              },
+              {
+                  id: 'notif_sample4',
+                  type: 'job',
+                  title: 'Job Viewed by Candidates',
+                  message: 'Your job posting for "Marketing Specialist" has been viewed by 24 potential candidates.',
+                  timestamp: new Date(new Date().getTime() - 24 * 60 * 60000).toISOString(), // 1 day ago
+                  isRead: true,
+                  relatedId: 'job_sample3',
+                  icon: 'lni-eye'
+              },
+              {
+                  id: 'notif_sample5',
+                  type: 'system',
+                  title: 'System Maintenance Complete',
+                  message: 'The scheduled system maintenance has been completed successfully. All features are now available.',
+                  timestamp: new Date(new Date().getTime() - 2 * 24 * 60 * 60000).toISOString(), // 2 days ago
+                  isRead: true,
+                  relatedId: 'system_sample1',
+                  icon: 'lni-cog'
+              }
+          ];
+          
+          localStorage.setItem('hirewise_notifications', JSON.stringify(sampleNotifications));
+      }
+      
+      // Display notifications
+      function displayNotifications(page = 1) {
+          const notifications = loadNotifications();
+          const startIndex = (page - 1) * PAGE_SIZE;
+          const endIndex = startIndex + PAGE_SIZE;
+          const pageNotifications = notifications.slice(startIndex, endIndex);
+          
+          // Clear current notifications
+          $('#notificationsList').empty();
+          
+          // Check if there are any notifications
+          if (pageNotifications.length === 0) {
+              $('#emptyState').show();
+          } else {
+              $('#emptyState').hide();
+              
+              // Add notifications to the list
+              pageNotifications.forEach(notification => {
+                  const notificationElement = createNotificationElement(notification);
+                  $('#notificationsList').append(notificationElement);
+              });
+          }
+          
+          // Update pagination
+          updatePagination(notifications.length, page);
+      }
+      
+      // Create notification element
+      function createNotificationElement(notification) {
+          // Format timestamp
+          const timestamp = formatTimestamp(notification.timestamp);
+          
+          // Determine background color based on notification type
+          let bgColor = 'bg-primary';
+          if (notification.type === 'application') {
+              bgColor = 'bg-success';
+          } else if (notification.type === 'system') {
+              bgColor = 'bg-secondary';
+          } else if (notification.icon === 'lni-alarm') {
+              bgColor = 'bg-warning';
+          } else if (notification.icon === 'lni-eye') {
+              bgColor = 'bg-info';
+          }
+          
+          // Create the notification element
+          const notificationItem = $(`
+              <div class="notification-item ${notification.isRead ? '' : 'unread'} d-flex align-items-start" data-id="${notification.id}">
+                  <div class="notification-icon ${bgColor}">
+                      <i class="lni ${notification.icon} text-white"></i>
+                  </div>
+                  <div class="notification-content">
+                      <div class="d-flex justify-content-between align-items-center">
+                          <h6 class="mb-0">${notification.title}</h6>
+                          ${notification.isRead ? '' : '<div class="notification-dot"></div>'}
+                      </div>
+                      <p class="mb-1">${notification.message}</p>
+                      <div class="notification-meta d-flex justify-content-between align-items-center">
+                          <span>${timestamp}</span>
+                          <div class="notification-actions">
+                              <button class="btn btn-sm btn-outline-primary view-details-btn" data-related-id="${notification.relatedId}" data-type="${notification.type}">
+                                  ${getActionButtonText(notification.type)}
+                              </button>
+                              ${notification.isRead ? '' : '<button class="btn btn-sm btn-light mark-read-btn">Mark as Read</button>'}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          `);
+          
+          return notificationItem;
+      }
+      
+      // Get action button text based on notification type
+      function getActionButtonText(type) {
+          switch (type) {
+              case 'job':
+                  return 'View Job';
+              case 'application':
+                  return 'View Profile';
+              case 'system':
+                  return 'System Status';
+              default:
+                  return 'View Details';
+          }
+      }
+      
+      // Format timestamp to relative time
+      function formatTimestamp(timestamp) {
+          const now = new Date();
+          const notificationDate = new Date(timestamp);
+          const diffInMilliseconds = now - notificationDate;
+          const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+          const diffInHours = Math.floor(diffInMinutes / 60);
+          const diffInDays = Math.floor(diffInHours / 24);
+          
+          if (diffInMinutes < 1) {
+              return 'Just now';
+          } else if (diffInMinutes < 60) {
+              return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+          } else if (diffInHours < 24) {
+              return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+          } else if (diffInDays < 7) {
+              return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+          } else {
+              // Format date as MM/DD/YYYY for dates older than a week
+              return notificationDate.toLocaleDateString();
+          }
+      }
+      
+      // Update pagination controls
+      function updatePagination(totalItems, currentPage) {
+          const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+          
+          // Update page numbers
+          $('.pagination').empty();
+          
+          // Previous button
+          const prevBtn = $(`
+              <li class="page-item ${currentPage === 1 ? 'disabled' : ''}" id="prevPage">
+                  <a class="page-link" href="#" tabindex="-1" ${currentPage === 1 ? 'aria-disabled="true"' : ''}>Previous</a>
+              </li>
+          `);
+          $('.pagination').append(prevBtn);
+          
+          // Page numbers
+          for (let i = 1; i <= totalPages; i++) {
+              const pageItem = $(`
+                  <li class="page-item ${i === currentPage ? 'active' : ''}">
+                      <a class="page-link" href="#" data-page="${i}">${i}</a>
+                  </li>
+              `);
+              $('.pagination').append(pageItem);
+          }
+          
+          // Next button
+          const nextBtn = $(`
+              <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}" id="nextPage">
+                  <a class="page-link" href="#" ${currentPage === totalPages ? 'aria-disabled="true"' : ''}>Next</a>
+              </li>
+          `);
+          $('.pagination').append(nextBtn);
+      }
+      
+      // Filter notifications
+      function filterNotifications() {
+          const typeFilter = $('#notificationTypeFilter').val();
+          const statusFilter = $('#notificationStatusFilter').val();
+          let notifications = loadNotifications();
+          
+          // Apply filters
+          if (typeFilter !== 'all') {
+              notifications = notifications.filter(notification => notification.type === typeFilter);
+          }
+          
+          if (statusFilter === 'unread') {
+              notifications = notifications.filter(notification => !notification.isRead);
+          } else if (statusFilter === 'read') {
+              notifications = notifications.filter(notification => notification.isRead);
+          }
+          
+          // Clear current notifications
+          $('#notificationsList').empty();
+          
+          // Check if there are any notifications after filtering
+          if (notifications.length === 0) {
+              $('#emptyState').show();
+          } else {
+              $('#emptyState').hide();
+              
+              // Get current page notifications
+              const startIndex = (currentPage - 1) * PAGE_SIZE;
+              const endIndex = startIndex + PAGE_SIZE;
+              const pageNotifications = notifications.slice(startIndex, endIndex);
+              
+              // Add notifications to the list
+              pageNotifications.forEach(notification => {
+                  const notificationElement = createNotificationElement(notification);
+                  $('#notificationsList').append(notificationElement);
+              });
+          }
+          
+          // Update pagination
+          updatePagination(notifications.length, 1);
+          currentPage = 1;
+      }
+      
+      // Mark notification as read
+      function markAsRead(notificationId) {
+          let notifications = loadNotifications();
+          
+          // Find and update notification
+          const updatedNotifications = notifications.map(notification => {
+              if (notification.id === notificationId) {
+                  return { ...notification, isRead: true };
+              }
+              return notification;
+          });
+          
+          // Save back to localStorage
+          localStorage.setItem('hirewise_notifications', JSON.stringify(updatedNotifications));
+          
+          // Update UI
+          updateNotificationBadge();
+          
+          // Refresh notifications display
+          displayNotifications(currentPage);
+      }
+      
+      // Mark all notifications as read
+      function markAllAsRead() {
+          let notifications = loadNotifications();
+          
+          // Update all notifications
+          const updatedNotifications = notifications.map(notification => {
+              return { ...notification, isRead: true };
+          });
+          
+          // Save back to localStorage
+          localStorage.setItem('hirewise_notifications', JSON.stringify(updatedNotifications));
+          
+          // Update UI
+          updateNotificationBadge();
+          
+          // Refresh notifications display
+          displayNotifications(currentPage);
+      }
+      
+      // Update notification badge count
+      function updateNotificationBadge() {
+          const notifications = loadNotifications();
+          const unreadCount = notifications.filter(notification => !notification.isRead).length;
+          
+          $('#notificationBadge').text(unreadCount);
+          
+          if (unreadCount === 0) {
+              $('#notificationBadge').hide();
+          } else {
+            $('#notificationBadge').show();
+          }
+          
+          // Update the mark all as read button visibility
+          if (unreadCount === 0) {
+              $('#markAllReadBtn').prop('disabled', true);
+          } else {
+              $('#markAllReadBtn').prop('disabled', false);
+          }
+      }
+      
+      // Delete notification
+      function deleteNotification(notificationId) {
+          let notifications = loadNotifications();
+          
+          // Filter out the deleted notification
+          const updatedNotifications = notifications.filter(notification => notification.id !== notificationId);
+          
+          // Save back to localStorage
+          localStorage.setItem('hirewise_notifications', JSON.stringify(updatedNotifications));
+          
+          // Update UI
+          updateNotificationBadge();
+          
+          // Refresh notifications display
+          displayNotifications(currentPage);
+      }
+      
+      // Clear all notifications
+      function clearAllNotifications() {
+          // Remove all notifications
+          localStorage.removeItem('hirewise_notifications');
+          
+          // Update UI
+          updateNotificationBadge();
+          
+          // Refresh notifications display
+          displayNotifications(currentPage);
+      }
+      
+      // Event handlers
+      
+      // Filter change event
+      $('#notificationTypeFilter, #notificationStatusFilter').on('change', function() {
+          filterNotifications();
+      });
+      
+      // Pagination click event
+      $(document).on('click', '.pagination .page-link', function(e) {
+          e.preventDefault();
+          
+          const pageNumber = $(this).data('page');
+          
+          if (pageNumber) {
+              currentPage = pageNumber;
+              displayNotifications(currentPage);
+          }
+      });
+      
+      // Next page click event
+      $(document).on('click', '#nextPage', function(e) {
+          e.preventDefault();
+          
+          if (!$(this).hasClass('disabled')) {
+              currentPage++;
+              displayNotifications(currentPage);
+          }
+      });
+      
+      // Previous page click event
+      $(document).on('click', '#prevPage', function(e) {
+          e.preventDefault();
+          
+          if (!$(this).hasClass('disabled')) {
+              currentPage--;
+              displayNotifications(currentPage);
+          }
+      });
+      
+      // Mark as read button click event
+      $(document).on('click', '.mark-read-btn', function() {
+          const notificationId = $(this).closest('.notification-item').data('id');
+          markAsRead(notificationId);
+      });
+      
+      // Mark all as read button click event
+      $('#markAllReadBtn').on('click', function() {
+          markAllAsRead();
+      });
+      
+      // View details button click event
+      $(document).on('click', '.view-details-btn', function() {
+          const relatedId = $(this).data('related-id');
+          const type = $(this).data('type');
+          
+          // Mark as read when viewing details
+          const notificationId = $(this).closest('.notification-item').data('id');
+          markAsRead(notificationId);
+          
+          // Redirect based on notification type
+          switch (type) {
+              case 'job':
+                  window.location.href = `job-details.html?id=${relatedId}`;
+                  break;
+              case 'application':
+                  window.location.href = `candidate-profile.html?id=${relatedId}`;
+                  break;
+              case 'system':
+                  window.location.href = `system-status.html`;
+                  break;
+              default:
+                  window.location.href = `notifications.html?id=${relatedId}`;
+          }
+      });
+      
+      // Delete notification button click event
+      $(document).on('click', '.delete-notification-btn', function() {
+          const notificationId = $(this).closest('.notification-item').data('id');
+          
+          // Confirm deletion
+          if (confirm('Are you sure you want to delete this notification?')) {
+              deleteNotification(notificationId);
+          }
+      });
+      
+      // Clear all notifications button click event
+      $('#clearAllBtn').on('click', function() {
+          // Confirm clearing all notifications
+          if (confirm('Are you sure you want to clear all notifications?')) {
+              clearAllNotifications();
+          }
+      });
+      
+      // Initialize the notifications display
+      displayNotifications();
+      
+      // Update the notification badge count
+      updateNotificationBadge();
+  });
+</script>
+</body>
+</html>

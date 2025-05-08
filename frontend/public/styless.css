@@ -1,0 +1,462 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+a, span {
+  display: inline-block;
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+
+body, p, span, div, h1, h2, h3, h4, h5, h6 {
+  text-decoration: none;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+html {
+  scroll-behavior: smooth;
+}
+
+.scroll-top {
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  background: #6552D0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  color: #fff !important;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9;
+  cursor: pointer;
+  transition: all .3s ease-out 0s;
+  border-radius: 4px;
+}
+
+.scroll-top:hover {
+  box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+  transform: translate3d(0, -5px, 0);
+  background-color: #081828;
+}
+
+/* Pagination CSS */
+.pagination {
+  text-align: left;
+  margin: 40px 0 0 0;
+  display: block;
+}
+
+.pagination.center {
+  text-align: center;
+}
+
+.pagination.right {
+  text-align: right;
+}
+
+.pagination .pagination-list {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.pagination .pagination-list li {
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.pagination .pagination-list li a {
+  background: #fff;
+  color: #081828;
+  font-weight: 500;
+  font-size: 13px;
+  border-radius: 4px;
+  line-height: 40px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.pagination .pagination-list li.active a,
+.pagination .pagination-list li:hover a {
+  background: #6552D0;
+  color: #fff;
+  border-color: transparent;
+}
+
+.button .btn {
+  display: inline-block;
+  text-transform: capitalize;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 15px 30px;
+  background-color: #6552D0;
+  color: #fff;
+  border: none;
+  transition: 0.5s;
+  border-radius: 4px;
+}
+
+.button .btn:hover {
+  background-color: #081828;
+  box-shadow: 0 1rem 3rem rgba(35, 38, 45, 0.15) !important;
+}
+
+.button .btn-alt {
+  background-color: #081828;
+  color: #fff;
+}
+
+.button .btn-alt:hover {
+  background-color: #6552D0;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.navbar-toggler:focus,
+a:focus,
+input:focus,
+textarea:focus,
+button:focus,
+.btn:focus {
+  outline: none;
+}
+
+/*===== NAVBAR =====*/
+.navbar-area {
+  width: 100%;
+  z-index: 99;
+  transition: all 0.3s ease-out 0s;
+  background-color: transparent;
+  position: absolute;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.other-page .navbar-area,
+.header.style4 .navbar-area {
+  background-color: #6552D0;
+  border: none;
+}
+
+.sticky {
+  position: fixed;
+  z-index: 99;
+  background-color: #6552D0;
+  box-shadow: 0px 20px 50px 0px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-out 0s;
+  top: 0;
+}
+
+.sticky .navbar .navbar-nav .nav-item a {
+  color: #ffffff;
+}
+
+.sticky .navbar .navbar-nav .nav-item a.active {
+  color: #ffffffe2;
+}
+
+.navbar {
+  padding: 0;
+  border-radius: 5px;
+  transition: all 0.3s ease-out 0s;
+}
+
+.navbar-brand img {
+  width: 150px;
+}
+
+.navbar-toggler {
+  padding: 5px 8px !important;
+  background-color: #6552D0;
+  transition: all 0.4s ease;
+}
+
+.navbar-toggler:hover {
+  background-color: #6552D0 !important;
+}
+
+.navbar-toggler .toggler-icon {
+  width: 22px;
+  height: 2px;
+  background-color: #ffffff;
+  display: block;
+  margin: 5px 0;
+}
+
+.navbar-toggler.active .toggler-icon:nth-of-type(1) {
+  transform: rotate(45deg);
+  top: 7px;
+}
+
+.navbar-toggler.active .toggler-icon:nth-of-type(3) {
+  transform: rotate(135deg);
+  top: -7px;
+}
+
+.navbar-nav .nav-item {
+  position: relative;
+  margin-left: 38px;
+}
+
+.navbar-nav .nav-item a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  transition: all 0.3s ease-out 0s;
+  padding: 30px 0;
+  text-transform: capitalize;
+}
+
+.navbar-nav .nav-item a:hover,
+.navbar-nav .nav-item a.active {
+  color: #6552D0;
+}
+
+.navbar-nav .nav-item a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  background: #6552D0;
+  opacity: 0;
+  border-radius: 10px;
+  transition: all 0.3s ease-out 0s;
+}
+
+.navbar-nav .nav-item a:hover::before,
+.navbar-nav .nav-item a.active::before {
+  opacity: 1;
+  width: 100%;
+}
+
+.navbar-nav .sub-nav-toggler {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: none;
+  color: #222;
+  font-size: 18px;
+  border: 0;
+  width: 30px;
+  height: 30px;
+}
+.navbar-nav .sub-nav-toggler span {
+  width: 8px;
+  height: 8px;
+  border-left: 1px solid #222;
+  border-bottom: 1px solid #222;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  position: relative;
+  top: -5px;
+}
+
+.header {
+  position: relative;
+}
+
+/* Header Button */
+@media (max-width: 991px) {
+  .header .button {
+      display: none !important;
+  }
+}
+
+.header .button {
+  display: inherit !important;
+  margin-left: 60px;
+}
+
+.header .button .login {
+  display: inherit;
+  margin-right: 30px;
+  padding: 0;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.header .button .login i {
+  display: inherit;
+  margin-right: 8px;
+  font-size: 14px;
+  line-height: 45px;
+}
+
+.header .button .login:hover {
+  color: #6552D0;
+  border-color: transparent;
+}
+
+.header .button .btn {
+  color: #fff;
+  padding: 0 !important;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  background: #6552D0;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  padding: 0 10px;
+  height: 45px;
+  line-height: 42px;
+  width: 130px;
+}
+
+.header .button .btn:hover {
+  color: #fff;
+  background-color: #081828;
+  border-color: transparent;
+  -webkit-transform: none;
+          transform: none;
+}
+
+/* Dropdown Menu */
+.header .navbar-nav li .sub-menu {
+  background: #fff;
+  width: 220px;
+  text-align: left;
+  position: absolute;
+  top: 100%;
+  opacity: 0;
+  visibility: hidden;
+  padding: 15px;
+  left: 0;
+  margin: 0;
+  -webkit-box-shadow: 1px 4px 12px rgba(51, 51, 51, 0.25);
+  box-shadow: 0px 13px 20px rgba(153, 153, 153, 0.06);
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  -webkit-transform-origin: 0 0 0;
+          transform-origin: 0 0 0;
+  -webkit-transform: scaleY(0.2);
+          transform: scaleY(0.2);
+  border-radius: 0 0 3px 3px;
+}
+
+.header .navbar-nav li:hover .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: scaleY(1);
+          transform: scaleY(1);
+}
+
+.header .navbar-nav li .sub-menu li {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.header .navbar-nav li .sub-menu li:last-child {
+  margin-bottom: 0px;
+  border: none;
+}
+
+.header .navbar-nav li .sub-menu li a {
+  padding: 10px 15px;
+  color: #666;
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: capitalize;
+  background: transparent;
+  border-radius: 3px;
+}
+
+.header .navbar-nav li .sub-menu li a:hover {
+  color: #fff;
+  background: #6552D0;
+}
+
+/* Navbar Color Customization */
+.header.style4 .navbar-area, .other-page .navbar-area, .sticky {
+  background-color: #6552D0 !important;
+}
+
+.navbar-area {
+  background-color: #1a2238!important;
+}
+
+/* Hero Section */
+.hero-area {
+  position: relative;
+  background: #f6f9fc;
+  overflow: hidden;
+}
+
+.hero-area .hero-inner {
+  height: 800px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: 3;
+}
+
+.hero-area .hero-text {
+  margin-top: 230px;
+  padding-right: 50px;
+}
+
+.hero-area .hero-text h1 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 55px;
+  margin-bottom: 25px;
+}
+
+.hero-area .hero-text h1 span {
+  font-weight: 300;
+}
+
+.hero-area .hero-text p {
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.hero-area .hero-text .button {
+  margin-top: 35px;
+}
+
+.hero-area .hero-text .button .btn:hover {
+  color: #fff;
+}
+
+.hero-area .hero-video-head {
+  margin-top: 160px;
+}
+
+.hero-area .hero-video-head .video-inner::before {
+  position: absolute;
+  content: "";
+  right: -50px;
+  bottom: -90px;
+  height: 300px;
+  width: 300px;
+  background-image: url(../images/hero/pattern.png);
+  background-repeat: no-repeat;
+  z-index: -1;
+}

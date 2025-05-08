@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+
+  <title>Hirewise</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.122.0">
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
+
+<!-- Bootstrap & jQuery CDN -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+<link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+<meta name="theme-color" content="#712cf9">
+ 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<style>
+    
+</style>
+</head>
+<body>
+    <div id="root" ></div>
+ <!-- Start Header Area -->
+ <div id="loading-area"></div>
+
+ <!-- Start Header Area -->
+ <header class="header">
+     <div class="navbar-area">
+         <div class="container">
+             <div class="row align-items-center">
+                 <div class="col-lg-12">
+                     <nav class="navbar navbar-expand-lg">
+                         <a class="navbar-brand logo" href="index.html">
+                             <img class="logo1" src="images/www.JPEG" alt="Logo" width="100%"  />
+                         </a>
+                         <button class="navbar-toggler" type="button" data-toggle="collapse"
+                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                             aria-expanded="false" aria-label="Toggle navigation">
+                             <span class="toggler-icon"></span>
+                             <span class="toggler-icon"></span>
+                             <span class="toggler-icon"></span>
+                         </button>
+                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                             <ul id="nav" class="navbar-nav ml-auto">
+                                 <li class="nav-item">
+                                     <a class="active" href="index.html">Home</a>
+                                    
+                                 </li>
+                                 <li class="nav-item"><a href="about-us.html">About Us</a>
+                                    
+                                 </li>
+                                 <li class="nav-item"><a href="privacy-policy.html">Privacy Policy</a>
+                                    
+                                 </li>
+                                 <li class="nav-item"><a href="faq.html">Faq </a>
+                                 </li>
+                                 <li class="nav-item"><a href="contact.html">Contact </a> </li>
+                             </ul>
+                         </div>
+                         <!-- navbar collapse -->
+                         <div class="button">
+                          <a href="javascript:void(0);" data-toggle="modal" data-target="#login" class="login" style="text-decoration: none;">
+                              <i class="lni lni-lock-alt"></i> Login
+                          </a>
+                          <a href="javascript:void(0);" data-toggle="modal" data-target="#signup" class="btn">Sign Up</a>
+                      </div>
+                      
+                     </nav>
+                     <!-- navbar -->
+                 </div>
+             </div>
+             <!-- row -->
+         </div>
+         <!-- container -->
+     </div>
+     <!-- navbar area -->
+ </header>
+
+<!-- Login Modal -->
+<div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog max-width-px-840 position-relative">
+        <button type="button" class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper" data-dismiss="modal">
+            <i class="lni lni-close"></i>
+        </button>
+        <div class="login-modal-main">
+            <div class="row no-gutters">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="heading">
+                            <h3>Login From Here</h3>
+                            <p>Log in to continue your account <br> and explore new jobs.</p>
+                        </div>
+                        <div class="social-login">
+                            <ul>
+                                <li><a class="linkedin" href="#" style="text-decoration: none;"><i class="lni lni-linkedin-original"></i> Log in with LinkedIn</a></li>
+                                <li><a class="google" href="#" style="text-decoration: none;"><i class="lni lni-google"></i> Log in with Google</a></li>
+                                <li><a class="facebook" href="#" style="text-decoration: none;"><i class="lni lni-facebook-original"></i> Log in with Facebook</a></li>
+                            </ul>
+                        </div>
+                        <div class="or-devider">
+                            <span>Or</span>
+                        </div>
+                        <form id="login-form">
+                            <div class="form-group">
+                                <label for="email" class="label">E-mail</label>
+                                <input type="email" class="form-control" placeholder="example@gmail.com" id="login-email">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="label">Password</label>
+                                <div class="position-relative">
+                                    <input type="password" class="form-control" id="login-password" placeholder="Enter password">
+                                </div>
+                            </div>
+                            <div class="form-group d-flex flex-wrap justify-content-between">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                    <label class="form-check-label" for="flexCheckDefault">Remember password</label>
+                                </div>
+                                <a href="#" style="text-decoration: none;" class="font-size-3 text-dodger line-height-reset">Forget Password</a>
+                            </div>
+                            <div class="form-group mb-8 button">
+                                <button type="submit" class="btn">Log in</button>
+                            </div>
+                        </form>
+                        <p class="text-center create-new-account">
+                            Don’t have an account?  
+                            <a href="javascript:void(0);" style="text-decoration: none;" data-dismiss="modal" data-toggle="modal" data-target="#signup">
+                                Create a free account
+                            </a>
+                            
+                        </p>
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Signup Modal -->
+<div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog max-width-px-840 position-relative">
+        <button type="button" class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper" data-dismiss="modal">
+            <i class="lni lni-close"></i>
+        </button>
+        <div class="login-modal-main">
+            <div class="row no-gutters">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="heading">
+                            <h3>Create a free Account <br> Today</h3>
+                            <p>Create your account to continue <br> and explore new jobs.</p>
+                        </div>
+                        <div class="social-login">
+                            <ul>
+                                <li><a class="linkedin" href="#" style="text-decoration: none;"><i class="lni lni-linkedin-original"></i> Import from LinkedIn</a></li>
+                                <li><a class="google" href="#" style="text-decoration: none;"><i class="lni lni-google"></i> Import from Google</a></li>
+                                <li><a class="facebook" href="#" style="text-decoration: none;"><i class="lni lni-facebook-original"></i> Import from Facebook</a></li>
+                            </ul>
+                        </div>
+                        <div class="or-devider">
+                            <span>Or</span>
+                        </div>
+                        <form id="signup-form">
+                            <div class="form-group">
+                                <label for="email" class="label">E-mail</label>
+                                <input type="email" class="form-control" id="signup-email" placeholder="example@gmail.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="label">Password</label>
+                                <div class="position-relative">
+                                    <input type="password" class="form-control" id="signup-password" placeholder="Enter password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password" class="label">Confirm Password</label>
+                                <div class="position-relative">
+                                    <input type="password" class="form-control" id="signup-confirm-password" placeholder="Enter password">
+                                </div>
+                            </div>
+                            <div class="form-group d-flex flex-wrap justify-content-between">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <label class="form-check-label" for="flexCheckDefault">Agree to the <a href="privacy-policy.html" style="text-decoration: none;">Terms & Conditions</a></label>
+                                </div>
+                            </div>
+                            <div class="form-group mb-8 button">
+                                <button type="submit" class="btn">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>document.getElementById("login-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+    localStorage.setItem("userEmail", email); // Store email in localStorage
+   
+    const response = await fetch("http://localhost:5000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok) {
+        alert("Login successful!");
+        window.location.href = "sky/src/index.html"; // Change to your desired page
+    } else {
+        alert(data.message);
+    }
+    alert(data.message);
+});
+
+document.getElementById("signup-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
+    
+    const response = await fetch("http://localhost:5000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    });
+    
+    const data = await response.json();
+    alert(data.message);
+});
+
+</script>
+
+ <section class="hero-area">
+     <!-- Single Slider -->
+     <div class="hero-inner">
+         <div class="container">
+             <div class="row ">
+                 <div class="col-lg-6 co-12">
+                     <div class="inner-content">
+                         <div class="hero-text">
+                             <h1 class="wow fadeInUp" data-wow-delay=".3s">Find Your Career <br>to Make a Better Life
+                             </h1>
+                             <p class="wow fadeInUp" data-wow-delay=".5s">Creating a beautiful job website is not
+                                 easy <br> always. To make your life easier, we are<br> introducing Hirewise.
+                             </p>
+                         </div>
+                         <div class="job-search-wrap-two mt-50 wow fadeInUp" data-wow-delay=".7s">
+                             <div class="job-search-form">
+                                <form action="#" onsubmit="event.preventDefault(); showLoginModal();">
+                                    <!-- Single Field Item Start  -->
+                                    <div class="single-field-item keyword">
+                                        <label for="keyword">What</label>
+                                        <input id="keyword" placeholder="What jobs you want?" name="keyword" type="text">
+                                    </div>
+                                    <!-- Single Field Item End  -->
+                                    
+                                    <!-- Single Field Item Start  -->
+                                    <div class="single-field-item location">
+                                        <label for="location">Where</label>
+                                        <input id="location" class="input-field input-field-location" placeholder="Location" name="location" type="text">
+                                    </div>
+                                    <!-- Single Field Item End  -->
+                                    
+                                    <div class="submit-btn">
+                                        <button class="btn" type="submit">Search</button>
+                                    </div>
+                                </form>
+                                
+                             </div>
+                             <div class="trending-keywords mt-30">
+                                 <div class="keywords style-two">
+                                     <span class="title">Popular Keywords:</span>
+                                     <ul>
+                                         <li><a href="#" style="text-decoration: none;">Administrative</a></li>
+                                         <li><a href="#"style="text-decoration: none;">Android</a></li>
+                                         <li><a href="#"style="text-decoration: none;">app</a></li>
+                                         <li><a href="#"style="text-decoration: none;">ASP.NET</a></li>
+                                     </ul>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-lg-6 co-12">
+                     <div class="hero-video-head wow fadeInRight" data-wow-delay=".5s">
+                         <div class="video-inner">
+                             <img src="images/hero-image.png" alt="#">
+                         
+                         
+                             <!--/ End Video Animation -->
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <!--/ End Single Slider -->
+ </section>
+
+
+ 
+ <section class="apply-process section " style=" background-color: #6552D0; ">
+     <div class="container">
+         <div class="row">
+             <div class="col-lg-4 col-md-4 col-12">
+                 <div class="process-item">
+                     <i class="lni lni-user"></i>
+                     <h4>Create Your Account</h4>
+                     <p>Join HIREWISE today and take the next step in your career journey.</p>
+                     
+                 </div>
+             </div>
+             <div class="col-lg-4 col-md-4 col-12">
+                 <div class="process-item">
+                     <i class="lni lni-book"></i>
+                     <h4>Upload Your Resume</h4>
+                     <p>Showcase your skills and experience to get matched with the best job opportunities.</p>
+                     
+                 </div>
+             </div>
+             <div class="col-lg-4 col-md-4 col-12">
+                 <div class="process-item">
+                     <i class="lni lni-briefcase"></i>
+                     <h4>Apply for Your Dream Job</h4>
+                     <p>Explore top opportunities and submit applications with ease.</p>
+                     
+                 </div>
+             </div>
+         </div>
+     </div>
+ </section>
+
+
+
+  <section class="call-action  section">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 offset-lg-2 col-12">
+                <div class="inner">
+                    <div class="section-title">
+                        <span class="wow fadeInDown" data-wow-delay=".2s" style="color:#ffffff"><h1>GETTING STARTED TO WORK</h1></span>
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Don’t just find. Be found. Put your
+                            CV in front of great employers</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">It helps you to increase your chances of
+                            finding a suitable job and let recruiters contact you
+                            about jobs that are not needed to pay for advertising.</p>
+                            <div class="button wow fadeInUp" data-wow-delay=".8s">
+                                <a href="javascript:void(0);" class="btn" data-toggle="modal" data-target="#login">
+                                    <i class="lni lni-upload"></i> Upload Your Resume
+                                </a>
+                            </div>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+
+
+
+  
+    <!-- Start About Area -->
+    <section class="about-us section">
+      <div class="container">
+          <div class="row align-items-center justify-content-center">
+              <div class="col-lg-6 col-md-10 col-12">
+                  <div class="content-left wow fadeInLeft" data-wow-delay=".3s">
+                      <div calss="row">
+                          <div calss="col-lg-6 col-12">
+                              <div class="row">
+                                  <div class="col-lg-6 col-md-6 col-6">
+                                      <img class="single-img" src="images/small1.jpg" alt="#">
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-6">
+                                      <img class="single-img mt-50" src="images/sm.jpg" alt="#">
+                                  </div>
+                              </div>
+                          </div>
+                          <div calss="col-lg-6 col-12">
+                              <div class="row">
+                                  <div class="col-lg-6 col-md-6 col-6">
+                                      <img class="single-img minus-margin" src="images/hh.jpg" alt="#">
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-6">
+                                      <!-- media body start -->
+                                      <div class="media-body"  style=" background-color: #6552D0; ">
+                                          <i class="lni lni-checkmark"></i>
+                                          <h6 class="">Job alert!</h6>
+                                          <p class="">104 new jobs are available in this week!
+                                          </p>
+                                      </div>
+                                      <!-- media body start -->
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-10 col-12">
+                  <!-- content-1 start -->
+                  <div class="content-right wow fadeInRight" data-wow-delay=".5s">
+                      <!-- Heading -->
+                      <h2>Help you to get the <br>
+                          best job that fits you</h2>
+                      <!-- End Heading -->
+                      <!-- Single List -->
+                      <div class="single-list">
+                          <i class="lni lni-grid-alt"></i>
+                          <!-- List body start -->
+                          <div class="list-bod">
+                            <h5>#1 Jobs Site</h5>
+                            <p>Find the best job opportunities and connect with top employers effortlessly.</p>
+                            
+                          </div>
+                          <!-- List body start -->
+                      </div>
+                      <!-- End Single List -->
+                      <!-- Single List -->
+                      <div class="single-list">
+                          <i class="lni lni-search"></i>
+                          <!-- List body start -->
+                          <div class="list-bod">
+                            <h5>Seamless Searching</h5>
+                            <p>Effortlessly discover jobs that match your skills and career goals.</p>
+                            
+                          </div>
+                          <!-- List body start -->
+                      </div>
+                      <!-- End Single List -->
+                      <!-- Single List -->
+                      <div class="single-list">
+                          <i class="lni lni-stats-up"></i>
+                          <!-- List body start -->
+                          <div class="list-bod">
+                            <h5>Hired in Top Companies</h5>
+                            <p>Connect with leading employers and secure your ideal job opportunity.</p>
+                            
+                          </div>
+                          <!-- List body start -->
+                      </div>
+                      <!-- End Single List -->
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+
+<!-- Start Job Category Area -->
+<section class="job-category section">
+  <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <div class="section-title">
+                <span class="wow fadeInDown" data-wow-delay=".2s"><h1>Job Categories</h1></span>
+                <h2 class="wow fadeInUp" data-wow-delay=".4s">Find the Right Career Path</h2>
+                <p class="wow fadeInUp" data-wow-delay=".6s">Explore diverse job categories and discover opportunities that match your skills and aspirations.</p>
+                
+              </div>
+          </div>
+      </div>
+      <div class="cat-head" >
+          <div class="row">
+              <div class="col-lg-3 col-md-6 col-12" >
+                <a href="javascript:void(0);" onclick="showLoginModal()" class="single-cat wow fadeInUp "style="text-decoration: none;" data-wow-delay=".2s">
+                      <div class="icon">
+                          <i class="lni lni-cog"></i>
+                      </div>
+                      <h3>Technical<br> Support</h3>
+                  </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                  <a href="browse-jobs.html" class="single-cat wow fadeInUp"style="text-decoration: none;" data-wow-delay=".4s">
+                      <div class="icon">
+                          <i class="lni lni-layers"></i>
+                      </div>
+                      <h3>Business<br> Development</h3>
+                  </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                  <a href="browse-jobs.html" class="single-cat wow fadeInUp" style="text-decoration: none;"data-wow-delay=".6s">
+                      <div class="icon">
+                          <i class="lni lni-home"></i>
+                      </div>
+                      <h3>Real Estate<br> Business</h3>
+                  </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                  <a href="browse-jobs.html" class="single-cat wow fadeInUp" style="text-decoration: none;"data-wow-delay=".8s">
+                      <div class="icon">
+                          <i class="lni lni-search"></i>
+                      </div>
+                      <h3>Share Market<br> Analysis</h3>
+                  </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                  <a href="browse-jobs.html" class="single-cat wow fadeInUp"style="text-decoration: none;" data-wow-delay=".2s">
+                      <div class="icon">
+                          <i class="lni lni-investment"></i>
+                      </div>
+                      <h3>Finance & Banking <br> Service</h3>
+                  </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                  <a href="browse-jobs.html" class="single-cat wow fadeInUp"style="text-decoration: none;" data-wow-delay=".4s">
+                      <div class="icon">
+                          <i class="lni lni-cloud-network"></i>
+                      </div>
+                      <h3>IT & Networing <br> Sevices</h3>
+                  </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                  <a href="browse-jobs.html" class="single-cat wow fadeInUp"style="text-decoration: none;" data-wow-delay=".6s">
+                      <div class="icon">
+                          <i class="lni lni-restaurant"></i>
+                      </div>
+                      <h3>Restaurant <br> Services</h3>
+                  </a>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                  <a href="browse-jobs.html" class="single-cat wow fadeInUp" style="text-decoration: none;"data-wow-delay=".8s">
+                      <div class="icon">
+                          <i class="lni lni-fireworks"></i>
+                      </div>
+                      <h3>Defence & Fire <br> Service</h3>
+                  </a>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- /End Job Category Area -->
+
+
+
+<section class="body companies-body m-5">
+  <div class="container body-container companies-container w-container svelte-ljts48">
+    <div class="section-6 wf-section companies-header svelte-ljts48">
+      <h2 class="companies-heading svelte-ljts48">Helping Companies Make <span class="gradient smart-hires-gradient">Smart Hires</span></h2>
+    </div>
+
+    <div class="marquee svelte-ljts48">
+      <div class="div-block-15 section-8 companies-section marquee__content svelte-ljts48">
+        <div class="companies-row svelte-ljts48">
+          <!-- Company 1 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://imagedelivery.net/L-RRwTsGtjw4XmStu9Y7XA/256211ad-d248-43f6-9361-f9f666b25300/public" width="170" alt="Microsoft">
+          </div>
+
+          <!-- Company 2 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://imagedelivery.net/L-RRwTsGtjw4XmStu9Y7XA/b6975c88-b230-4c80-05de-523799dea000/public" width="170" alt="Amazon">
+          </div>
+
+          <!-- Company 3 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://imagedelivery.net/L-RRwTsGtjw4XmStu9Y7XA/bf9f88fb-c486-4425-d4ba-de51b8d27f00/public" width="170" alt="Adobe">
+          </div>
+
+          <!-- Company 4 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://imagedelivery.net/L-RRwTsGtjw4XmStu9Y7XA/ac315be4-16b6-4079-3de5-314a1054df00/public" width="170" alt="Goldman Sachs">
+          </div>
+
+          <!-- Company 5 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://imagedelivery.net/L-RRwTsGtjw4XmStu9Y7XA/18f4096f-ee27-4246-c5ec-89b979bc0900/public" width="170" alt="DarwinBox">
+          </div>
+
+          <!-- Company 6 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://imagedelivery.net/L-RRwTsGtjw4XmStu9Y7XA/f1acbf97-b6fe-4004-b90d-d018d91b7500/public" width="170" alt="JP Morgan and Chase">
+          </div>
+
+          <!-- Company 7 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://imagedelivery.net/L-RRwTsGtjw4XmStu9Y7XA/1bf932d8-2b71-4101-4bd2-230bc4ab0a00/public" width="170" alt="Accenture">
+          </div>
+
+          <!-- Company 8 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://imagedelivery.net/L-RRwTsGtjw4XmStu9Y7XA/a793dceb-1355-442d-054f-2e778707a700/public" width="170" alt="Apple">
+          </div>
+
+          <!-- Company 9 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/google.com" alt="Google" width="170">
+          </div>
+
+          <!-- Company 10 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/flipkart.com" alt="Flipkart" width="170">
+          </div>
+
+          <!-- Company 11 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/oracle.com" alt="Oracle" width="170">
+          </div>
+
+          <!-- Company 12 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/ibm.com" alt="IBM" width="170">
+          </div>
+
+          <!-- Company 13 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/meta.com" alt="Meta" width="170">
+          </div>
+
+          <!-- Company 14 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/palantir.com" alt="Palantir" width="170">
+          </div>
+
+          <!-- Company 15 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/tesla.com" alt="Tesla" width="170">
+          </div>
+        </div>
+      </div>
+
+      <div aria-hidden="true" class="div-block-15 section-8 companies-section marquee__content svelte-ljts48">
+        <div class="companies-row svelte-ljts48">
+          <!-- Company 1 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/netflix.com" alt="Netflix" width="170">
+          </div>
+      
+          <!-- Company 2 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/spotify.com" alt="Spotify" width="170">
+          </div>
+      
+          <!-- Company 3 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/samsung.com" alt="Samsung" width="170">
+          </div>
+      
+          <!-- Company 4 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/airbnb.com" alt="Airbnb" width="170">
+          </div>
+      
+          <!-- Company 5 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/slack.com" alt="Slack" width="170">
+          </div>
+      
+          <!-- Company 6 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/zoom.us" alt="Zoom" width="170">
+          </div>
+      
+          <!-- Company 7 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/ubisoft.com" alt="Ubisoft" width="170">
+          </div>
+      
+          <!-- Company 8 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/tesla.com" alt="Tesla" width="170">
+          </div>
+      
+          <!-- Company 9 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/nike.com" alt="Nike" width="170">
+          </div>
+      
+          <!-- Company 10 -->
+        
+      
+          <!-- Company 11 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/intel.com" alt="Intel" width="170">
+          </div>
+      
+          <!-- Company 12 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/visa.com" alt="Visa" width="170">
+          </div>
+      
+          <!-- Company 13 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/pepsi.com" alt="Pepsi" width="170">
+          </div>
+      
+          <!-- Company 14 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/walmart.com" alt="Walmart" width="170">
+          </div>
+      
+          <!-- Company 15 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/etsy.com" alt="Etsy" width="170">
+          </div>
+        </div>
+      </div>
+      <div aria-hidden="true" class="div-block-15 section-8 companies-section marquee__content svelte-ljts48">
+        <div class="companies-row svelte-ljts48">
+          <!-- Company 1 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/bmw.com" alt="BMW" width="170">
+          </div>
+      
+          <!-- Company 2 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft" width="170">
+          </div>
+      
+          <!-- Company 3 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/siemens.com" alt="Siemens" width="170">
+          </div>
+      
+          <!-- Company 4 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/pepsico.com" alt="PepsiCo" width="170">
+          </div>
+      
+          <!-- Company 5 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/squareup.com" alt="Square" width="170">
+          </div>
+    
+      
+          <!-- Company 7 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/gm.com" alt="General Motors" width="170">
+          </div>
+      
+          <!-- Company 8 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/coca-cola.com" alt="Coca-Cola" width="170">
+          </div>
+      
+          <!-- Company 9 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/ubisoft.com" alt="Ubisoft" width="170">
+          </div>
+      
+          <!-- Company 10 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/hp.com" alt="HP" width="170">
+          </div>
+      
+          <!-- Company 11 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/rockwellautomation.com" alt="Rockwell Automation" width="170">
+          </div>
+      
+          <!-- Company 12 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/atlassian.com" alt="Atlassian" width="170">
+          </div>
+      
+          <!-- Company 13 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/lufthansa.com" alt="Lufthansa" width="170">
+          </div>
+      
+          <!-- Company 14 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/visa.com" alt="Visa" width="170">
+          </div>
+      
+          <!-- Company 15 -->
+          <div class="companies-grid-div box-shadow svelte-ljts48">
+            <img src="https://logo.clearbit.com/expedia.com" alt="Expedia" width="170">
+          </div>
+        </div>
+      </div>
+            
+        </div>
+      </div>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+   <!-- Start Footer Area -->
+   <footer class="footer">
+    <!-- Start Middle Top -->
+    <div class="footer-middle">
+        <div class="container" style="text-decoration: none;">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Single Widget -->
+                    <div class="f-about single-footer">
+                        <div class="logo">
+                            <a href="index.html"><img src="images/www.jpeg" alt="Logo"></a>
+                        </div>
+                        <p>Hirewise connects job seekers and employers through AI-driven matching, streaming the hiring process for everyone.</p>
+                        <ul class="contact-address">
+                            <li><span>Address:</span> 555 Wall Street, USA, NY</li>
+                            <li><span>Email:</span> example@apus.com</li>
+                            <li><span>Call:</span> 555-555-1234</li>
+                        </ul>
+                        <div class="footer-social">
+                            <ul>
+                                <li><a href="#"><i class="lni lni-facebook-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-pinterest"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Single Widget -->
+                </div>
+                <div class="col-lg-8 col-12">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link" style="text-decoration: none;">
+                                <h3>For Candidates</h3>
+                                <ul>
+                                    <li><a href="resume.html">User Dashboard</a></li>
+                                    <li><a href="#">CV Packages</a></li>
+                                    <li><a href="#">Jobs Featured</a></li>
+                                    <li><a href="#">Jobs Urgent</a></li>
+                                    <li><a href="#">Candidate List</a></li>
+                                    <li><a href="#">Candidates Grid</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>For Employers</h3>
+                                <ul>
+                                    <li><a href="#">Post New</a></li>
+                                    <li><a href="#">Employer List</a></li>
+                                    <li><a href="#">Employers Grid</a></li>
+                                    <li><a href="#">Job Packages</a></li>
+                                    <li><a href="#">Jobs Listing</a></li>
+                                    <li><a href="#">Jobs Featured</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer newsletter">
+                                <h3>Contact us</h3>
+                                <p>Get in touch to get the latest jobs posted, candidates...</p>
+                                <form id="query-form">
+                                    <input id="query-email" name="EMAIL" placeholder="Your email address" class="common-input"
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Your email address'" required type="email">
+                                    <div class="button">
+                                        <button type="submit" class="btn">Contact Now! <span class="dir-part"></span></button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        
+<script>
+    document.getElementById("query-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        
+        const email = document.getElementById("query-email").value;
+    
+        try {
+            const response = await fetch("http://localhost:5000/user-queries", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+            });
+    
+            const data = await response.json();
+            alert(data.message || data.error);
+            
+            if (response.ok) {
+                document.getElementById("query-form").reset();
+            }
+        } catch (error) {
+            alert("Error submitting the query. Please try again.");
+            console.error(error);
+        }
+    });
+    </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Footer Middle -->
+    <!-- Start Footer Bottom -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="left">
+                            <p>Designed and Developed by<a href="index.html" rel="nofollow" target="_blank">Hirewise</a></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12"style="text-decoration: none;">
+                        <div class="right"style="text-decoration: none;">
+                            <ul>
+                                <li><a href="faq.html">Terms of use</a></li>
+                                <li><a href="privacy-policy.html"> Privacy Policy</a></li>
+                                <li><a href="faq.html">Faq</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer Middle -->
+</footer>
+
+
+  <!-- Chatbot Icon (Button to open the chatbot) -->
+  <div id="chatbot-icon" class="chat-icon" onclick="toggleChatWindow()">
+    <img src="https://png.pngtree.com/png-clipart/20230401/original/pngtree-smart-chatbot-cartoon-clipart-png-image_9015126.png"  class="bot-avatar" alt="Chatbot Icon">
+  </div>
+
+  <!-- Chatbot Window -->
+  <div id="chatbot-window" class="chat-window">
+    <div class="chat-header">
+      <span>Chat with us!</span>
+      <button class="close-btn" onclick="toggleChatWindow()">X</button>
+    </div>
+    <div id="chat-content" class="chat-content">
+      <img src="https://png.pngtree.com/png-clipart/20230401/original/pngtree-smart-chatbot-cartoon-clipart-png-image_9015126.png" class="bot-avatar" alt="Bot Avatar">
+      <div class="chat-message bot-message">Hello! How can I assist you today? Feel free to ask about job openings, the application process, or anything related!</div>
+    </div>
+    <input type="text" id="user-input" placeholder="Type a message..." class="chat-input" onkeydown="sendMessage(event)">
+    <button onclick="sendMessage()" class="send-btn">Send</button>
+  </div>
+
+  <script>// Function to show login modal
+    function showLoginModal() {
+        var loginModal = new bootstrap.Modal(document.getElementById('login'));
+        loginModal.show();
+    }
+    
+    // Function to toggle the chatbot window
+    function toggleChatWindow() {
+        var chatWindow = document.getElementById("chatbot-window");
+        if (chatWindow.style.display === "none" || chatWindow.style.display === "") {
+            chatWindow.style.display = "flex";  // Ensure flex display for alignment
+        } else {
+            chatWindow.style.display = "none";
+        }
+    }
+    
+    // Function to send user message and get a bot reply based on pattern matching
+    function sendMessage(event) {
+        // Check if event exists and if it's an Enter key press, or if it's a click event, or if no event (direct call)
+        if (!event || (event.key === 'Enter') || (event.type === 'click')) {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === '') return;
+    
+            // Append user message
+            appendMessage(userInput, 'user');
+    
+            // Generate bot response based on pattern matching
+            const botReply = getBotResponse(userInput);
+            setTimeout(() => {
+                appendMessage(botReply, 'bot');
+            }, 1000);
+    
+            // Clear the input field
+            document.getElementById('user-input').value = '';
+        }
+    }
+    
+    // Function to append messages to the chat window
+    function appendMessage(message, sender) {
+        const chatContent = document.getElementById('chat-content');
+        
+        if (sender === 'bot') {
+            // Add bot avatar for bot messages
+            const avatarImg = document.createElement('img');
+            avatarImg.src = "https://png.pngtree.com/png-clipart/20230401/original/pngtree-smart-chatbot-cartoon-clipart-png-image_9015126.png";
+            avatarImg.className = "bot-avatar";
+            avatarImg.alt = "Bot Avatar";
+            chatContent.appendChild(avatarImg);
+        }
+        
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('chat-message');
+        messageElement.classList.add(sender + '-message');
+        messageElement.innerText = message;
+        chatContent.appendChild(messageElement);
+    
+        // Scroll to the bottom to show the latest message
+        chatContent.scrollTop = chatContent.scrollHeight;
+    }
+    
+    // Function to generate bot response based on user input using pattern matching
+    function getBotResponse(userInput) {
+        const responses = {
+            "hi": "Hello! How can I assist you today?",
+            "hello": "Hi there! How can I help you?",
+            "hey": "Hey! What can I do for you?",
+            "how are you": "I'm just a bot, but I'm here to help! How can I assist you?",
+            "what's your name": "I'm HireWise Bot, your AI assistant for job-related queries!",
+            "who are you": "I'm HireWise Bot, your AI job assistant!",
+            "thank you": "You're welcome! Let me know if you need anything else.",
+            "thanks": "Glad to help! Let me know if you have more questions.",
+            "good morning": "Good morning! How can I help you today?",
+            "good afternoon": "Good afternoon! What can I do for you?",
+            "good night": "Good night! Feel free to ask me anything when you're back.",
+    
+            // Job-related queries
+            "job openings": "We currently have several job openings! Check them out on our careers page.",
+            "vacancies": "We have multiple vacancies. Visit our careers page for details.",
+            "available positions": "You can find available positions on our job listings page.",
+            "full-time jobs": "Yes, we offer full-time jobs! Check our listings for details.",
+            "part-time jobs": "We have part-time job openings as well. Check our website!",
+            "internship": "Yes! We offer internship opportunities. Visit our careers page to apply.",
+            "intern": "Internship positions are available! Apply through our website.",
+            "remote work": "Some positions offer remote work options. Please check the job descriptions.",
+            "work from home": "Yes! Some jobs are remote-friendly. Check the listings for more details.",
+    
+            // Application & Hiring Process
+            "application process": "To apply, visit our job listings page and click 'Apply Now' for your desired role.",
+            "how to apply": "Simply visit our careers page, select a job, and click 'Apply Now'.",
+            "hiring process": "Our hiring process includes resume screening, technical assessments, and interviews.",
+            "selection process": "The selection process varies by role but typically involves screening and interviews.",
+            "how long does the hiring process take": "It usually takes 2-4 weeks, depending on the role and interview rounds.",
+    
+            // Salary & Benefits
+            "salary": "Salaries vary by role and experience. You can find details in the job description.",
+            "pay scale": "Compensation details are mentioned in each job listing.",
+            "compensation": "Each job description includes salary details. Check our website!",
+            "benefits": "We offer health insurance, paid time off, and more! Visit our careers page for details.",
+            "perks": "Our employees enjoy various perks, including flexible work schedules and bonuses.",
+            "insurance": "We provide comprehensive health insurance benefits for employees.",
+            "bonus": "Some roles offer performance-based bonuses and incentives.",
+            "incentives": "Performance-based incentives are available for certain positions.",
+    
+            // Resume & Interview Tips
+            "resume tips": "Highlight relevant skills, projects, and experience. Tailor your resume for the job!",
+            "cv help": "Make your CV clear and job-specific. List your skills and achievements.",
+            "cover letter": "A strong cover letter should emphasize your skills, experience, and enthusiasm for the role.",
+            "common interview questions": "Typical questions include 'Tell me about yourself' and 'Why do you want this job?'.",
+            "technical interview questions": "Expect role-specific technical questions. Developer roles often include coding challenges.",
+    
+            // Job Recommendations
+            "recommend a job": "Tell me about your skills and interests, and I'll suggest relevant jobs!",
+            "job suggestion": "I can help you find a job! What field are you interested in?",
+            "best job for freshers": "We have several entry-level positions available. Check our careers page!",
+            "jobs for experienced candidates": "Mid-level and senior roles are available! Explore opportunities on our website.",
+    
+            // Company & Contact
+            "about the company": "We are a cutting-edge job portal that connects top talent with great opportunities.",
+            "company info": "We help job seekers connect with employers. Learn more on our About Us page!",
+            "contact": "You can reach us at contact@jobportal.com for inquiries.",
+            "customer support": "For support, email us at support@jobportal.com.",
+            "office location": "Our headquarters is in Hyderabad, India, but we also offer remote work opportunities.",
+            "where are you based": "We are based in Hyderabad, but we offer jobs worldwide!",
+    
+            // Technical Support
+            "website issues": "Try clearing your browser cache and refreshing the page. If the issue persists, contact support.",
+            "site not working": "Ensure your internet connection is stable. If the problem continues, contact us.",
+            "forgot password": "Reset your password using the 'Forgot Password' option on the login page.",
+            "reset password": "Click 'Forgot Password' on the login page to reset your password.",
+    
+            // Miscellaneous
+            "why should i apply here": "We offer competitive salaries, career growth opportunities, and a great work environment!",
+            "why choose us": "We provide an excellent work culture, great benefits, and professional growth!",
+            "work culture": "We value teamwork, innovation, and continuous learning!",
+            "company environment": "We promote a positive, inclusive, and growth-oriented work culture."
+        };
+    
+        // Convert input to lowercase to handle case-insensitive matching
+        userInput = userInput.toLowerCase();
+    
+        // Return response if found, otherwise fallback response
+        return responses[userInput] || "I'm sorry, I didn't understand that. Could you please rephrase your question or check our FAQ section?";
+    }
+    
+   
+    
+  </script>
+  <script>
+    fetch("http://localhost:5000/data")
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

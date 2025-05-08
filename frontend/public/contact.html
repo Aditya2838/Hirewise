@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+
+  <title>Hirewise</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.122.0">
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
+
+<!-- Bootstrap & jQuery CDN -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+<link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+<meta name="theme-color" content="#712cf9">
+ 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+ <!-- Start Header Area -->
+ <div id="loading-area"></div>
+
+ <!-- Start Header Area -->
+ <header class="header">
+    <div class="navbar-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand logo" href="index.html">
+                            <img class="logo1" src="images/www.JPEG" alt="Logo" width="100%"  />
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                            <ul id="nav" class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a  href="index.html">Home</a>
+                                   
+                                </li>
+                                <li class="nav-item"><a href="about-us.html">About Us</a>
+                                   
+                                </li>
+                                <li class="nav-item"><a href="privacy-policy.html">Privacy Policy</a>
+                                   
+                                </li>
+                                <li class="nav-item"><a href="faq.html">Faq </a>
+                                </li>
+                                <li class="nav-item"><a class="active" href="contact.html">Contact </a> </li>
+                            </ul>
+                        </div>
+                        <!-- navbar collapse -->
+                        <div class="button">
+                         <a href="javascript:void(0);" data-toggle="modal" data-target="#login" class="login" style="text-decoration: none;">
+                             <i class="lni lni-lock-alt"></i> Login
+                         </a>
+                         <a href="javascript:void(0);" data-toggle="modal" data-target="#signup" class="btn">Sign Up</a>
+                     </div>
+                     
+                    </nav>
+                    <!-- navbar -->
+                </div>
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- navbar area -->
+</header>
+
+<!-- Login Modal -->
+<div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
+   <div class="modal-dialog max-width-px-840 position-relative">
+       <button type="button" class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper" data-dismiss="modal">
+           <i class="lni lni-close"></i>
+       </button>
+       <div class="login-modal-main">
+           <div class="row no-gutters">
+               <div class="col-12">
+                   <div class="row">
+                       <div class="heading">
+                           <h3>Login From Here</h3>
+                           <p>Log in to continue your account <br> and explore new jobs.</p>
+                       </div>
+                       <div class="social-login">
+                           <ul>
+                               <li><a class="linkedin" href="#" style="text-decoration: none;"><i class="lni lni-linkedin-original"></i> Log in with LinkedIn</a></li>
+                               <li><a class="google" href="#" style="text-decoration: none;"><i class="lni lni-google"></i> Log in with Google</a></li>
+                               <li><a class="facebook" href="#" style="text-decoration: none;"><i class="lni lni-facebook-original"></i> Log in with Facebook</a></li>
+                           </ul>
+                       </div>
+                       <div class="or-devider">
+                           <span>Or</span>
+                       </div>
+                       <form id="login-form">
+                           <div class="form-group">
+                               <label for="email" class="label">E-mail</label>
+                               <input type="email" class="form-control" placeholder="example@gmail.com" id="login-email">
+                           </div>
+                           <div class="form-group">
+                               <label for="password" class="label">Password</label>
+                               <div class="position-relative">
+                                   <input type="password" class="form-control" id="login-password" placeholder="Enter password">
+                               </div>
+                           </div>
+                           <div class="form-group d-flex flex-wrap justify-content-between">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                   <label class="form-check-label" for="flexCheckDefault">Remember password</label>
+                               </div>
+                               <a href="#" class="font-size-3 text-dodger line-height-reset">Forget Password</a>
+                           </div>
+                           <div class="form-group mb-8 button">
+                               <button type="submit" class="btn">Log in</button>
+                           </div>
+                       </form>
+                       <p class="text-center create-new-account">Don’t have an account? <a href="#">Create a free account</a></p>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+<!-- Signup Modal -->
+<div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
+   <div class="modal-dialog max-width-px-840 position-relative">
+       <button type="button" class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper" data-dismiss="modal">
+           <i class="lni lni-close"></i>
+       </button>
+       <div class="login-modal-main">
+           <div class="row no-gutters">
+               <div class="col-12">
+                   <div class="row">
+                       <div class="heading">
+                           <h3>Create a free Account <br> Today</h3>
+                           <p>Create your account to continue <br> and explore new jobs.</p>
+                       </div>
+                       <div class="social-login">
+                           <ul>
+                               <li><a class="linkedin" href="#" style="text-decoration: none;"><i class="lni lni-linkedin-original"></i> Import from LinkedIn</a></li>
+                               <li><a class="google" href="#" style="text-decoration: none;"><i class="lni lni-google"></i> Import from Google</a></li>
+                               <li><a class="facebook" href="#" style="text-decoration: none;"><i class="lni lni-facebook-original"></i> Import from Facebook</a></li>
+                           </ul>
+                       </div>
+                       <div class="or-devider">
+                           <span>Or</span>
+                       </div>
+                       <form id="signup-form">
+                           <div class="form-group">
+                               <label for="email" class="label">E-mail</label>
+                               <input type="email" class="form-control" id="signup-email" placeholder="example@gmail.com">
+                           </div>
+                           <div class="form-group">
+                               <label for="password" class="label">Password</label>
+                               <div class="position-relative">
+                                   <input type="password" class="form-control" id="signup-password" placeholder="Enter password">
+                               </div>
+                           </div>
+                           <div class="form-group">
+                               <label for="confirm-password" class="label">Confirm Password</label>
+                               <div class="position-relative">
+                                   <input type="password" class="form-control" id="signup-confirm-password" placeholder="Enter password">
+                               </div>
+                           </div>
+                           <div class="form-group d-flex flex-wrap justify-content-between">
+                               <div class="form-check">
+                                   <input class="form-check-input" type="checkbox" value="">
+                                   <label class="form-check-label" for="flexCheckDefault">Agree to the <a href="privacy-policy.html" style="text-decoration: none;">Terms & Conditions</a></label>
+                               </div>
+                           </div>
+                           <div class="form-group mb-8 button">
+                               <button type="submit" class="btn">Sign Up</button>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+<script>document.getElementById("login-form").addEventListener("submit", async (event) => {
+   event.preventDefault();
+   
+   const email = document.getElementById("login-email").value;
+   const password = document.getElementById("login-password").value;
+   localStorage.setItem("userEmail", email); // Store email in localStorage
+  
+   const response = await fetch("http://localhost:5000/auth/login", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({ email, password })
+   });
+   
+   const data = await response.json();
+   if (response.ok) {
+       alert("Login successful!");
+       window.location.href = "sky/src/index.html"; // Change to your desired page
+   } else {
+       alert(data.message);
+   }
+   alert(data.message);
+});
+
+document.getElementById("signup-form").addEventListener("submit", async (event) => {
+   event.preventDefault();
+   
+   const email = document.getElementById("signup-email").value;
+   const password = document.getElementById("signup-password").value;
+   
+   const response = await fetch("http://localhost:5000/signup", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({ email, password })
+   });
+   
+   const data = await response.json();
+   alert(data.message);
+});
+
+</script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+  <!-- Start Breadcrumbs -->
+  <div class="breadcrumbs overlay">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumbs-content">
+                    <h1 class="page-title">Contact Us</h1>
+                    <p>Have questions or need assistance? Get in touch with us for support, inquiries, or feedback. We're here to help you.</p>
+                    
+                </div>
+                <ul class="breadcrumb-nav">
+                    <li><a href="index.html" style="text-decoration: none;">Home</a></li>
+                    <li>Contact Us</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumbs -->
+
+
+
+
+
+  <!-- Start Contact Area -->
+  <section id="contact-us" class="contact-us section">
+    <div class="container">
+        <div class="contact-head wow fadeInUp" data-wow-delay=".4s">
+            <div class="row">
+                <div class="col-lg-7 col-12">
+                    <div class="form-main">
+                        <form id="contact-form" class="form">
+                            <div class="row">
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group">
+                                        <input id="contact-name" name="name" type="text" placeholder="Your Name" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group">
+                                        <input id="contact-subject" name="subject" type="text" placeholder="Your Subject" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group">
+                                        <input id="contact-email" name="email" type="email" placeholder="Your Email" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group">
+                                        <input id="contact-phone" name="phone" type="text" placeholder="Your Phone" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group message">
+                                        <textarea id="contact-message" name="message" placeholder="Your Message" required="required"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group button">
+                                        <button type="submit" class="btn">Submit Message</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-12">
+                    <div class="single-head">
+                        <div class="contant-inner-title">
+                            <h4>Contact Information</h4>
+                            <p>Reach out to us for any inquiries, support, or collaboration opportunities. We’re here to assist you.</p>
+                        </div>
+                        <div class="single-info">
+                            <i class="lni lni-phone"></i>
+                            <ul>
+                                <li>+91 9391931148</li>
+                            </ul>
+                        </div>
+                        <div class="single-info">
+                            <i class="lni lni-envelope"></i>
+                            <ul>
+                                <li><a href="mailto:info@yourwebsite.com">adi0937@gmail.com</a></li>
+                            </ul>
+                        </div>
+                        <div class="single-info">
+                            <i class="lni lni-map"></i>
+                            <ul>
+                                <li>Yamnampet, Ghatkesar, Hyderabad, Telangana 501301</li>
+                            </ul>
+                        </div>
+                        <div class="contact-social">
+                            <h5>Follow Us on</h5>
+                            <ul>
+                                <li><a href="#"><i class="lni lni-facebook-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-pinterest"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById("contact-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            // Get form values
+            const name = document.getElementById("contact-name").value;
+            const subject = document.getElementById("contact-subject").value;
+            const email = document.getElementById("contact-email").value;
+            const phone = document.getElementById("contact-phone").value;
+            const message = document.getElementById("contact-message").value;
+
+            // Store email in localStorage (optional)
+            localStorage.setItem("userEmail", email);
+
+            try {
+                const response = await fetch("http://localhost:5000/contact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, subject, email, phone, message }),
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert("Message sent successfully!");
+                    document.getElementById("contact-form").reset(); // Clear form after submission
+                } else {
+                    alert(data.error || "Failed to send message.");
+                }
+            } catch (error) {
+                alert("Error submitting the form. Please try again.");
+                console.error(error);
+            }
+        });
+    </script>
+
+
+
+        <div class="map-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="map-container">
+                            <div class="mapouter">
+                                <div class="gmap_canvas"><iframe width="100%" height="400" id="gmap_canvas"
+                                        src="https://maps.google.com/maps?q=Sreenidhi%20Institute%20of%20Science%20and%20Technology&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                                        width="600" 
+                                        frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
+                                        href="https://123movies-to.com">123movies old site</a>
+                                    <style>
+                                        .mapouter {
+                                            position: relative;
+                                            text-align: right;
+                                            height: 400px;
+                                            width: 100%;
+                                        }
+
+                                        .gmap_canvas {
+                                            overflow: hidden;
+                                            background: none !important;
+                                            height: 400px;
+                                            width: 100%;
+                                        }
+                                    </style><a href="https://maps-google.github.io/embed-google-map/">embed google
+                                        map</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Google-map Area -->
+    </section>
+    <!--/ End Contact Area -->
+
+
+    <footer class="footer">
+        <!-- Start Middle Top -->
+        <div class="footer-middle">
+            <div class="container" style="text-decoration: none;">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="f-about single-footer">
+                            <div class="logo">
+                                <a href="index.html"><img src="images/www.jpeg" alt="Logo"></a>
+                            </div>
+                            <p>Hirewise connects job seekers and employers through AI-driven matching, streaming the hiring process for everyone.</p>
+                            <ul class="contact-address">
+                                <li><span>Address:</span> 555 Wall Street, USA, NY</li>
+                                <li><span>Email:</span> example@apus.com</li>
+                                <li><span>Call:</span> 555-555-1234</li>
+                            </ul>
+                            <div class="footer-social">
+                                <ul>
+                                    <li><a href="#"><i class="lni lni-facebook-original"></i></a></li>
+                                    <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                    <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                    <li><a href="#"><i class="lni lni-pinterest"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-8 col-12">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-12">
+                                <!-- Single Widget -->
+                                <div class="single-footer f-link" style="text-decoration: none;">
+                                    <h3>For Candidates</h3>
+                                    <ul>
+                                        <li><a href="resume.html">User Dashboard</a></li>
+                                        <li><a href="#">CV Packages</a></li>
+                                        <li><a href="#">Jobs Featured</a></li>
+                                        <li><a href="#">Jobs Urgent</a></li>
+                                        <li><a href="#">Candidate List</a></li>
+                                        <li><a href="#">Candidates Grid</a></li>
+                                    </ul>
+                                </div>
+                                <!-- End Single Widget -->
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-12">
+                                <!-- Single Widget -->
+                                <div class="single-footer f-link">
+                                    <h3>For Employers</h3>
+                                    <ul>
+                                        <li><a href="#">Post New</a></li>
+                                        <li><a href="#">Employer List</a></li>
+                                        <li><a href="#">Employers Grid</a></li>
+                                        <li><a href="#">Job Packages</a></li>
+                                        <li><a href="#">Jobs Listing</a></li>
+                                        <li><a href="#">Jobs Featured</a></li>
+                                    </ul>
+                                </div>
+                                <!-- End Single Widget -->
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-12">
+                                <!-- Single Widget -->
+                                <div class="single-footer newsletter">
+                                    <h3>Contact us</h3>
+                                    <p>Get in touch to get the latest jobs posted, candidates...</p>
+                                    <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                        <input name="EMAIL" placeholder="Your email address" class="common-input"
+                                            onfocus="this.placeholder = ''"
+                                            onblur="this.placeholder = 'Your email address'" required="" type="email">
+                                        <div class="button">
+                                            <button class="btn">Contact Now! <span class="dir-part"></span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- End Single Widget -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Footer Middle -->
+        <!-- Start Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="inner">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="left">
+                                <p>Designed and Developed by<a href="index.html" rel="nofollow" target="_blank">Hirewise</a></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-12"style="text-decoration: none;">
+                            <div class="right"style="text-decoration: none;">
+                                <ul>
+                                    <li><a href="#">Terms of use</a></li>
+                                    <li><a href="#"> Privacy Policy</a></li>
+                                    <li><a href="#">Faq</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Middle -->
+    </footer>
+    
+ 
+
+      <script>
+        
+        fetch("http://localhost:5000/data")
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+      </script>
+    
+     <!-- ========================= scroll-top ========================= -->
+     <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/tiny-slider.js"></script>
+    <script src="assets/js/glightbox.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script type="text/javascript">
+        //====== Clients Logo Slider
+        tns({
+            container: '.client-logo-carousel',
+            slideBy: 'page',
+            autoplay: true,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 15,
+            nav: false,
+            controls: false,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                540: {
+                    items: 2,
+                },
+                768: {
+                    items: 3,
+                },
+                992: {
+                    items: 4,
+                },
+                1170: {
+                    items: 6,
+                }
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced AI Interview Prep</title>
+    <!-- Libraries -->
+    <script src="https://unpkg.com/compromise@14.10.0/builds/compromise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Styling */
+        :root {
+            --primary: #ff9800;
+            --primary-dark: #e68900;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --bg-element: #252525;
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+            --success: #4caf50;
+            --warning: #ff5722;
+            --info: #2196f3;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 992px) {
+            .app-container {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--bg-element);
+        }
+
+        .header h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header .settings {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: var(--primary);
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--bg-element);
+        }
+
+        .btn-secondary:hover {
+            background: #333;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #3d8b40;
+        }
+
+        .btn-info {
+            background: var(--info);
+        }
+
+        .btn-info:hover {
+            background: #1976d2;
+        }
+
+        .interview-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .question-container {
+            background: var(--bg-element);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timer {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        #question {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            margin-right: 60px;
+        }
+
+        .question-category {
+            display: inline-block;
+            background: var(--bg-dark);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            padding: 15px;
+            background: var(--bg-element);
+            color: white;
+            border: 1px solid #555;
+            outline: none;
+            resize: vertical;
+            font-size: 16px;
+            font-family: inherit;
+            margin-bottom: 15px;
+        }
+
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .progress-container {
+            height: 6px;
+            background: var(--bg-element);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        #feedback {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--bg-element);
+            border-radius: 8px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .feedback-score {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .feedback-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .feedback-item {
+            background: var(--bg-dark);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .feedback-item h4 {
+            margin: 5px 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .feedback-item p {
+            margin: 5px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .history-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .history-section h3 {
+            margin-top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab {
+            padding: 8px 15px;
+            background: var(--bg-element);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            font-weight: bold;
+        }
+
+        #history-list {
+            padding: 0;
+            list-style: none;
+            max-height: 500px;
+            overflow-y: auto;
+            margin: 0;
+        }
+
+        .history-item {
+            background: var(--bg-element);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .history-item .question {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .history-item .answer {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .history-item .score {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--bg-dark);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .chart-container {
+            margin-top: 20px;
+            height: 200px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--bg-element);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 6px;
+            top: 100%;
+            right: 0;
+        }
+
+        .dropdown-content a {
+            color: var(--text-light);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+        }
+
+        .dropdown-content a:hover {background-color: var(--bg-dark);}
+        .dropdown:hover .dropdown-content {display: block;}
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 14px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .keyword-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .keyword {
+            background: var(--bg-dark);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .recording-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            color: var(--warning);
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .recording-indicator.active {
+            display: flex;
+        }
+
+        .pulse {
+            width: 10px;
+            height: 10px;
+            background-color: var(--warning);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+
+        .settings-panel {
+            background: var(--bg-element);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .settings-panel.active {
+            display: block;
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-dark);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .range-slider {
+            width: 150px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 20px;
+            margin-left: 5px;
+        }
+
+        .badge-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .badge-info {
+            background-color: var(--info);
+            color: white;
+        }
+
+        /* Category styles */
+        .category-behavioral { color: var(--success); }
+        .category-technical { color: var(--info); }
+        .category-situational { color: var(--warning); }
+        .category-personal { color: var(--primary); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header card">
+            <h1><i class="fas fa-comments"></i> Advanced AI Interview Prep</h1>
+            <div class="settings">
+                <button class="btn btn-secondary" id="settingsBtn">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                <div class="dropdown">
+                    <button class="btn">
+                        <i class="fas fa-user-tie"></i> Job Type
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="setJobType('software-engineer')">Software Engineer</a>
+                        <a href="#" onclick="setJobType('data-scientist')">Data Scientist</a>
+                        <a href="#" onclick="setJobType('product-manager')">Product Manager</a>
+                        <a href="#" onclick="setJobType('marketing')">Marketing</a>
+                        <a href="#" onclick="setJobType('sales')">Sales</a>
+                        <a href="#" onclick="setJobType('general')">General</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="interview-section card">
+            <div class="question-container">
+                <div class="question-category" id="questionCategory">Behavioral</div>
+                <p id="question">Click "Generate Question" to start your interview prep!</p>
+                <div class="timer" id="timer">60</div>
+            </div>
+
+            <textarea id="answer" placeholder="Type your answer here... Be specific and use relevant examples from your experience."></textarea>
+            
+            <div class="recording-indicator" id="recordingIndicator">
+                <div class="pulse"></div>
+                <span>Recording in progress...</span>
+            </div>
+            
+            <div class="controls">
+                <button class="btn" onclick="generateQuestion()">
+                    <i class="fas fa-sync-alt"></i> New Question
+                </button>
+                <button class="btn btn-info" id="speechBtn" onclick="toggleSpeech()">
+                    <i class="fas fa-microphone"></i> Voice Answer
+                </button>
+                <button class="btn btn-success" onclick="analyzeAnswer()">
+                    <i class="fas fa-check-circle"></i> Submit Answer
+                </button>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div id="feedback" style="display: none;">
+                <div class="feedback-header">
+                    <h3>Answer Feedback</h3>
+                    <div class="feedback-score">0/100</div>
+                </div>
+                <p id="feedbackText">Submit your answer to get AI feedback.</p>
+                
+                <div class="keyword-cloud" id="keywordCloud"></div>
+                
+                <div class="feedback-details">
+                    <div class="feedback-item">
+                        <h4>Clarity</h4>
+                        <p id="clarityScore">0</p>
+                    </div>
+                    <div class="feedback-item">
+                        <h4>Relevance</h4>
+                        <p id="relevanceScore">0</p>
+                    </div>
+                    <div class="feedback-item">
+                        <h4>Detail</h4>
+                        <p id="detailScore">0</p>
+                    </div>
+                    <div class="feedback-item">
+                        <h4>Structure</h4>
+                        <p id="structureScore">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-section card">
+            <h3>
+                Your Progress
+                <button class="btn btn-secondary" id="clearHistoryBtn">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </h3>
+            
+            <div class="tab-container">
+                <div class="tab active" data-tab="history">History</div>
+                <div class="tab" data-tab="stats">Statistics</div>
+            </div>
+            
+            <div id="historyTab">
+                <ul id="history-list"></ul>
+            </div>
+            
+            <div id="statsTab" style="display: none;">
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-panel" id="settingsPanel">
+        <h3>Settings</h3>
+        
+        <div class="settings-row">
+            <label>Answer Timer</label>
+            <label class="toggle">
+                <input type="checkbox" id="timerToggle" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div class="settings-row">
+            <label>Timer Duration (seconds)</label>
+            <input type="range" class="range-slider" id="timerDuration" min="30" max="300" step="30" value="60">
+            <span id="timerValue">60s</span>
+        </div>
+        
+        <div class="settings-row">
+            <label>Voice Recognition</label>
+            <label class="toggle">
+                <input type="checkbox" id="voiceToggle" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div class="settings-row">
+            <label>Dark Mode</label>
+            <label class="toggle">
+                <input type="checkbox" id="darkModeToggle" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div class="settings-row">
+            <label>Difficulty Level</label>
+            <select id="difficultyLevel" class="dropdown-select">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate" selected>Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+        </div>
+        
+        <button class="btn" id="saveSettingsBtn">Save Settings</button>
+    </div>
+
+    <div class="modal-overlay" id="questionModalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add Custom Question</h3>
+                <button class="modal-close" id="closeQuestionModal">&times;</button>
+            </div>
+            <textarea id="customQuestion" placeholder="Enter your custom interview question..."></textarea>
+            <div class="settings-row">
+                <label>Category</label>
+                <select id="customQuestionCategory">
+                    <option value="behavioral">Behavioral</option>
+                    <option value="technical">Technical</option>
+                    <option value="situational">Situational</option>
+                    <option value="personal">Personal</option>
+                </select>
+            </div>
+            <button class="btn btn-success" id="saveCustomQuestion">Add Question</button>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let timerInterval;
+        let secondsLeft = 60;
+        let currentJobType = "general";
+        let currentQuestionCategory = "";
+        let currentQuestion = "";
+        let isRecording = false;
+        let recognition;
+        let speechRecognitionSupported = 'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
+        let performanceChart;
+        let categoryChart;
+        let userQuestions = {};
+
+        // Question banks by category and job type
+        const questionBank = {
+            general: {
+                behavioral: [
+                    "Tell me about yourself and your background.",
+                    "What are your greatest strengths and weaknesses?",
+                    "Why do you want to work for our company?",
+                    "Tell me about a time you failed and what you learned from it.",
+                    "How do you handle stress and pressure at work?"
+                ],
+                technical: [
+                    "Explain a complex concept from your field to someone with no technical background.",
+                    "What tools or methodologies do you use to stay organized?",
+                    "How do you stay updated with industry trends and developments?",
+                    "Describe a technical challenge you faced and how you solved it.",
+                    "What technical skills are you currently working to improve?"
+                ],
+                situational: [
+                    "How would you handle a disagreement with a team member?",
+                    "You notice a colleague making a serious mistake. What do you do?",
+                    "Describe how you would prioritize multiple urgent tasks.",
+                    "How would you approach a situation where you're given unclear instructions?",
+                    "How do you handle receiving constructive criticism?"
+                ],
+                personal: [
+                    "Where do you see yourself in 5 years?",
+                    "What motivates you in your work?",
+                    "Describe your ideal work environment.",
+                    "What accomplishment are you most proud of?",
+                    "What do you do when you're not working? Any hobbies or interests?"
+                ]
+            },
+            "software-engineer": {
+                behavioral: [
+                    "Describe a time when you had to learn a new programming language or framework quickly.",
+                    "Tell me about a project where you had to work with legacy code.",
+                    "How do you approach code reviews with your team?",
+                    "Describe a situation where you improved a codebase's performance.",
+                    "Tell me about a time you had to make a difficult technical decision."
+                ],
+                technical: [
+                    "What's your approach to debugging complex issues?",
+                    "How do you ensure your code is maintainable and scalable?",
+                    "Explain how you implement automated testing in your projects.",
+                    "Describe your experience with continuous integration/deployment.",
+                    "How do you keep up with new programming languages and frameworks?"
+                ],
+                situational: [
+                    "Your team is behind schedule on a critical project. How do you handle it?",
+                    "How would you handle disagreement about technical approach with a senior developer?",
+                    "A critical production bug is discovered in your code. What steps do you take?",
+                    "How would you onboard a new developer to your complex codebase?",
+                    "A feature you developed has unexpected side effects in production. What do you do?"
+                ]
+            },
+            "data-scientist": {
+                behavioral: [
+                    "Tell me about a data analysis project you're most proud of.",
+                    "Describe a time when your data-driven insights changed a business decision.",
+                    "How do you explain complex statistical concepts to non-technical stakeholders?",
+                    "Tell me about a time when you had to work with messy or incomplete data.",
+                    "Describe how you stay organized when working on complex data projects."
+                ],
+                technical: [
+                    "Explain the difference between supervised and unsupervised learning.",
+                    "How do you handle imbalanced datasets?",
+                    "Describe your approach to feature selection and engineering.",
+                    "What tools and libraries do you use for data visualization?",
+                    "How do you validate the accuracy of your machine learning models?"
+                ]
+            }
+        };
+
+        // Essential keywords by category
+        const keywords = {
+            behavioral: ["example", "situation", "action", "result", "team", "collaborate", "learn", "improve", "challenge", "success"],
+            technical: ["implement", "develop", "technology", "solution", "process", "system", "analyze", "design", "efficient", "secure"],
+            situational: ["approach", "handle", "resolve", "prioritize", "communicate", "strategy", "decision", "plan", "adapt", "manage"],
+            personal: ["goal", "passion", "motivation", "strength", "growth", "value", "future", "interest", "achievement", "skill"]
+        };
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            loadSettings();
+            loadUserQuestions();
+            loadHistory();
+            setupCharts();
+            
+            // Initialize speech recognition if supported
+            if (speechRecognitionSupported) {
+                setupSpeechRecognition();
+            } else {
+                document.getElementById('speechBtn').disabled = true;
+                document.getElementById('speechBtn').title = "Speech recognition not supported in this browser";
+            }
+        });
+
+        function setupEventListeners() {
+            // Settings button toggle
+            document.getElementById('settingsBtn').addEventListener('click', function() {
+                document.getElementById('settingsPanel').classList.toggle('active');
+            });
+            
+            // Save settings button
+            document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+            
+            // Timer duration slider
+            document.getElementById('timerDuration').addEventListener('input', function() {
+                document.getElementById('timerValue').textContent = this.value + 's';
+            });
+            
+            // Clear history button
+            document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
+            
+            // Tab switching
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    switchTab(this.getAttribute('data-tab'));
+                });
+            });
+            
+            // Timer toggle changes
+            document.getElementById('timerToggle').addEventListener('change', function() {
+                if (this.checked) {
+                    document.getElementById('timer').style.display = 'flex';
+                } else {
+                    document.getElementById('timer').style.display = 'none';
+                    clearInterval(timerInterval);
+                }
+            });
+            
+            // Dark mode toggle
+            document.getElementById('darkModeToggle').addEventListener('change', function() {
+                toggleDarkMode(this.checked);
+            });
+        }
+
+        function setupSpeechRecognition() {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = "en-US";
+            
+            recognition.onresult = function(event) {
+                let interimTranscript = '';
+                let finalTranscript = '';
+                
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript;
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
+                }
+                
+                if (finalTranscript) {
+                    let currentText = document.getElementById("answer").value;
+                    document.getElementById("answer").value = currentText + ' ' + finalTranscript;
+                }
+            };
+            
+            recognition.onend = function() {
+                if (isRecording) {
+                    recognition.start();
+                } else {
+                    document.getElementById('recordingIndicator').classList.remove('active');
+                }
+            };
+        }
+
+        function toggleSpeech() {
+            if (!speechRecognitionSupported) {
+                alert("Speech recognition is not supported in your browser.");
+                return;
+            }
+            
+            isRecording = !isRecording;
+            
+            if (isRecording) {
+                recognition.start();
+                document.getElementById('recordingIndicator').classList.add('active');
+                document.getElementById('speechBtn').innerHTML = '<i class="fas fa-stop"></i> Stop Recording';
+            } else {
+                recognition.stop();
+                document.getElementById('recordingIndicator').classList.remove('active');
+                document.getElementById('speechBtn').innerHTML = '<i class="fas fa-microphone"></i> Voice Answer';
+            }
+        }
+
+        function generateQuestion() {
+            // Reset and start timer
+            clearInterval(timerInterval);
+            resetTimer();
+            
+            // Get available categories for current job type
+            const availableCategories = Object.keys(questionBank[currentJobType] || questionBank.general);
+            
+            // Randomly select a category
+            const randomCategory = availableCategories[Math.floor(Math.random() * availableCategories.length)];
+            currentQuestionCategory = randomCategory;
+            
+            // Get questions for this category and job type
+            let questions = [];
+            
+            // Add user-defined questions if available
+            if (userQuestions[currentJobType] && userQuestions[currentJobType][randomCategory]) {
+                questions = questions.concat(userQuestions[currentJobType][randomCategory]);
+            }
+            
+            // Add default questions
+            if (questionBank[currentJobType] && questionBank[currentJobType][randomCategory]) {
+                questions = questions.concat(questionBank[currentJobType][randomCategory]);
+            } else {
+                questions = questions.concat(questionBank.general[randomCategory]);
+            }
+            
+            // Select a random question
+            const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+            currentQuestion = randomQuestion;
+            
+            // Update UI
+            document.getElementById("question").innerText = randomQuestion;
+            document.getElementById("questionCategory").innerText = categoryToDisplayName(randomCategory);
+            document.getElementById("questionCategory").className = `question-category category-${randomCategory}`;
+            document.getElementById("answer").value = "";
+            document.getElementById("feedback").style.display = "none";
+            
+            // Start timer if enabled
+            if (document.getElementById("timerToggle").checked) {
+                startTimer();
+            }
+        }
+        
+        function categoryToDisplayName(category) {
+            const names = {
+                'behavioral': 'Behavioral',
+                'technical': 'Technical',
+                'situational': 'Situational',
+                'personal': 'Personal'
+            };
+            return names[category] || category.charAt(0).toUpperCase() + category.slice(1);
+        }
+        
+        function resetTimer() {
+            secondsLeft = parseInt(document.getElementById("timerDuration").value) || 60;
+            document.getElementById("timer").innerText = secondsLeft;
+            document.getElementById("progressBar").style.width = "100%";
+        }
+        
+        function startTimer() {
+            const totalTime = parseInt(document.getElementById("timerDuration").value) || 60;
+            secondsLeft = totalTime;
+            document.getElementById("timer").innerText = secondsLeft;
+            
+            timerInterval = setInterval(function() {
+                secondsLeft--;
+                document.getElementById("timer").innerText = secondsLeft;
+                
+                // Update progress bar
+                const percentLeft = (secondsLeft / totalTime) * 100;
+                document.getElementById("progressBar").style.width = percentLeft + "%";
+                
+                // Change color as time runs out
+                if (secondsLeft <= 10) {
+                    document.getElementById("timer").style.backgroundColor = "#ff5722";
+                } else if (secondsLeft <= 30) {
+                    document.getElementById("timer").style.backgroundColor = "#ff9800";
+                } else {
+                    document.getElementById("timer").style.backgroundColor = "#ff9800";
+                }
+                
+                if (secondsLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById("timer").innerText = "Time!";
+                    
+                    // Optionally auto-submit after time is up
+                    if (document.getElementById("answer").value.trim().length > 0) {
+                        analyzeAnswer();
+                    }
+                }
+            }, 1000);
+        }
+        
+        function analyzeAnswer() {
+            let answer = document.getElementById("answer").value.trim();
+            if (answer.length === 0) {
+                alert("Please provide an answer before submitting.");
+                return;
+            }
+            
+            clearInterval(timerInterval);
+            
+            // Basic metrics
+            const wordCount = answer.split(/\s+/).filter(word => word.length > 0).length;
+            const sentenceCount = answer.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0).length;
+            const avgWordLength = answer.replace(/\s+/g, '').length / wordCount;
+            
+            // Check for category-specific keywords
+            const categoryKeywords = keywords[currentQuestionCategory] || [];
+            const foundKeywords = categoryKeywords.filter(word => 
+                answer.toLowerCase().includes(word.toLowerCase())
+            );
+            
+            // Calculate detail score based on word count
+            let detailScore = 0;
+            if (wordCount < 30) {
+                detailScore = Math.round((wordCount / 30) * 60);
+            } else if (wordCount < 100) {
+                detailScore = 60 + Math.round(((wordCount - 30) / 70) * 20);
+            } else if (wordCount < 200) {
+                detailScore = 80 + Math.round(((wordCount - 100) / 100) * 15);
+            } else {
+                detailScore = 95;
+            }
+            
+            // Calculate relevance score based on keywords found
+            const relevanceScore = Math.round((foundKeywords.length / categoryKeywords.length) * 100);
+            
+            // Calculate clarity score based on average sentence length and word length
+            const avgSentenceLength = wordCount / sentenceCount;
+            let clarityScore = 100;
+            
+            // Penalize very long sentences (over 25 words avg) or very short (under 5 words avg)
+            if (avgSentenceLength > 25) {
+                clarityScore -= Math.min(30, (avgSentenceLength - 25) * 3);
+            } else if (avgSentenceLength < 5) {
+                clarityScore -= Math.min(30, (5 - avgSentenceLength) * 6);
+            }
+            
+            // Penalize very long words (over 6 chars avg)
+            if (avgWordLength > 6) {
+                clarityScore -= Math.min(20, (avgWordLength - 6) * 10);
+            }
+            
+            clarityScore = Math.max(0, clarityScore);
+            
+            // Calculate structure score based on paragraphs and STAR method detection
+            const paragraphCount = answer.split(/\n+/).filter(p => p.trim().length > 0).length;
+            let structureScore = 50; // Base score
+            
+            // Award points for having multiple paragraphs
+            if (paragraphCount > 1) {
+                structureScore += Math.min(25, (paragraphCount - 1) * 12.5);
+            }
+            
+            // Check for STAR method (situation, task, action, result)
+            const starTerms = ["situation", "task", "action", "result"];
+            const starMatches = starTerms.filter(term => answer.toLowerCase().includes(term));
+            structureScore += (starMatches.length / starTerms.length) * 25;
+            structureScore = Math.min(100, structureScore);
+            
+            // Calculate total score (weighted average)
+            const totalScore = Math.round(
+                (clarityScore * 0.25) + 
+                (relevanceScore * 0.3) + 
+                (detailScore * 0.25) + 
+                (structureScore * 0.2)
+            );
+            
+            // Generate feedback
+            let feedback = "";
+            
+            // Determine overall assessment
+            if (totalScore >= 85) {
+                feedback = "Excellent answer! ";
+            } else if (totalScore >= 70) {
+                feedback = "Good answer with some strong points. ";
+            } else if (totalScore >= 50) {
+                feedback = "Satisfactory answer that could be improved. ";
+            } else {
+                feedback = "This answer needs significant improvement. ";
+            }
+            
+            // Add specific feedback based on scores
+            if (clarityScore < 70) {
+                feedback += "Try using shorter, more concise sentences. ";
+            }
+            
+            if (relevanceScore < 70) {
+                feedback += "Your answer could better address the question by including more relevant keywords and examples. ";
+            }
+            
+            if (detailScore < 70) {
+                feedback += "Consider providing more specific details and examples to strengthen your answer. ";
+            }
+            
+            if (structureScore < 70) {
+                feedback += "Structure your answer using the STAR method (Situation, Task, Action, Result) for stronger impact. ";
+            }
+            
+            // Add positive reinforcement
+            if (foundKeywords.length > 0) {
+                feedback += `Good use of key terms like: ${foundKeywords.slice(0, 3).join(", ")}. `;
+            }
+            
+            // Add specific advice for improvement
+            const missingKeywords = categoryKeywords.filter(word => !foundKeywords.includes(word));
+            if (missingKeywords.length > 0) {
+                feedback += `Consider incorporating terms like: ${missingKeywords.slice(0, 3).join(", ")}. `;
+            }
+            
+            // Display feedback
+            document.getElementById("feedback").style.display = "block";
+            document.getElementById("feedbackText").innerText = feedback;
+            document.getElementById("clarityScore").innerText = clarityScore;
+            document.getElementById("relevanceScore").innerText = relevanceScore;
+            document.getElementById("detailScore").innerText = detailScore;
+            document.getElementById("structureScore").innerText = structureScore;
+            document.querySelector(".feedback-score").innerText = `${totalScore}/100`;
+            
+            // Show keyword cloud
+            const keywordCloud = document.getElementById("keywordCloud");
+            keywordCloud.innerHTML = "";
+            foundKeywords.forEach(keyword => {
+                const keywordElement = document.createElement("span");
+                keywordElement.className = "keyword";
+                keywordElement.innerText = keyword;
+                keywordCloud.appendChild(keywordElement);
+            });
+            
+            // Save to history
+            saveToHistory(currentQuestion, answer, totalScore, currentQuestionCategory);
+        }
+        
+        function saveToHistory(question, answer, score, category) {
+            let history = JSON.parse(localStorage.getItem("interviewHistory")) || [];
+            
+            // Add new entry
+            history.push({
+                question: question,
+                answer: answer,
+                score: score,
+                category: category,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Sort by newest first
+            history.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            // Limit to last 50 entries
+            if (history.length > 50) {
+                history = history.slice(0, 50);
+            }
+            
+            localStorage.setItem("interviewHistory", JSON.stringify(history));
+            loadHistory();
+            updateCharts();
+        }
+        
+        function loadHistory() {
+            let history = JSON.parse(localStorage.getItem("interviewHistory")) || [];
+            let historyList = document.getElementById("history-list");
+            historyList.innerHTML = "";
+            
+            if (history.length === 0) {
+                historyList.innerHTML = "<p>No practice answers yet. Submit your first answer to see your history.</p>";
+                return;
+            }
+            
+            history.forEach(entry => {
+                let li = document.createElement("li");
+                li.className = "history-item";
+                
+                // Score badge with dynamic color
+                let scoreClass = "badge-info";
+                if (entry.score >= 80) {
+                    scoreClass = "badge-success";
+                } else if (entry.score < 60) {
+                    scoreClass = "badge-warning";
+                }
+                
+                li.innerHTML = `
+                    <div class="question">${entry.question}</div>
+                    <div class="answer">${truncateText(entry.answer, 100)}</div>
+                    <div class="score badge ${scoreClass}">${entry.score}/100</div>
+                    <small>${new Date(entry.timestamp).toLocaleString()}</small>
+                `;
+                
+                // Add click event to show full answer
+                li.addEventListener('click', function() {
+                    showAnswerDetail(entry);
+                });
+                
+                historyList.appendChild(li);
+            });
+        }
+        
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + "...";
+        }
+        
+        function showAnswerDetail(entry) {
+            // Create modal for answer detail (implementation left for brevity)
+            alert(`Full Answer:\n\n${entry.answer}`);
+        }
+        
+        function clearHistory() {
+            if (confirm("Are you sure you want to clear your entire practice history? This cannot be undone.")) {
+                localStorage.removeItem("interviewHistory");
+                loadHistory();
+                updateCharts();
+            }
+        }
+        
+        function setupCharts() {
+            // Performance chart
+            const perfCtx = document.getElementById('performanceChart').getContext('2d');
+            performanceChart = new Chart(perfCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Score History',
+                        data: [],
+                        backgroundColor: 'rgba(255, 152, 0, 0.2)',
+                        borderColor: 'rgba(255, 152, 0, 1)',
+                        borderWidth: 2,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Category performance chart
+            const catCtx = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(catCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Behavioral', 'Technical', 'Situational', 'Personal'],
+                    datasets: [{
+                        label: 'Category Performance',
+                        data: [0, 0, 0, 0],
+                        backgroundColor: 'rgba(255, 152, 0, 0.2)',
+                        borderColor: 'rgba(255, 152, 0, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(255, 152, 0, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                display: false
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            pointLabels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            updateCharts();
+        }
+        
+        function updateCharts() {
+            const history = JSON.parse(localStorage.getItem("interviewHistory")) || [];
+            
+            // Update performance chart
+            if (history.length > 0) {
+                // Get last 10 entries
+                const recentHistory = history.slice(0, 10).reverse();
+                
+                performanceChart.data.labels = recentHistory.map((_, index) => `Session ${index + 1}`);
+                performanceChart.data.datasets[0].data = recentHistory.map(entry => entry.score);
+                performanceChart.update();
+                
+                // Update category chart
+                const categoryScores = {
+                    'behavioral': [],
+                    'technical': [],
+                    'situational': [],
+                    'personal': []
+                };
+                
+                history.forEach(entry => {
+                    if (entry.category && categoryScores[entry.category]) {
+                        categoryScores[entry.category].push(entry.score);
+                    }
+                });
+                
+                // Calculate average score for each category
+                const categoryData = Object.keys(categoryScores).map(category => {
+                    const scores = categoryScores[category];
+                    return scores.length > 0 ? 
+                        Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length) : 
+                        0;
+                });
+                
+                categoryChart.data.datasets[0].data = categoryData;
+                categoryChart.update();
+            }
+        }
+        
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+            
+            if (tabName === 'history') {
+                document.getElementById('historyTab').style.display = 'block';
+                document.getElementById('statsTab').style.display = 'none';
+            } else if (tabName === 'stats') {
+                document.getElementById('historyTab').style.display = 'none';
+                document.getElementById('statsTab').style.display = 'block';
+                // Ensure charts render correctly
+                performanceChart.resize();
+                categoryChart.resize();
+            }
+        }
+        
+        function setJobType(type) {
+            currentJobType = type;
+            // Update UI to reflect job type
+            document.querySelector('.dropdown button').innerHTML = 
+                `<i class="fas fa-user-tie"></i> ${type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')}`;
+            
+            // Reset current state
+            document.getElementById("question").innerText = "Click \"Generate Question\" to start practicing for " + 
+                type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ') + " interviews!";
+            document.getElementById("answer").value = "";
+            document.getElementById("feedback").style.display = "none";
+        }
+        
+        function loadSettings() {
+            // Load settings from localStorage
+            const settings = JSON.parse(localStorage.getItem("interviewSettings")) || {};
+            
+            if (settings.timerEnabled !== undefined) {
+                document.getElementById("timerToggle").checked = settings.timerEnabled;
+            }
+            
+            if (settings.timerDuration) {
+                document.getElementById("timerDuration").value = settings.timerDuration;
+                document.getElementById("timerValue").textContent = settings.timerDuration + 's';
+            }
+            
+            if (settings.voiceEnabled !== undefined) {
+                document.getElementById("voiceToggle").checked = settings.voiceEnabled;
+            }
+            
+            if (settings.darkMode !== undefined) {
+                document.getElementById("darkModeToggle").checked = settings.darkMode;
+                toggleDarkMode(settings.darkMode);
+            }
+            
+            if (settings.difficultyLevel) {
+                document.getElementById("difficultyLevel").value = settings.difficultyLevel;
+            }
+            
+            if (settings.jobType) {
+                setJobType(settings.jobType);
+            }
+        }
+        
+        function saveSettings() {
+            const settings = {
+                timerEnabled: document.getElementById("timerToggle").checked,
+                timerDuration: document.getElementById("timerDuration").value,
+                voiceEnabled: document.getElementById("voiceToggle").checked,
+                darkMode: document.getElementById("darkModeToggle").checked,
+                difficultyLevel: document.getElementById("difficultyLevel").value,
+                jobType: currentJobType
+            };
+            
+            localStorage.setItem("interviewSettings", JSON.stringify(settings));
+            document.getElementById('settingsPanel').classList.remove('active');
+            
+            // Apply settings immediately
+            if (!settings.timerEnabled) {
+                document.getElementById("timer").style.display = 'none';
+                clearInterval(timerInterval);
+            } else {
+                document.getElementById("timer").style.display = 'flex';
+            }
+            
+            toggleDarkMode(settings.darkMode);
+        }
+        
+        function toggleDarkMode(isDark) {
+            // This function would toggle between dark and light themes
+            // For brevity, we'll just keep dark mode always on in this example
+            // A full implementation would change CSS variables
+        }
+        
+        function loadUserQuestions() {
+            userQuestions = JSON.parse(localStorage.getItem("userQuestions")) || {};
+        }
+        
+        function addCustomQuestion(question, category, jobType) {
+            if (!userQuestions[jobType]) {
+                userQuestions[jobType] = {};
+            }
+            
+            if (!userQuestions[jobType][category]) {
+                userQuestions[jobType][category] = [];
+            }
+            
+            userQuestions[jobType][category].push(question);
+            localStorage.setItem("userQuestions", JSON.stringify(userQuestions));
+        }
+        
+        // Initialize the app
+        window.onload = function() {
+            // Initialize the question list if not available
+            if (!localStorage.getItem("userQuestions")) {
+                localStorage.setItem("userQuestions", JSON.stringify({}));
+            }
+            
+            // Generate first question
+            generateQuestion();
+        };
+        </script>
+        </body>
+        </html>

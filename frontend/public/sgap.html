@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Skill Gap Analysis & Course Recommendations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern CSS Variables */
+        :root {
+            --primary-color: #ff9800;
+            --primary-hover: #e68900;
+            --background-dark: #121212;
+            --card-background: #1e1e1e;
+            --input-background: #252525;
+            --text-color: #f5f5f5;
+            --border-color: #555;
+            --highlight-color: #3a3f44;
+            --success-color: #4caf50;
+            --warning-color: #ff5722;
+            --tag-background: #2d3748;
+            --animation-time: 0.3s;
+        }
+
+        /* General Styling */
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background-color var(--animation-time) ease;
+        }
+
+        .container {
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            transition: transform var(--animation-time) ease, box-shadow var(--animation-time) ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: -8px;
+            left: 25%;
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin: 25px 0 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        textarea, input, select {
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px 15px;
+            background: var(--input-background);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border-color var(--animation-time) ease, box-shadow var(--animation-time) ease;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.3);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--border-color);
+        }
+
+        /* Skill Tags */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: var(--tag-background);
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color var(--animation-time) ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--primary-color);
+        }
+
+        .skill-tag i {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+            justify-content: center;
+        }
+
+        button {
+            background: var(--primary-color);
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background var(--animation-time) ease, transform var(--animation-time) ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        button.secondary {
+            background: var(--highlight-color);
+        }
+
+        button.secondary:hover {
+            background: #4a4f56;
+        }
+
+        /* Analysis Results */
+        .results {
+            background: var(--input-background);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            transition: opacity var(--animation-time) ease, transform var(--animation-time) ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) inset;
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+            animation: fade-in 0.4s ease;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .result-header h4 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .result-date {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .match-percentage {
+            font-size: 3rem;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .match-details {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .match-col {
+            flex: 1;
+        }
+
+        .missing-skills, .matching-skills {
+            list-style: none;
+            padding: 0;
+        }
+
+        .missing-skills li, .matching-skills li {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .missing-skills li {
+            background: rgba(255, 87, 34, 0.2);
+            border-left: 3px solid var(--warning-color);
+        }
+
+        .matching-skills li {
+            background: rgba(76, 175, 80, 0.2);
+            border-left: 3px solid var(--success-color);
+        }
+
+        /* Course Recommendations */
+        .course-recommendations {
+            margin-top: 20px;
+        }
+
+        .course-card {
+            background: var(--highlight-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: transform var(--animation-time) ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .course-platform {
+            font-size: 12px;
+            background: var(--primary-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .course-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #bbb;
+        }
+
+        /* History */
+        .history-container {
+            max-height: 300px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--card-background);
+        }
+
+        .history-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history-container::-webkit-scrollbar-track {
+            background: var(--card-background);
+        }
+
+        .history-container::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .history-item {
+            background: var(--input-background);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color var(--animation-time) ease;
+        }
+
+        .history-item:hover {
+            background: var(--highlight-color);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .history-actions i {
+            cursor: pointer;
+            transition: color var(--animation-time) ease;
+        }
+
+        .history-actions i:hover {
+            color: var(--primary-color);
+        }
+
+        .history-summary {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                width: 95%;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .match-details {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h2>Skill Gap Analyzer</h2>
+            <p>Compare your skills with job requirements to find gaps and recommended courses</p>
+        </header>
+
+        <div class="form-group">
+            <label for="skills"><i class="fas fa-user-check"></i> Your Current Skills</label>
+            <div class="input-with-icon">
+                <input type="text" id="skill-input" placeholder="Type a skill and press Enter">
+                <i class="fas fa-plus"></i>
+            </div>
+            <div id="current-skills" class="skill-tags"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="job-skills"><i class="fas fa-briefcase"></i> Job Requirements</label>
+            <div class="input-with-icon">
+                <input type="text" id="job-skill-input" placeholder="Type a job requirement and press Enter">
+                <i class="fas fa-plus"></i>
+            </div>
+            <div id="job-skills" class="skill-tags"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="experience-level"><i class="fas fa-chart-line"></i> Your Experience Level</label>
+            <select id="experience-level">
+                <option value="beginner">Beginner (0-1 years)</option>
+                <option value="intermediate" selected>Intermediate (1-3 years)</option>
+                <option value="advanced">Advanced (3-5 years)</option>
+                <option value="expert">Expert (5+ years)</option>
+            </select>
+        </div>
+
+        <div class="btn-group">
+            <button id="analyze-btn" onclick="analyzeSkillGap()">
+                <i class="fas fa-search"></i> Analyze Skills
+            </button>
+            <button class="secondary" onclick="resetForm()">
+                <i class="fas fa-undo"></i> Reset
+            </button>
+        </div>
+
+        <div id="results" class="results">
+            <div class="result-header">
+                <h4>Analysis Results</h4>
+                <span class="result-date" id="analysis-date"></span>
+            </div>
+            
+            <div class="match-percentage" id="match-percentage">0%</div>
+            
+            <div class="match-details">
+                <div class="match-col">
+                    <h4><i class="fas fa-check-circle"></i> Matching Skills</h4>
+                    <ul class="matching-skills" id="matching-skills"></ul>
+                </div>
+                <div class="match-col">
+                    <h4><i class="fas fa-times-circle"></i> Missing Skills</h4>
+                    <ul class="missing-skills" id="missing-skills"></ul>
+                </div>
+            </div>
+            
+            <div class="course-recommendations">
+                <h4><i class="fas fa-graduation-cap"></i> Recommended Courses</h4>
+                <div id="course-list"></div>
+            </div>
+        </div>
+
+        <h3><i class="fas fa-history"></i> Previous Analyses</h3>
+        <div class="history-container">
+            <div id="history-list"></div>
+        </div>
+
+       
+    </div>
+
+    <script>
+        // Global variables
+        let userSkills = [];
+        let jobRequirements = [];
+        
+        // Data for course recommendations
+        const courseDatabase = {
+            "javascript": [
+                { name: "Modern JavaScript from the Beginning", platform: "Udemy", rating: 4.8, duration: "20 hours", level: "beginner" },
+                { name: "Advanced JavaScript Concepts", platform: "Udemy", rating: 4.7, duration: "25 hours", level: "intermediate" },
+                { name: "JavaScript: The Hard Parts", platform: "Frontend Masters", rating: 4.9, duration: "12 hours", level: "advanced" }
+            ],
+            "python": [
+                { name: "Python for Everybody", platform: "Coursera", rating: 4.9, duration: "30 hours", level: "beginner" },
+                { name: "Python for Data Science", platform: "edX", rating: 4.7, duration: "40 hours", level: "intermediate" },
+                { name: "Advanced Python Programming", platform: "Pluralsight", rating: 4.6, duration: "15 hours", level: "advanced" }
+            ],
+            "react": [
+                { name: "React - The Complete Guide", platform: "Udemy", rating: 4.8, duration: "40 hours", level: "beginner" },
+                { name: "Advanced React Patterns", platform: "Frontend Masters", rating: 4.9, duration: "10 hours", level: "advanced" }
+            ],
+            "node.js": [
+                { name: "Node.js API Masterclass", platform: "Udemy", rating: 4.8, duration: "15 hours", level: "intermediate" }
+            ],
+            "mongodb": [
+                { name: "MongoDB - The Complete Developer's Guide", platform: "Udemy", rating: 4.7, duration: "20 hours", level: "intermediate" }
+            ],
+            "sql": [
+                { name: "SQL - The Complete Developer's Guide", platform: "Codecademy", rating: 4.6, duration: "25 hours", level: "beginner" }
+            ],
+            "aws": [
+                { name: "AWS Certified Solutions Architect", platform: "A Cloud Guru", rating: 4.8, duration: "35 hours", level: "intermediate" }
+            ],
+            "docker": [
+                { name: "Docker Crash Course", platform: "YouTube - TraversyMedia", rating: 4.5, duration: "2 hours", level: "beginner" },
+                { name: "Docker & Kubernetes: The Complete Guide", platform: "Udemy", rating: 4.7, duration: "22 hours", level: "intermediate" }
+            ],
+            "typescript": [
+                { name: "TypeScript for Professionals", platform: "Udemy", rating: 4.6, duration: "15 hours", level: "intermediate" }
+            ],
+            "flutter": [
+                { name: "Flutter & Dart - The Complete Guide", platform: "Udemy", rating: 4.8, duration: "30 hours", level: "beginner" }
+            ],
+            "go": [
+                { name: "Go: The Complete Developer's Guide", platform: "Udemy", rating: 4.6, duration: "9 hours", level: "beginner" }
+            ],
+            "linux": [
+                { name: "Linux Administration: The Complete Linux Bootcamp", platform: "Udemy", rating: 4.7, duration: "45 hours", level: "intermediate" }
+            ],
+            "git": [
+                { name: "Git Complete: The Definitive Guide", platform: "Udemy", rating: 4.5, duration: "6 hours", level: "beginner" }
+            ]
+        };
+
+        // Default course recommendations for skills not in the database
+        const defaultCourses = [
+            { platform: "Udemy", level: "beginner" },
+            { platform: "Coursera", level: "beginner" },
+            { platform: "Pluralsight", level: "intermediate" }
+        ];
+
+        // DOM elements
+        const skillInput = document.getElementById('skill-input');
+        const jobSkillInput = document.getElementById('job-skill-input');
+        const currentSkillsContainer = document.getElementById('current-skills');
+        const jobSkillsContainer = document.getElementById('job-skills');
+        const resultsContainer = document.getElementById('results');
+        const historyListContainer = document.getElementById('history-list');
+        const deleteAllHistoryBtn = document.getElementById('delete-all-history');
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Load history
+            loadHistory();
+            
+            // Add example skills if first time
+            if (!localStorage.getItem("hasVisited")) {
+                addExampleData();
+                localStorage.setItem("hasVisited", "true");
+            }
+        });
+
+        function setupEventListeners() {
+            // Add skill on Enter key
+            skillInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addUserSkill();
+                }
+            });
+            
+            // Add job requirement on Enter key
+            jobSkillInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addJobRequirement();
+                }
+            });
+            
+            // Clear all history
+            deleteAllHistoryBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm("Are you sure you want to delete all analysis history?")) {
+                    localStorage.removeItem("skillGapHistory");
+                    loadHistory();
+                }
+            });
+        }
+
+        function addExampleData() {
+            // Add some example user skills
+            ["html", "css", "javascript", "bootstrap"].forEach(skill => {
+                userSkills.push(skill);
+                createSkillTag(skill, currentSkillsContainer, removeUserSkill);
+            });
+            
+            // Add some example job requirements
+            ["html", "css", "javascript", "react", "node.js"].forEach(skill => {
+                jobRequirements.push(skill);
+                createSkillTag(skill, jobSkillsContainer, removeJobRequirement);
+            });
+        }
+
+        function addUserSkill() {
+            const skill = skillInput.value.trim().toLowerCase();
+            if (skill && !userSkills.includes(skill)) {
+                userSkills.push(skill);
+                createSkillTag(skill, currentSkillsContainer, removeUserSkill);
+                skillInput.value = '';
+            } else if (userSkills.includes(skill)) {
+                showNotification("You already added this skill!");
+            }
+        }
+
+        function addJobRequirement() {
+            const skill = jobSkillInput.value.trim().toLowerCase();
+            if (skill && !jobRequirements.includes(skill)) {
+                jobRequirements.push(skill);
+                createSkillTag(skill, jobSkillsContainer, removeJobRequirement);
+                jobSkillInput.value = '';
+            } else if (jobRequirements.includes(skill)) {
+                showNotification("You already added this requirement!");
+            }
+        }
+
+        function createSkillTag(skill, container, removeCallback) {
+            const tag = document.createElement('div');
+            tag.className = 'skill-tag';
+            tag.innerHTML = `${skill} <i class="fas fa-times"></i>`;
+            tag.dataset.skill = skill;
+            
+            // Add remove event listener
+            const removeIcon = tag.querySelector('i');
+            removeIcon.addEventListener('click', () => removeCallback(skill));
+            
+            container.appendChild(tag);
+        }
+
+        function removeUserSkill(skill) {
+            userSkills = userSkills.filter(s => s !== skill);
+            removeSkillTag(skill, currentSkillsContainer);
+        }
+
+        function removeJobRequirement(skill) {
+            jobRequirements = jobRequirements.filter(s => s !== skill);
+            removeSkillTag(skill, jobSkillsContainer);
+        }
+
+        function removeSkillTag(skill, container) {
+            const tag = container.querySelector(`[data-skill="${skill}"]`);
+            if (tag) {
+                tag.remove();
+            }
+        }
+
+        function analyzeSkillGap() {
+            if (userSkills.length === 0 || jobRequirements.length === 0) {
+                alert("Please add at least one skill and one job requirement.");
+                return;
+            }
+            
+            // Find matching and missing skills
+            const matchingSkills = jobRequirements.filter(req => 
+                userSkills.some(skill => skill.trim() === req.trim())
+            );
+            
+            const missingSkills = jobRequirements.filter(req => 
+                !userSkills.includes(req.trim())
+            );
+            
+            // Calculate match percentage
+            const matchPercentage = Math.round((matchingSkills.length / jobRequirements.length) * 100);
+            
+            // Build results
+            document.getElementById('match-percentage').textContent = `${matchPercentage}%`;
+            
+            // Update matching skills list
+            const matchingSkillsList = document.getElementById('matching-skills');
+            matchingSkillsList.innerHTML = '';
+            matchingSkills.forEach(skill => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-check"></i> ${skill}`;
+                matchingSkillsList.appendChild(li);
+            });
+            
+            // Update missing skills list
+            const missingSkillsList = document.getElementById('missing-skills');
+            missingSkillsList.innerHTML = '';
+            missingSkills.forEach(skill => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-times"></i> ${skill}`;
+                missingSkillsList.appendChild(li);
+            });
+            
+            // Generate course recommendations
+            generateCourseRecommendations(missingSkills);
+            
+            // Set analysis date
+            const now = new Date();
+            document.getElementById('analysis-date').textContent = now.toLocaleString();
+            
+            // Show results
+            resultsContainer.classList.add('active');
+            
+            // Save to history
+            saveAnalysisToHistory(matchPercentage, matchingSkills, missingSkills, now);
+        }
+
+        function generateCourseRecommendations(missingSkills) {
+            const courseList = document.getElementById('course-list');
+            courseList.innerHTML = '';
+            
+            const experienceLevel = document.getElementById('experience-level').value;
+            
+            missingSkills.forEach(skill => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                
+                // Get courses for this skill from database or use default
+                let courses = courseDatabase[skill] || [];
+                
+                // If no specific courses found, create generic recommendations
+                if (courses.length === 0) {
+                    courses = defaultCourses.map(template => {
+                        return {
+                            name: `${capitalizeFirstLetter(skill)} Essential Training`,
+                            platform: template.platform,
+                            rating: (4 + Math.random() * 0.9).toFixed(1),
+                            duration: `${Math.floor(5 + Math.random() * 20)} hours`,
+                            level: template.level
+                        };
+                    });
+                }
+                
+                // Filter by experience level if possible
+                let filteredCourses = courses.filter(course => {
+                    if (experienceLevel === 'beginner' && course.level === 'beginner') return true;
+                    if (experienceLevel === 'intermediate' && (course.level === 'beginner' || course.level === 'intermediate')) return true;
+                    if (experienceLevel === 'advanced') return true;
+                    if (experienceLevel === 'expert' && course.level === 'advanced') return true;
+                    return false;
+                });
+                
+                // If no courses match the experience level, just use the first one
+                if (filteredCourses.length === 0 && courses.length > 0) {
+                    filteredCourses = [courses[0]];
+                }
+                
+                // Take the best match
+                const course = filteredCourses[0] || courses[0] || {
+                    name: `${capitalizeFirstLetter(skill)} Course`,
+                    platform: "Udemy",
+                    rating: "4.5",
+                    duration: "15 hours",
+                    level: "beginner"
+                };
+                
+                courseCard.innerHTML = `
+                    <div class="course-header">
+                        <h4>${course.name}</h4>
+                        <span class="course-platform">${course.platform}</span>
+                    </div>
+                    <p>Learn the essential skills needed for ${skill}</p>
+                    <div class="course-info">
+                        <span><i class="fas fa-star"></i> ${course.rating}/5.0</span>
+                        <span><i class="fas fa-clock"></i> ${course.duration}</span>
+                        <span><i class="fas fa-signal"></i> ${capitalizeFirstLetter(course.level)}</span>
+                    </div>
+                `;
+                
+                courseList.appendChild(courseCard);
+            });
+        }
+
+        function saveAnalysisToHistory(matchPercentage, matchingSkills, missingSkills, date) {
+            const analysis = {
+                date: date.toISOString(),
+                userSkills: [...userSkills],
+                jobRequirements: [...jobRequirements],
+                matchPercentage,
+                matchingSkills,
+                missingSkills
+            };
+            
+            let history = JSON.parse(localStorage.getItem("skillGapHistory")) || [];
+            history.unshift(analysis); // Add at the beginning
+            
+            // Keep only the most recent 10 analyses
+            if (history.length > 10) {
+                history = history.slice(0, 10);
+            }
+            
+            localStorage.setItem("skillGapHistory", JSON.stringify(history));
+            loadHistory();
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem("skillGapHistory")) || [];
+            historyListContainer.innerHTML = '';
+            
+            if (history.length === 0) {
+                historyListContainer.innerHTML = '<p>No previous analyses found.</p>';
+                return;
+            }
+            
+            history.forEach((analysis, index) => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                const date = new Date(analysis.date);
+                
+                historyItem.innerHTML = `
+                    <div class="history-header">
+                        <h4>Match: ${analysis.matchPercentage}%</h4>
+                        <div class="history-actions">
+                            <i class="fas fa-redo" title="Load this analysis" data-index="${index}"></i>
+                            <i class="fas fa-trash" title="Delete this analysis" data-index="${index}"></i>
+                        </div>
+                    </div>
+                    <div class="history-summary">
+                        <p><strong>Date:</strong> ${date.toLocaleString()}</p>
+                        <p><strong>Missing:</strong> ${analysis.missingSkills.join(', ') || 'None'}</p>
+                    </div>
+                `;
+                
+                historyListContainer.appendChild(historyItem);
+            });
+            
+            // Add event listeners for history actions
+            document.querySelectorAll('.fa-redo').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    loadAnalysisFromHistory(history[index]);
+                });
+            });
+            
+            document.querySelectorAll('.fa-trash').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    deleteAnalysisFromHistory(index);
+                });
+            });
+        }
+
+       
+        function loadAnalysisFromHistory(analysis) {
+            // Clear current skills and job requirements
+            userSkills = [];
+            jobRequirements = [];
+            currentSkillsContainer.innerHTML = '';
+            jobSkillsContainer.innerHTML = '';
+            
+            // Restore skills from history
+            analysis.userSkills.forEach(skill => {
+                userSkills.push(skill);
+                createSkillTag(skill, currentSkillsContainer, removeUserSkill);
+            });
+            
+            // Restore job requirements from history
+            analysis.jobRequirements.forEach(skill => {
+                jobRequirements.push(skill);
+                createSkillTag(skill, jobSkillsContainer, removeJobRequirement);
+            });
+            
+            // Run analysis again to show results
+            analyzeSkillGap();
+        }
+        
+        function deleteAnalysisFromHistory(index) {
+            if (confirm("Are you sure you want to delete this analysis?")) {
+                let history = JSON.parse(localStorage.getItem("skillGapHistory")) || [];
+                history.splice(index, 1);
+                localStorage.setItem("skillGapHistory", JSON.stringify(history));
+                loadHistory();
+            }
+        }
+        
+        function resetForm() {
+            userSkills = [];
+            jobRequirements = [];
+            currentSkillsContainer.innerHTML = '';
+            jobSkillsContainer.innerHTML = '';
+            resultsContainer.classList.remove('active');
+            skillInput.value = '';
+            jobSkillInput.value = '';
+            document.getElementById('experience-level').value = 'intermediate';
+        }
+        
+        function showNotification(message) {
+            // Simple notification functionality
+            alert(message);
+        }
+        
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+    </script>
+    </body>
+    </html>

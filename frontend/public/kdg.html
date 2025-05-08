@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Powered Job Description Generator for creating professional job postings">
+    <meta name="keywords" content="job description, job posting, AI generator">
+    <title>Advanced Job Description Generator</title>
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #ff9800;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        h3 {
+            color: #ff9800;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 0 5px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px;
+            background: #252525;
+            color: white;
+            border: 1px solid #555;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #ff9800;
+            box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .checkbox-item input {
+            width: auto;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: #333;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .skill-tag span {
+            cursor: pointer;
+            color: #ff9800;
+        }
+
+        button {
+            background: #ff9800;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            transition: 0.3s ease-in-out;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background: #e68900;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #555;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #666;
+        }
+
+        #generatedDescription {
+            margin-top: 15px;
+            text-align: left;
+            background: #252525;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            white-space: pre-line;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #444;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 100;
+        }
+
+        .template-selector {
+            display: flex;
+            margin: 15px 0;
+            gap: 10px;
+        }
+
+        .template-option {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .template-option:hover {
+            background-color: #333;
+        }
+
+        .template-option.active {
+            border-color: #ff9800;
+            background-color: rgba(255, 152, 0, 0.1);
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #ff9800;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            
+            h2 {
+                font-size: 20px;
+            }
+            
+            .result-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .result-actions button {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #f5f5f5;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Light theme */
+        body.light-theme {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        body.light-theme .container {
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme label {
+            color: #555;
+        }
+
+        body.light-theme input, 
+        body.light-theme select, 
+        body.light-theme textarea,
+        body.light-theme #generatedDescription {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        body.light-theme .skill-tag {
+            background: #e9e9e9;
+            color: #333;
+        }
+
+        body.light-theme .theme-toggle {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">🌓</button>
+
+    <div class="container">
+        <h2>📝 Advanced Job Description Generator</h2>
+
+        <div class="template-selector">
+            <div class="template-option active" data-template="standard" onclick="selectTemplate('standard')">
+                Standard
+            </div>
+            <div class="template-option" data-template="creative" onclick="selectTemplate('creative')">
+                Creative
+            </div>
+            <div class="template-option" data-template="technical" onclick="selectTemplate('technical')">
+                Technical
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="jobRole">🔍 Job Role *</label>
+            <input type="text" id="jobRole" placeholder="e.g., Software Engineer" required>
+        </div>
+
+        <div class="form-group">
+            <label for="experience">📅 Experience Level *</label>
+            <select id="experience" required>
+                <option value="Entry-Level">Entry-Level (0-2 years)</option>
+                <option value="Mid-Level">Mid-Level (3-5 years)</option>
+                <option value="Senior">Senior (6+ years)</option>
+                <option value="Lead">Lead/Manager (8+ years)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="skills">🛠 Required Skills *</label>
+            <input type="text" id="skills" placeholder="Type skills and press Enter" onkeydown="handleSkillInput(event)">
+            <div class="skill-tags" id="skillTags"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="company">🏢 Company Name *</label>
+            <input type="text" id="company" placeholder="e.g., Google" required>
+        </div>
+
+        <div class="form-group">
+            <label for="location">📍 Location *</label>
+            <input type="text" id="location" placeholder="e.g., Remote, New York" required>
+        </div>
+
+        <div class="form-group">
+            <label for="salary">💰 Salary Range (Optional)</label>
+            <input type="text" id="salary" placeholder="e.g., $80,000 - $100,000">
+        </div>
+
+        <div class="form-group">
+            <label>📋 Employment Type</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="fullTime" checked>
+                    <label for="fullTime">Full-time</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="partTime">
+                    <label for="partTime">Part-time</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="contract">
+                    <label for="contract">Contract</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="freelance">
+                    <label for="freelance">Freelance</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="benefits">🎁 Benefits (Optional)</label>
+            <input type="text" id="benefits" placeholder="e.g., Health insurance, 401k, Flexible hours">
+        </div>
+
+        <button onclick="generateDescription()">⚡ Generate Description</button>
+
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+            <p>Generating your job description...</p>
+        </div>
+
+        <h3>📄 Generated Job Description</h3>
+        <div id="generatedDescription">Your job description will appear here...</div>
+
+        <div class="result-actions">
+            <button onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+            <button class="btn-secondary" onclick="downloadDescription()">📥 Download as Text</button>
+        </div>
+    </div>
+
+    <div class="copy-notification" id="copyNotification">Copied to clipboard!</div>
+
+    <script>
+        // Global variables
+        let selectedTemplate = 'standard';
+        let skillsList = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for saved theme
+            const savedTheme = localStorage.getItem('preferredTheme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        });
+
+        // Theme toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+            const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            localStorage.setItem('preferredTheme', currentTheme);
+        }
+
+        // Template selector
+        function selectTemplate(template) {
+            selectedTemplate = template;
+            
+            // Update UI
+            document.querySelectorAll('.template-option').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelector(`.template-option[data-template="${template}"]`).classList.add('active');
+        }
+
+        // Skills input handler
+        function handleSkillInput(event) {
+            if (event.key === 'Enter' && event.target.value.trim() !== '') {
+                event.preventDefault();
+                
+                const skill = event.target.value.trim();
+                if (!skillsList.includes(skill)) {
+                    skillsList.push(skill);
+                    renderSkillTags();
+                }
+                
+                event.target.value = '';
+            }
+        }
+
+        // Render skill tags
+        function renderSkillTags() {
+            const container = document.getElementById('skillTags');
+            container.innerHTML = '';
+            
+            skillsList.forEach((skill, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `${skill} <span onclick="removeSkill(${index})">✕</span>`;
+                container.appendChild(tag);
+            });
+        }
+
+        // Remove skill
+        function removeSkill(index) {
+            skillsList.splice(index, 1);
+            renderSkillTags();
+        }
+
+        // Generate the job description
+        function generateDescription() {
+            const jobRole = document.getElementById("jobRole").value.trim();
+            const experience = document.getElementById("experience").value;
+            const company = document.getElementById("company").value.trim();
+            const location = document.getElementById("location").value.trim();
+            const salary = document.getElementById("salary").value.trim();
+            const benefits = document.getElementById("benefits").value.trim();
+            
+            // Get employment types
+            const employmentTypes = [];
+            if (document.getElementById("fullTime").checked) employmentTypes.push("Full-time");
+            if (document.getElementById("partTime").checked) employmentTypes.push("Part-time");
+            if (document.getElementById("contract").checked) employmentTypes.push("Contract");
+            if (document.getElementById("freelance").checked) employmentTypes.push("Freelance");
+            
+            // Validation
+            if (!jobRole || skillsList.length === 0 || !company || !location) {
+                alert("Please fill in all required fields and add at least one skill.");
+                return;
+            }
+
+            // Show loading
+            document.getElementById("loadingIndicator").style.display = "block";
+            
+            // Simulate delay for effect
+            setTimeout(() => {
+                let description = generateByTemplate(
+                    jobRole, 
+                    experience, 
+                    skillsList, 
+                    company, 
+                    location, 
+                    salary, 
+                    benefits, 
+                    employmentTypes
+                );
+                
+                document.getElementById("generatedDescription").innerHTML = description;
+                document.getElementById("loadingIndicator").style.display = "none";
+            }, 1000);
+        }
+
+        // Generate description based on template
+        function generateByTemplate(jobRole, experience, skills, company, location, salary, benefits, employmentTypes) {
+            const formattedSkills = skills.join(', ');
+            const employmentString = employmentTypes.join(', ');
+            
+            // Default responsibilities based on experience
+            let responsibilities = [];
+            if (experience.includes('Entry')) {
+                responsibilities = [
+                    "Assist in developing and testing software components",
+                    "Collaborate with team members on assigned tasks",
+                    "Debug and fix simple issues",
+                    "Participate in team meetings and code reviews"
+                ];
+            } else if (experience.includes('Mid')) {
+                responsibilities = [
+                    "Develop and maintain software applications",
+                    "Write clean, efficient, and well-documented code",
+                    "Troubleshoot and resolve technical issues",
+                    "Collaborate with cross-functional teams on project implementation"
+                ];
+            } else if (experience.includes('Senior')) {
+                responsibilities = [
+                    "Design and implement complex software solutions",
+                    "Provide technical leadership and mentorship to junior developers",
+                    "Make architectural decisions and propose technical improvements",
+                    "Collaborate with stakeholders to understand requirements and deliver solutions"
+                ];
+            } else {
+                responsibilities = [
+                    "Lead development teams and coordinate project execution",
+                    "Make strategic technical decisions and establish best practices",
+                    "Mentor team members and drive technical excellence",
+                    "Collaborate with other departments to align technical solutions with business goals"
+                ];
+            }
+            
+            // Requirements based on experience level
+            let requirements = [
+                `${experience} experience in ${jobRole} or similar role`,
+                `Proficiency in ${formattedSkills}`,
+                "Strong problem-solving and analytical skills",
+                "Excellent communication and collaboration abilities"
+            ];
+            
+            // Template-specific content
+            if (selectedTemplate === 'standard') {
+                return generateStandardTemplate(jobRole, experience, company, location, responsibilities, requirements, formattedSkills, salary, benefits, employmentString);
+            } else if (selectedTemplate === 'creative') {
+                return generateCreativeTemplate(jobRole, experience, company, location, responsibilities, requirements, formattedSkills, salary, benefits, employmentString);
+            } else {
+                return generateTechnicalTemplate(jobRole, experience, company, location, responsibilities, requirements, formattedSkills, salary, benefits, employmentString);
+            }
+        }
+
+        // Standard template
+        function generateStandardTemplate(jobRole, experience, company, location, responsibilities, requirements, skills, salary, benefits, employmentTypes) {
+            let salaryText = salary ? `<strong>Salary:</strong> ${salary}<br>` : '';
+            let benefitsText = benefits ? `<strong>Benefits:</strong> ${benefits}<br><br>` : '<br>';
+            
+            return `<h3>${experience} ${jobRole} at ${company}</h3>
+<p><strong>Location:</strong> ${location}<br>
+<strong>Employment Type:</strong> ${employmentTypes}<br>
+${salaryText}${benefitsText}</p>
+
+<p>${company} is seeking a talented ${experience} ${jobRole} to join our dynamic team in ${location}. As a ${jobRole}, you will be responsible for delivering high-quality solutions while collaborating with cross-functional teams.</p>
+
+<h4>Responsibilities:</h4>
+<ul>
+${responsibilities.map(r => `<li>${r}</li>`).join('\n')}
+</ul>
+
+<h4>Requirements:</h4>
+<ul>
+${requirements.map(r => `<li>${r}</li>`).join('\n')}
+</ul>
+
+<h4>About ${company}:</h4>
+<p>${company} is committed to providing a supportive and inclusive work environment. We value diversity and encourage all qualified applicants to apply.</p>
+
+<p><strong>How to Apply:</strong> Please submit your resume and cover letter highlighting your relevant experience and skills. For any queries, please contact our HR department.</p>`;
+        }
+
+        // Creative template
+        function generateCreativeTemplate(jobRole, experience, company, location, responsibilities, requirements, skills, salary, benefits, employmentTypes) {
+            let salaryText = salary ? `💰 <strong>Compensation:</strong> ${salary}<br>` : '';
+            let benefitsText = benefits ? `🎁 <strong>Perks & Benefits:</strong> ${benefits}<br><br>` : '<br>';
+            
+            return `<h3>✨ Join our ${company} family as a ${experience} ${jobRole}! ✨</h3>
+<p>📍 <strong>Where:</strong> ${location}<br>
+⏰ <strong>How:</strong> ${employmentTypes}<br>
+${salaryText}${benefitsText}</p>
+
+<p>Are you passionate about innovation and ready to make an impact? ${company} is looking for a creative, driven ${jobRole} to help us shape the future!</p>
+
+<h4>🚀 What You'll Do:</h4>
+<ul>
+${responsibilities.map(r => `<li>${r}</li>`).join('\n')}
+</ul>
+
+<h4>🌟 Who You Are:</h4>
+<ul>
+${requirements.map(r => `<li>${r}</li>`).join('\n')}
+</ul>
+
+<h4>💫 Why Join ${company}?</h4>
+<p>At ${company}, we believe in pushing boundaries and challenging the status quo. Our collaborative culture encourages innovation, personal growth, and work-life balance. We're not just colleagues - we're a community of passionate individuals working toward shared goals.</p>
+
+<p>🌈 <strong>Diversity Statement:</strong> We celebrate diversity and are committed to creating an inclusive environment for all employees.</p>
+
+<p>Ready to embark on an exciting journey with us? We can't wait to hear from you! 🚀</p>`;
+        }
+
+        // Technical template
+        function generateTechnicalTemplate(jobRole, experience, company, location, responsibilities, requirements, skills, salary, benefits, employmentTypes) {
+            let salaryText = salary ? `<strong>Compensation:</strong> ${salary}<br>` : '';
+            let benefitsText = benefits ? `<strong>Benefits Package:</strong> ${benefits}<br><br>` : '<br>';
+            
+            // Add technical requirements
+            let technicalReqs = requirements.slice();
+            technicalReqs.push("Experience with version control systems (e.g., Git)");
+            technicalReqs.push("Understanding of software development methodologies");
+            
+            return `<h3>${experience} ${jobRole} - Technical Position</h3>
+<p><strong>Organization:</strong> ${company}<br>
+<strong>Location:</strong> ${location}<br>
+<strong>Position Type:</strong> ${employmentTypes}<br>
+${salaryText}${benefitsText}</p>
+
+<h4>Project Overview:</h4>
+<p>${company} is developing innovative solutions in our ${location} office. We're seeking a technically proficient ${jobRole} with ${experience.toLowerCase()} experience to join our engineering team.</p>
+
+<h4>Technical Responsibilities:</h4>
+<ul>
+${responsibilities.map(r => `<li>${r}</li>`).join('\n')}
+<li>Optimize code for maximum performance and scalability</li>
+<li>Implement automated testing and deployment practices</li>
+</ul>
+
+<h4>Technical Requirements:</h4>
+<ul>
+${technicalReqs.map(r => `<li>${r}</li>`).join('\n')}
+</ul>
+
+<h4>Technical Stack:</h4>
+<p>The ideal candidate will have experience with the following technologies: ${skills}.</p>
+
+<h4>Development Methodology:</h4>
+<p>Our team employs an Agile development process with two-week sprints. We utilize continuous integration/continuous deployment (CI/CD) practices and maintain comprehensive documentation.</p>
+
+<p><strong>Application Process:</strong> Candidates will undergo a technical screening followed by a coding assessment and technical interview.</p>`;
+        }
+
+        // Copy to clipboard
+        function copyToClipboard() {
+            const descriptionText = document.getElementById("generatedDescription").innerText;
+            navigator.clipboard.writeText(descriptionText).then(() => {
+                const notification = document.getElementById("copyNotification");
+                notification.style.display = "block";
+                
+                setTimeout(() => {
+                    notification.style.display = "none";
+                }, 2000);
+            });
+        }
+
+        // Download as text file
+        function downloadDescription() {
+            const descriptionText = document.getElementById("generatedDescription").innerText;
+            const blob = new Blob([descriptionText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = "job_description.txt";
+            
+            document.body.appendChild(a);
+            a.click();
+            
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        // Form validation on input
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('input', function() {
+                if (this.hasAttribute('required') && this.value.trim() === '') {
+                    this.style.borderColor = '#ff6b6b';
+                } else {
+                    this.style.borderColor = '#555';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

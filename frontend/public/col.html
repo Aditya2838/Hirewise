@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced AI Cover Letter Generator</title>
+    <style>
+        /* CSS Reset and Variables */
+        :root {
+            --primary-color: #ff9800;
+            --primary-hover: #e68900;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --bg-input: #252525;
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+            --border-color: #555;
+            --shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General Styling */
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 800px;
+            margin: 20px 0;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .header-with-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .header-with-icon i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        textarea, input, select {
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px;
+            background: var(--bg-input);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            outline: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        textarea:focus, input:focus, select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.25);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-row > div {
+            flex: 1;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        button {
+            background: var(--primary-color);
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: var(--bg-input);
+            color: var(--text-light);
+        }
+
+        button.secondary:hover {
+            background: #333;
+        }
+
+        /* Output Section */
+        .output-section {
+            margin-top: 25px;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .output-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        #cover-letter {
+            text-align: left;
+            padding: 20px;
+            background: var(--bg-input);
+            border-radius: 8px;
+            font-size: 15px;
+            white-space: pre-line;
+            min-height: 200px;
+            border: 1px solid var(--border-color);
+            line-height: 1.6;
+        }
+
+        /* Tabs for cover letter styles */
+        .tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .input-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-with-icon">
+            <i class="fas fa-file-alt"></i>
+            <h2>Advanced Cover Letter Generator</h2>
+        </div>
+
+        <div class="form-group">
+            <div class="input-row">
+                <div>
+                    <label for="name"><i class="fas fa-user"></i> Your Name</label>
+                    <input id="name" type="text" placeholder="John Doe">
+                </div>
+                <div>
+                    <label for="email"><i class="fas fa-envelope"></i> Your Email</label>
+                    <input id="email" type="email" placeholder="john@example.com">
+                </div>
+            </div>
+            
+            <div class="input-row">
+                <div>
+                    <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                    <input id="phone" type="tel" placeholder="(123) 456-7890">
+                </div>
+                <div>
+                    <label for="linkedin"><i class="fab fa-linkedin"></i> LinkedIn (optional)</label>
+                    <input id="linkedin" type="text" placeholder="linkedin.com/in/johndoe">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="position"><i class="fas fa-briefcase"></i> Job Position</label>
+                <input id="position" type="text" placeholder="Software Engineer">
+            </div>
+
+            <div class="form-group">
+                <label for="company"><i class="fas fa-building"></i> Company Name</label>
+                <input id="company" type="text" placeholder="Tech Solutions Inc.">
+            </div>
+
+            <div class="form-group">
+                <label for="recruiter-name"><i class="fas fa-user-tie"></i> Recruiter's Name (if known)</label>
+                <input id="recruiter-name" type="text" placeholder="Jane Smith">
+            </div>
+
+            <div class="form-group">
+                <label for="experience"><i class="fas fa-star"></i> Your Experience & Key Skills</label>
+                <textarea id="experience" placeholder="- 5 years of front-end development experience
+- Proficient with React, Vue.js, and Angular
+- Led a team of 3 developers on a successful project"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="achievements"><i class="fas fa-trophy"></i> Notable Achievements (optional)</label>
+                <textarea id="achievements" placeholder="- Increased website performance by 40%
+- Reduced bug reports by 30% through implementing better testing protocols
+- Won company hackathon for innovative feature"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="job-description"><i class="fas fa-clipboard-list"></i> Key Job Requirements</label>
+                <textarea id="job-description" placeholder="- Strong knowledge of JavaScript and modern frameworks
+- Experience with CI/CD pipelines
+- Ability to work in agile environment"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="tone"><i class="fas fa-comment"></i> Tone</label>
+                <select id="tone">
+                    <option value="professional">Professional</option>
+                    <option value="enthusiastic">Enthusiastic</option>
+                    <option value="confident">Confident</option>
+                    <option value="formal">Formal</option>
+                    <option value="conversational">Conversational</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="length"><i class="fas fa-text-height"></i> Length</label>
+                <select id="length">
+                    <option value="concise">Concise (250-300 words)</option>
+                    <option value="standard" selected>Standard (350-400 words)</option>
+                    <option value="detailed">Detailed (450-500 words)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button id="generate-btn" onclick="generateCoverLetter()">
+                <i class="fas fa-wand-magic-sparkles"></i> Generate Cover Letter
+                <div id="spinner" class="spinner"></div>
+            </button>
+            <button class="secondary" onclick="resetForm()">
+                <i class="fas fa-broom"></i> Reset
+            </button>
+        </div>
+
+        <div class="output-section" id="output-section" style="display: none;">
+            <div class="output-header">
+                <div class="tabs">
+                    <button class="tab active" data-style="standard">Standard</button>
+                    <button class="tab" data-style="storytelling">Storytelling</button>
+                    <button class="tab" data-style="skills-focused">Skills-Focused</button>
+                </div>
+                <div class="output-actions">
+                    <button class="secondary tooltip" onclick="copyToClipboard()">
+                        <i class="fas fa-copy"></i> Copy
+                        <span class="tooltiptext">Copy to clipboard</span>
+                    </button>
+                    <button class="secondary tooltip" onclick="downloadAsPDF()">
+                        <i class="fas fa-file-pdf"></i> PDF
+                        <span class="tooltiptext">Download as PDF</span>
+                    </button>
+                    <button class="secondary tooltip" onclick="downloadAsWord()">
+                        <i class="fas fa-file-word"></i> Word
+                        <span class="tooltiptext">Download as Word</span>
+                    </button>
+                </div>
+            </div>
+            <div id="cover-letter"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- CDN for HTML to PDF conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- CDN for Word document creation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- CDN for DocX generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.0.0/docx.js"></script>
+
+    <script>// Store different versions of the generated cover letter
+        let coverLetterVersions = {
+            standard: '',
+            storytelling: '',
+            skillsFocused: ''
+        };
+        
+        // Current active tab
+        let activeStyle = 'standard';
+        
+        // Initialize tabs
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    activeStyle = this.getAttribute('data-style');
+                    updateCoverLetterDisplay();
+                });
+            });
+        });
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        function resetForm() {
+            const formElements = document.querySelectorAll('input, textarea');
+            formElements.forEach(element => element.value = '');
+            document.getElementById('output-section').style.display = 'none';
+        }
+        
+        function generateCoverLetter() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const linkedin = document.getElementById("linkedin").value;
+            const position = document.getElementById("position").value;
+            const company = document.getElementById("company").value;
+            const recruiterName = document.getElementById("recruiter-name").value;
+            const experience = document.getElementById("experience").value;
+            const achievements = document.getElementById("achievements").value;
+            const jobDescription = document.getElementById("job-description").value;
+            const tone = document.getElementById("tone").value;
+            const length = document.getElementById("length").value;
+        
+            // Validate required fields
+            const requiredFields = [
+                { id: 'name', label: 'Your Name' },
+                { id: 'email', label: 'Your Email' },
+                { id: 'position', label: 'Job Position' },
+                { id: 'company', label: 'Company Name' },
+                { id: 'experience', label: 'Your Experience' },
+                { id: 'job-description', label: 'Job Requirements' }
+            ];
+            
+            let missingFields = [];
+            requiredFields.forEach(field => {
+                if (!document.getElementById(field.id).value.trim()) {
+                    missingFields.push(field.label);
+                }
+            });
+            
+            if (missingFields.length > 0) {
+                showToast(`Please fill in the following: ${missingFields.join(', ')}`);
+                return;
+            }
+        
+            // Show loading state
+            const generateBtn = document.getElementById('generate-btn');
+            const spinner = document.getElementById('spinner');
+            generateBtn.disabled = true;
+            spinner.style.display = 'block';
+            
+            // Show output section
+            document.getElementById('output-section').style.display = 'block';
+        
+            setTimeout(() => {
+                // Greeting based on recruiter name
+                const greeting = recruiterName ? `Dear ${recruiterName},` : `Dear Hiring Manager,`;
+                
+                // Date formatting
+                const today = new Date();
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                const formattedDate = today.toLocaleDateString('en-US', options);
+                
+                // Contact info formatting
+                const contactInfo = `${name}\n${email}${phone ? ` | ${phone}` : ''}${linkedin ? ` | ${linkedin}` : ''}`;
+                
+                // Generate different versions of the cover letter
+                
+                // Standard version
+                coverLetterVersions.standard = generateStandardLetter(
+                    contactInfo, formattedDate, greeting, 
+                    name, position, company, experience, 
+                    achievements, jobDescription, tone, length
+                );
+                
+                // Storytelling version
+                coverLetterVersions.storytelling = generateStorytellingLetter(
+                    contactInfo, formattedDate, greeting, 
+                    name, position, company, experience, 
+                    achievements, jobDescription, tone, length
+                );
+                
+                // Skills-focused version
+                coverLetterVersions.skillsFocused = generateSkillsFocusedLetter(
+                    contactInfo, formattedDate, greeting, 
+                    name, position, company, experience, 
+                    achievements, jobDescription, tone, length
+                );
+                
+                // Display the active version
+                updateCoverLetterDisplay();
+                
+                // Reset loading state
+                generateBtn.disabled = false;
+                spinner.style.display = 'none';
+                
+                // Show success message
+                showToast("Cover letter generated successfully!");
+                
+                // Scroll to output
+                document.getElementById('output-section').scrollIntoView({ behavior: 'smooth' });
+            }, 1000); // Simulating generation time
+        }
+        
+        function updateCoverLetterDisplay() {
+            const coverLetterElement = document.getElementById("cover-letter");
+            
+            switch(activeStyle) {
+                case 'storytelling':
+                    coverLetterElement.innerText = coverLetterVersions.storytelling;
+                    break;
+                case 'skills-focused':
+                    coverLetterElement.innerText = coverLetterVersions.skillsFocused;
+                    break;
+                default:
+                    coverLetterElement.innerText = coverLetterVersions.standard;
+            }
+        }
+        
+        function generateStandardLetter(contactInfo, date, greeting, name, position, company, experience, achievements, jobDescription, tone, length) {
+            // Tone variations
+            const openingLines = {
+                professional: `I am writing to express my interest in the ${position} position at ${company}.`,
+                enthusiastic: `I'm thrilled to apply for the ${position} role at ${company}!`,
+                confident: `With my proven track record, I am the ideal candidate for the ${position} position at ${company}.`,
+                formal: `Please accept my application for the ${position} position as advertised.`,
+                conversational: `When I saw your opening for a ${position}, I knew it was the perfect opportunity for me.`
+            };
+            
+            const closingLines = {
+                professional: `Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to ${company}.`,
+                enthusiastic: `I'm excited about the possibility of bringing my skills to ${company} and would love to discuss how I can contribute to your team's success!`,
+                confident: `I am certain that my expertise would make me a valuable addition to your team, and I look forward to discussing this opportunity further.`,
+                formal: `I appreciate your consideration and look forward to the possibility of an interview to further discuss my qualifications.`,
+                conversational: `I'd love to chat more about how my background fits your needs. Thanks so much for considering my application!`
+            };
+            
+            // Create the parts of the letter
+            const header = `${contactInfo}\n\n${date}\n\n${greeting}\n\n`;
+            
+            const opening = `${openingLines[tone]}\n\n`;
+            
+            let body = `With experience in ${experience.split('\n').join(', ')}, I am well-equipped to excel in this role. `;
+            
+            if (achievements) {
+                body += `Some of my notable achievements include ${achievements.split('\n').join(', ')}. `;
+            }
+            
+            body += `\n\nAfter reviewing the job description, I understand that you're looking for a candidate with ${jobDescription.split('\n').join(', ')}. My background has prepared me well for these requirements, and I am confident in my ability to deliver exceptional results for ${company}.\n\n`;
+            
+            // Adjust length based on selection
+            if (length === 'detailed') {
+                body += `What particularly excites me about this role is the chance to bring my unique perspective and problem-solving approach to your team. Throughout my career, I've consistently demonstrated the ability to adapt to new challenges and deliver innovative solutions. I believe these qualities, combined with my technical expertise, make me an excellent fit for your company culture and mission.\n\n`;
+            } else if (length === 'concise') {
+                body = body.replace(/\. /g, '. ').replace(/\n\n/g, '\n');
+            }
+            
+            const closing = `${closingLines[tone]}\n\nSincerely,\n\n${name}`;
+            
+            return header + opening + body + closing;
+        }
+        
+        function generateStorytellingLetter(contactInfo, date, greeting, name, position, company, experience, achievements, jobDescription, tone, length) {
+            // Create a narrative-style cover letter
+            const header = `${contactInfo}\n\n${date}\n\n${greeting}\n\n`;
+            
+            let opening = '';
+            if (achievements) {
+                const achievementList = achievements.split('\n');
+                opening = `While ${achievementList[0].replace(/^-\s*/, '')}, I discovered my passion for this field. This experience, along with my background in ${experience.split('\n')[0].replace(/^-\s*/, '')}, has prepared me well for the ${position} role at ${company}.\n\n`;
+            } else {
+                opening = `My journey in this field began when I first discovered my passion for ${experience.split('\n')[0].replace(/^-\s*/, '')}. Since then, I've built a career that has prepared me perfectly for the ${position} role at ${company}.\n\n`;
+            }
+            
+            let body = `Throughout my professional journey, I've developed expertise in ${experience.split('\n').join(', ')}. These skills directly align with your requirements for ${jobDescription.split('\n').join(', ')}.\n\n`;
+            
+            // Add more details based on length selection
+            if (length === 'detailed') {
+                body += `One particular challenge I faced was implementing a new system while maintaining daily operations. By carefully planning and collaborating with stakeholders, we achieved a seamless transition that actually improved efficiency by 30%. This experience taught me valuable lessons about change management and communication that I'm eager to bring to ${company}.\n\n`;
+            } else if (length === 'concise') {
+                body = body.replace(/\. /g, '. ').replace(/\n\n/g, '\n');
+            }
+            
+            const closing = `I'm excited about the opportunity to bring my unique story and skills to ${company} and contribute to your continued success. I look forward to discussing how my journey has prepared me to excel in this role.\n\nSincerely,\n\n${name}`;
+            
+            return header + opening + body + closing;
+        }
+        
+        function generateSkillsFocusedLetter(contactInfo, date, greeting, name, position, company, experience, achievements, jobDescription, tone, length) {
+            // Create a skills-matching cover letter
+            const header = `${contactInfo}\n\n${date}\n\n${greeting}\n\n`;
+            
+            const opening = `I am writing to apply for the ${position} position at ${company}. After reviewing your job requirements, I believe my specific skill set makes me an ideal candidate for this role.\n\n`;
+            
+            // Extract job requirements and match with experience
+            const requirements = jobDescription.split('\n').map(req => req.replace(/^-\s*/, '').trim());
+            const skills = experience.split('\n').map(skill => skill.replace(/^-\s*/, '').trim());
+            
+            let body = `Your requirements match my qualifications in the following ways:\n\n`;
+            
+            // Match requirements with skills where possible
+            for (let i = 0; i < Math.min(requirements.length, 3); i++) {
+                const req = requirements[i];
+                // Find a matching skill if possible
+                const matchingSkill = skills.find(skill => 
+                    skill.toLowerCase().includes(req.toLowerCase().split(' ')[0]) || 
+                    req.toLowerCase().includes(skill.toLowerCase().split(' ')[0])
+                ) || skills[i % skills.length];
+                
+                body += `• ${req}: ${matchingSkill}${i < 2 ? '\n\n' : '\n'}`;
+            }
+            
+            if (achievements) {
+                body += `\nAdditionally, I have demonstrated success through:\n\n`;
+                achievements.split('\n').slice(0, 2).forEach(achievement => {
+                    body += `• ${achievement.replace(/^-\s*/, '')}\n`;
+                });
+                body += '\n';
+            }
+            
+            // Adjust length
+            if (length === 'detailed') {
+                body += `Beyond these specific qualifications, I bring a collaborative mindset and problem-solving approach that enables me to adapt quickly and contribute effectively in fast-paced environments. I pride myself on not just meeting expectations but exceeding them through innovation and dedication.\n\n`;
+            } else if (length === 'concise') {
+                body = body.replace(/\n\n/g, '\n');
+            }
+            
+            const closing = `I welcome the opportunity to discuss how my specific skills and experience will benefit ${company}. Thank you for considering my application.\n\nSincerely,\n\n${name}`;
+            
+            return header + opening + body + closing;
+        }
+        
+        function copyToClipboard() {
+            const text = document.getElementById("cover-letter").innerText;
+            if (text) {
+                navigator.clipboard.writeText(text);
+                showToast("Cover letter copied to clipboard!");
+            } else {
+                showToast("Please generate a cover letter first.");
+            }
+        }
+        
+        function downloadAsPDF() {
+            const coverLetter = document.getElementById("cover-letter").innerText;
+            if (!coverLetter) {
+                showToast("Please generate a cover letter first.");
+                return;
+            }
+        
+            const name = document.getElementById("name").value;
+            const position = document.getElementById("position").value;
+            const company = document.getElementById("company").value;
+            
+            // Create content for PDF
+            const element = document.createElement('div');
+            element.innerHTML = `
+                <div style="font-family: Arial, sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; line-height: 1.5;">
+                    <div style="white-space: pre-line;">${coverLetter}</div>
+                </div>
+            `;
+            
+            // Configure PDF options
+            const opt = {
+                margin: [15, 15, 15, 15],
+                filename: `${name.replace(/\s+/g, '_')}_Cover_Letter_${company.replace(/\s+/g, '_')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // Generate PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                showToast("PDF downloaded successfully!");
+            }).catch(err => {
+                console.error('Error generating PDF:', err);
+                showToast("Error generating PDF. Please try again.");
+            });
+        }
+        
+        function downloadAsWord() {
+            const coverLetter = document.getElementById("cover-letter").innerText;
+            if (!coverLetter) {
+                showToast("Please generate a cover letter first.");
+                return;
+            }
+            
+            const name = document.getElementById("name").value;
+            const company = document.getElementById("company").value;
+            
+            try {
+                // Create a new document
+                const doc = new docx.Document({
+                    sections: [{
+                        properties: {},
+                        children: [
+                            new docx.Paragraph({
+                                children: [
+                                    new docx.TextRun({
+                                        text: coverLetter,
+                                        size: 24 // 12pt
+                                    })
+                                ]
+                            })
+                        ]
+                    }]
+                });
+                
+                // Generate and save document
+                docx.Packer.toBlob(doc).then(blob => {
+                    saveAs(blob, `${name.replace(/\s+/g, '_')}_Cover_Letter_${company.replace(/\s+/g, '_')}.docx`);
+                    showToast("Word document downloaded successfully!");
+                });
+            } catch (error) {
+                console.error('Error generating Word document:', error);
+                showToast("Error generating Word document. Please try again.");
+                
+                // Fallback to text file if docx generation fails
+                const blob = new Blob([coverLetter], { type: 'text/plain;charset=utf-8' });
+                saveAs(blob, `${name.replace(/\s+/g, '_')}_Cover_Letter_${company.replace(/\s+/g, '_')}.txt`);
+                showToast("Downloaded as text file instead.");
+            }
+        }
+        
+        // Run validation on input fields
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('input, textarea').forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.hasAttribute('required') && !this.value.trim()) {
+                        this.style.borderColor = '#ff4d4d';
+                    } else {
+                        this.style.borderColor = 'var(--border-color)';
+                    }
+                });
+            });
+        });
+</script>
+</body>
+</html>

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered resume scoring and analysis tool">
+    <title>Resume Score Analyzer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff9800;
+            --primary-hover: #e68900;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --bg-input: #252525;
+            --text-light: #f5f5f5;
+            --text-secondary: #aaaaaa;
+            --score-high: #4CAF50;
+            --score-medium: #FFC107;
+            --score-low: #FF5733;
+            --border-color: #555;
+            --shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .file-upload {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 15px;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            background: var(--bg-input);
+            margin-bottom: 15px;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--primary-color);
+            background: rgba(255, 152, 0, 0.1);
+        }
+
+        .file-upload-label i {
+            margin-right: 10px;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        #resumeInput {
+            position: absolute;
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        #fileNameDisplay {
+            color: var(--text-secondary);
+            margin-top: 10px;
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        button {
+            background: var(--primary-color);
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button i {
+            margin-right: 8px;
+        }
+
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-container {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+            display: none;
+        }
+
+        .score-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .donut-chart {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .analysis-details {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .analysis-item {
+            margin-bottom: 15px;
+        }
+
+        .analysis-item h4 {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .analysis-item h4 i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        .analysis-item p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            padding-left: 24px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--bg-input);
+            border-radius: 4px;
+            margin: 8px 0 15px 24px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease-out;
+        }
+
+        .recommendations {
+            margin-top: 25px;
+        }
+
+        .recommendations ul {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .recommendations li {
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .recommendations li::marker {
+            color: var(--primary-color);
+        }
+
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: var(--score-low);
+            margin: 10px 0;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 24px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+
+        /* Dark mode toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .theme-toggle:hover {
+            color: var(--primary-color);
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* For light theme (future implementation) */
+        .light-theme {
+            --bg-dark: #f5f5f5;
+            --bg-card: #ffffff;
+            --bg-input: #f0f0f0;
+            --text-light: #333333;
+            --text-secondary: #666666;
+            --border-color: #dddddd;
+            --shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animation for results */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            margin-left: 5px;
+        }
+
+        .tooltip i {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+        
+        <div class="header">
+            <h2>AI Resume Score Analyzer</h2>
+            <p class="subtitle">Upload your resume for instant AI-powered analysis and scoring</p>
+        </div>
+
+        <div class="file-upload">
+            <label for="resumeInput" class="file-upload-label" id="dropZone">
+                <i class="fas fa-file-upload"></i>
+                <span>Choose a file or drag it here</span>
+            </label>
+            <input type="file" id="resumeInput" accept=".pdf,.docx,.doc,.txt,.rtf">
+            <p id="fileNameDisplay">No file selected</p>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+        
+        <div class="actions">
+            <button id="analyzeBtn" onclick="analyzeResume()" disabled>
+                <i class="fas fa-search"></i>Analyze Resume
+            </button>
+            <button id="resetBtn" onclick="resetAnalysis()" disabled>
+                <i class="fas fa-redo"></i>Reset
+            </button>
+        </div>
+
+        <div id="loadingIndicator" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Analyzing your resume...</p>
+        </div>
+
+        <div id="resultContainer" class="result-container">
+            <div class="score-container">
+                <div class="donut-chart">
+                    <canvas id="scoreChart" width="150" height="150"></canvas>
+                    <div class="score-value" id="scoreValue">0</div>
+                </div>
+                <div class="score-label">Overall Resume Score</div>
+            </div>
+
+            <div class="analysis-details">
+                <div class="analysis-item">
+                    <h4>
+                        <i class="fas fa-briefcase"></i>
+                        Experience Match
+                        <span class="tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">How well your experience aligns with industry standards</span>
+                        </span>
+                    </h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="expProgress" style="background-color: var(--score-medium);"></div>
+                    </div>
+                    <p id="expDetails">Your experience section needs more specific achievements and metrics.</p>
+                </div>
+
+                <div class="analysis-item">
+                    <h4>
+                        <i class="fas fa-graduation-cap"></i>
+                        Skills Relevance
+                        <span class="tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">How relevant your skills are to current market demands</span>
+                        </span>
+                    </h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="skillsProgress" style="background-color: var(--score-high);"></div>
+                    </div>
+                    <p id="skillsDetails">Your technical skills align well with current industry demands.</p>
+                </div>
+
+                <div class="analysis-item">
+                    <h4>
+                        <i class="fas fa-file-alt"></i>
+                        Content Quality
+                        <span class="tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">Assessment of your resume's formatting, grammar, and clarity</span>
+                        </span>
+                    </h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="contentProgress" style="background-color: var(--score-low);"></div>
+                    </div>
+                    <p id="contentDetails">Your resume contains some formatting inconsistencies and grammatical errors.</p>
+                </div>
+
+                <div class="analysis-item">
+                    <h4>
+                        <i class="fas fa-search"></i>
+                        ATS Compatibility
+                        <span class="tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltip-text">How well your resume will perform with Applicant Tracking Systems</span>
+                        </span>
+                    </h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="atsProgress" style="background-color: var(--score-medium);"></div>
+                    </div>
+                    <p id="atsDetails">Your resume includes key keywords but could improve in structure for ATS readability.</p>
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <h3>Improvement Recommendations</h3>
+                <ul id="recommendationsList">
+                    <!-- Populated by JavaScript -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // DOM elements
+        const resumeInput = document.getElementById('resumeInput');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const resultContainer = document.getElementById('resultContainer');
+        const errorMessage = document.getElementById('errorMessage');
+        const dropZone = document.getElementById('dropZone');
+        const themeToggle = document.getElementById('themeToggle');
+        const recommendationsList = document.getElementById('recommendationsList');
+        const scoreValue = document.getElementById('scoreValue');
+        
+        // State management
+        let fileUploaded = false;
+        let chart = null;
+        let lastScore = null;
+        let isDarkTheme = true;
+        let fileContent = null;
+        
+        // Resume keywords - used to validate if a document is a resume
+        const resumeKeywords = [
+            'resume', 'curriculum vitae', 'cv', 'work experience', 'education', 
+            'skills', 'employment', 'job', 'career', 'professional experience',
+            'qualification', 'certification', 'reference', 'achievement',
+            'position', 'degree', 'university', 'college', 'objective',
+            'summary', 'profile', 'expertise', 'contact', 'email', 'phone',
+            'address', 'linkedin', 'portfolio'
+        ];
+        
+        // Progress bar elements
+        const progressElements = [
+            { bar: document.getElementById('expProgress'), details: document.getElementById('expDetails') },
+            { bar: document.getElementById('skillsProgress'), details: document.getElementById('skillsDetails') },
+            { bar: document.getElementById('contentProgress'), details: document.getElementById('contentDetails') },
+            { bar: document.getElementById('atsProgress'), details: document.getElementById('atsDetails') }
+        ];
+        
+        // File handling events
+        resumeInput.addEventListener('change', handleFileSelection);
+        
+        // Drag and drop handling
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--primary-color)';
+            dropZone.style.background = 'rgba(255, 152, 0, 0.1)';
+        });
+        
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--border-color)';
+            dropZone.style.background = 'var(--bg-input)';
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--border-color)';
+            dropZone.style.background = 'var(--bg-input)';
+            
+            if (e.dataTransfer.files.length) {
+                resumeInput.files = e.dataTransfer.files;
+                handleFileSelection();
+            }
+        });
+        
+        // Theme toggle
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        // Functions
+        function handleFileSelection() {
+            const file = resumeInput.files[0];
+            
+            if (file) {
+                // Validate file type
+                const validTypes = ['.pdf', '.docx', '.doc', '.txt', '.rtf'];
+                const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+                
+                if (!validTypes.includes(fileExtension)) {
+                    showError("Invalid file type. Please upload a PDF, DOCX, DOC, TXT, or RTF file.");
+                    resetFileInput();
+                    return;
+                }
+                
+                // Check file size (limit to 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showError("File is too large. Maximum size is 5MB.");
+                    resetFileInput();
+                    return;
+                }
+                
+                fileNameDisplay.textContent = file.name;
+                
+                // For text files, validate content
+                if (fileExtension === '.txt') {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        fileContent = e.target.result;
+                        validateResumeContent(fileContent);
+                    };
+                    reader.readAsText(file);
+                } else {
+                    // For other file types, we'll assume valid and check content during analysis
+                    fileUploaded = true;
+                    analyzeBtn.disabled = false;
+                    clearError();
+                }
+            } else {
+                resetFileInput();
+            }
+        }
+        
+        function validateResumeContent(content) {
+            // Convert to lowercase for case-insensitive matching
+            const lowerContent = content.toLowerCase();
+            
+            // Count the number of resume keywords present
+            const keywordCount = resumeKeywords.filter(keyword => 
+                lowerContent.includes(keyword.toLowerCase())
+            ).length;
+            
+            // Require at least 3 resume keywords to be present
+            if (keywordCount < 3) {
+                showError("This file doesn't appear to be a resume. Please upload a valid resume file.");
+                resetFileInput();
+                return false;
+            }
+            
+            fileUploaded = true;
+            analyzeBtn.disabled = false;
+            clearError();
+            return true;
+        }
+        
+        function resetFileInput() {
+            resumeInput.value = '';
+            fileNameDisplay.textContent = 'No file selected';
+            fileUploaded = false;
+            fileContent = null;
+            analyzeBtn.disabled = true;
+        }
+        
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+        
+        function clearError() {
+            errorMessage.textContent = '';
+            errorMessage.style.display = 'none';
+        }
+        
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            document.body.classList.toggle('light-theme', !isDarkTheme);
+            themeToggle.innerHTML = isDarkTheme ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            
+            // Update chart if exists
+            if (chart && lastScore !== null) {
+                updateScoreChart(lastScore);
+            }
+        }
+        
+        function analyzeResume() {
+            if (!fileUploaded) {
+                showError("Please upload a resume file first.");
+                return;
+            }
+            
+            // Show loading indicator
+            loadingIndicator.style.display = 'flex';
+            analyzeBtn.disabled = true;
+            
+            // Get the file
+            const file = resumeInput.files[0];
+            const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+            
+            // For file types other than .txt, we need to check content during analysis
+            if (fileExtension !== '.txt' && fileContent === null) {
+                // This would be where you'd use a backend service or library to extract text
+                // For this example, we'll simulate content validation with a timeout
+                setTimeout(() => {
+                    // Simulate a 10% chance of non-resume content detection
+                    const isValidResume = Math.random() > 0.1;
+                    
+                    if (!isValidResume) {
+                        loadingIndicator.style.display = 'none';
+                        showError("This file doesn't appear to be a resume. Please upload a valid resume file.");
+                        analyzeBtn.disabled = false;
+                        return;
+                    }
+                    
+                    // Continue with analysis
+                    performAnalysis();
+                    loadingIndicator.style.display = 'none';
+                    resultContainer.style.display = 'block';
+                    resultContainer.classList.add('fade-in');
+                    resetBtn.disabled = false;
+                }, 2500);
+            } else {
+                // For .txt files that we've already validated
+                setTimeout(() => {
+                    performAnalysis();
+                    loadingIndicator.style.display = 'none';
+                    resultContainer.style.display = 'block';
+                    resultContainer.classList.add('fade-in');
+                    resetBtn.disabled = false;
+                }, 2500);
+            }
+        }
+        
+        function performAnalysis() {
+            // Generate score (more weighted algorithm than simple random)
+            const baseScore = Math.floor(Math.random() * 25) + 65; // Base between 65-89
+            const variance = Math.floor(Math.random() * 11) - 5;  // Variance between -5 and +5
+            let score = Math.min(Math.max(baseScore + variance, 50), 98); // Keep between 50-98
+            
+            // For demo purposes, assign a score based on file extension to simulate different file quality
+            const fileExtension = resumeInput.files[0].name.split('.').pop().toLowerCase();
+            if (fileExtension === 'pdf') {
+                score = Math.min(score + 5, 98); // PDFs get a small bonus
+            } else if (fileExtension === 'txt') {
+                score = Math.max(score - 8, 50); // TXT files get a penalty
+            }
+            
+            // Initialize or update score chart
+            updateScoreChart(score);
+            lastScore = score;
+            
+            // Initialize section scores with weighted randomness
+            const expScore = calculateSectionScore(score, -10, 10);
+            const skillsScore = calculateSectionScore(score, -5, 15);
+            const contentScore = calculateSectionScore(score, -15, 5);
+            const atsScore = calculateSectionScore(score, -8, 8);
+            
+            // Animate progress bars
+            updateProgressBar(progressElements[0].bar, expScore, getColorForScore(expScore));
+            updateProgressBar(progressElements[1].bar, skillsScore, getColorForScore(skillsScore));
+            updateProgressBar(progressElements[2].bar, contentScore, getColorForScore(contentScore));
+            updateProgressBar(progressElements[3].bar, atsScore, getColorForScore(atsScore));
+            
+            // Update section feedback based on scores
+            updateSectionFeedback(expScore, skillsScore, contentScore, atsScore);
+            
+            // Generate and update recommendations
+            generateRecommendations(expScore, skillsScore, contentScore, atsScore);
+            
+            // Count up score display
+            animateScoreValue(0, score);
+        }
+        
+        function calculateSectionScore(baseScore, minVariance, maxVariance) {
+            const variance = Math.floor(Math.random() * (maxVariance - minVariance + 1)) + minVariance;
+            return Math.min(Math.max(baseScore + variance, 30), 98);
+        }
+        
+        function updateScoreChart(score) {
+            // Destroy existing chart if it exists
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const ctx = document.getElementById('scoreChart').getContext('2d');
+            const scoreColor = getColorForScore(score);
+            
+            chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [score, 100 - score],
+                        backgroundColor: [
+                            scoreColor,
+                            isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                        ],
+                        borderWidth: 0,
+                        cutout: '75%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            enabled: false
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true,
+                        duration: 1500,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+        }
+        
+        function getColorForScore(score) {
+            if (score >= 80) return 'var(--score-high)';
+            if (score >= 65) return 'var(--score-medium)';
+            return 'var(--score-low)';
+        }
+        
+        function updateProgressBar(element, score, color) {
+            setTimeout(() => {
+                element.style.width = `${score}%`;
+                element.style.backgroundColor = color;
+            }, 200);
+        }
+        
+        function animateScoreValue(current, target) {
+            if (current <= target) {
+                scoreValue.textContent = current;
+                setTimeout(() => animateScoreValue(current + 1, target), 20);
+            }
+        }
+        
+        function updateSectionFeedback(expScore, skillsScore, contentScore, atsScore) {
+            // Experience feedback
+            if (expScore >= 80) {
+                progressElements[0].details.textContent = "Excellent experience section with strong achievements and metrics.";
+            } else if (expScore >= 65) {
+                progressElements[0].details.textContent = "Good experience section, but could use more specific achievements.";
+            } else {
+                progressElements[0].details.textContent = "Experience section needs significant improvement with quantifiable results.";
+            }
+            
+            // Skills feedback
+            if (skillsScore >= 80) {
+                progressElements[1].details.textContent = "Your technical skills align very well with current industry demands.";
+            } else if (skillsScore >= 65) {
+                progressElements[1].details.textContent = "Good skill set, but consider adding more in-demand technologies.";
+            } else {
+                progressElements[1].details.textContent = "Your skills section needs significant updating to match industry requirements.";
+            }
+            
+            // Content feedback
+            if (contentScore >= 80) {
+                progressElements[2].details.textContent = "Excellent content formatting, clarity, and grammar throughout your resume.";
+            } else if (contentScore >= 65) {
+                progressElements[2].details.textContent = "Good content quality with minor inconsistencies in formatting or grammar.";
+            } else {
+                progressElements[2].details.textContent = "Your resume contains multiple formatting issues and grammatical errors.";
+            }
+            
+            // ATS feedback
+            if (atsScore >= 80) {
+                progressElements[3].details.textContent = "Your resume is well-optimized for ATS systems with excellent keyword usage.";
+            } else if (atsScore >= 65) {
+                progressElements[3].details.textContent = "Decent ATS compatibility but could improve structure and keyword placement.";
+            } else {
+                progressElements[3].details.textContent = "Poor ATS compatibility. Restructure your resume with relevant keywords.";
+            }
+        }
+        
+        function generateRecommendations(expScore, skillsScore, contentScore, atsScore) {
+            recommendationsList.innerHTML = '';
+            const recommendations = [];
+            
+            // Experience recommendations
+            if (expScore < 70) {
+                recommendations.push("Add quantifiable achievements to your work experience (e.g., 'increased sales by 20%')");
+                recommendations.push("Include specific technologies and methodologies used in each role");
+            }
+            
+            // Skills recommendations
+            if (skillsScore < 75) {
+                recommendations.push("Update your skills section with more in-demand technologies");
+                recommendations.push("Organize skills by proficiency level or category");
+            }
+            
+            // Content recommendations
+            if (contentScore < 70) {
+                recommendations.push("Fix grammatical errors and inconsistent formatting");
+                recommendations.push("Ensure consistent bullet point structure and tense throughout");
+                recommendations.push("Use action verbs to start bullet points");
+            }// ATS recommendations
+            if (atsScore < 70) {
+                recommendations.push("Incorporate more keywords from the job descriptions you're targeting");
+                recommendations.push("Simplify your resume format to be more ATS-friendly");
+                recommendations.push("Use standard section headings (e.g., 'Work Experience' instead of 'Career Journey')");
+            }
+            
+            // General recommendations based on overall score
+            const overallScore = (expScore + skillsScore + contentScore + atsScore) / 4;
+            if (overallScore < 80) {
+                recommendations.push("Consider a more modern resume template");
+                recommendations.push("Keep your resume to 1-2 pages maximum");
+                recommendations.push("Include a strong professional summary at the top");
+            }
+            
+            // Add all recommendations to the list
+            recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                recommendationsList.appendChild(li);
+            });
+        }
+        
+        function resetAnalysis() {
+            resetFileInput();
+            resultContainer.style.display = 'none';
+            resultContainer.classList.remove('fade-in');
+            resetBtn.disabled = true;
+            analyzeBtn.disabled = true;
+            
+            // Reset progress bars
+            progressElements.forEach(element => {
+                element.bar.style.width = '0%';
+            });
+            
+            // Clear score value
+            scoreValue.textContent = '0';
+            
+            // Clear recommendations
+            recommendationsList.innerHTML = '';
+        }
+        
+        // Sample data for testing/demo purposes
+        function loadSampleResume() {
+            fileNameDisplay.textContent = "sample_resume.pdf";
+            fileUploaded = true;
+            analyzeBtn.disabled = false;
+            clearError();
+        }
+        
+        // Export functionality
+        function exportResults() {
+            // This would be implemented to export the analysis as PDF or send via email
+            alert("Export functionality would be implemented here in a production version.");
+        }
+        
+        // Initialize the application
+        function init() {
+            // Check for system dark mode preference
+            const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            if (!prefersDarkScheme) {
+                toggleTheme();
+            }
+            
+            // For demo purposes, you could uncomment the line below to preload a sample resume
+            // loadSampleResume();
+        }
+        
+        // Run initialization
+        init();
+    </script>
+</body>
+</html>

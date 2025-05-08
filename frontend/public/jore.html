@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Job Recommendations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF8C00;
+            --primary-dark: #E67300;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --bg-input: #252525;
+            --text-light: #f5f5f5;
+            --text-secondary: #aaaaaa;
+            --border-color: #333;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .description {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .input-area {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border-radius: 8px;
+            background: var(--bg-input);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            font-size: 16px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .help-text {
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: rgba(255, 140, 0, 0.2);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-tag i {
+            margin-left: 6px;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        button i {
+            margin-right: 8px;
+        }
+
+        button.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        button.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        button.secondary {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        button.secondary:hover {
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .filters {
+            background: rgba(255, 140, 0, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .filters.show {
+            display: block;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        .filter-group {
+            margin-bottom: 10px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+
+        select {
+            padding: 10px;
+            border-radius: 6px;
+            background: var(--bg-input);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        .loading {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 140, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        #results {
+            display: none;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .results-header h2 {
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .job-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+            margin-bottom: 5px;
+        }
+
+        .company {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+
+        .company i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+
+        .match-score {
+            background: rgba(255, 140, 0, 0.1);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .match-high {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .match-medium {
+            background: rgba(255, 193, 7, 0.1);
+            color: var(--warning);
+        }
+
+        .match-low {
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+        }
+
+        .job-description {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .job-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .job-detail {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+
+        .job-detail i {
+            margin-right: 6px;
+            color: var(--primary);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .skill.matched {
+            background: rgba(255, 140, 0, 0.2);
+            color: var(--primary);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .no-results i {
+            font-size: 50px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .upskill-section {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 140, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        .upskill-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .upskill-section h3 i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .job-header {
+                flex-direction: column;
+            }
+            
+            .match-score {
+                margin-top: 10px;
+                align-self: flex-start;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI-Powered Job Recommendations</h1>
+        <p class="description">Enter your skills and experience to find the perfect job match</p>
+        
+        <div class="input-area">
+            <textarea id="skills-input" placeholder="Enter your skills, technologies, or experience (e.g., JavaScript, React, 3 years project management)"></textarea>
+            <p class="help-text">Separate multiple skills with commas or press Enter after each skill</p>
+            <div id="skill-tags" class="skill-tags"></div>
+        </div>
+        
+        <div class="button-group">
+            <button id="filters-toggle" class="secondary">
+                <i class="fas fa-sliders-h"></i> Advanced Filters
+            </button>
+            <button id="search-button" class="primary">
+                <i class="fas fa-search"></i> Find Jobs
+            </button>
+        </div>
+        
+        <div id="filters" class="filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="location-filter">Location</label>
+                    <select id="location-filter">
+                        <option value="all">All Locations</option>
+                        <option value="Remote">Remote</option>
+                        <option value="USA">United States</option>
+                        <option value="Europe">Europe</option>
+                        <option value="India">India</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="experience-filter">Experience Level</label>
+                    <select id="experience-filter">
+                        <option value="all">All Levels</option>
+                        <option value="Entry">Entry Level</option>
+                        <option value="Mid">Mid Level</option>
+                        <option value="Senior">Senior Level</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="sort-filter">Sort By</label>
+                    <select id="sort-filter">
+                        <option value="match">Best Match</option>
+                        <option value="salary">Highest Salary</option>
+                        <option value="date">Most Recent</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+        
+        <div id="results">
+            <!-- Job results will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Job listings data
+        const jobListings = [
+            {
+                id: 1,
+                title: "Senior Frontend Developer",
+                company: "TechNova Solutions",
+                location: "Remote",
+                salary: "$120,000 - $150,000",
+                experienceLevel: "Senior",
+                jobType: "Full-time",
+                postedDate: "2023-08-15",
+                skills: ["JavaScript", "React", "TypeScript", "CSS", "HTML5", "Redux", "Webpack"],
+                description: "Looking for an experienced frontend developer to lead our web application development team."
+            },
+            {
+                id: 2,
+                title: "Backend Developer",
+                company: "DataStream Inc.",
+                location: "USA",
+                salary: "$95,000 - $125,000",
+                experienceLevel: "Mid",
+                jobType: "Full-time",
+                postedDate: "2023-08-17",
+                skills: ["Java", "Spring Boot", "Microservices", "SQL", "RESTful APIs", "Docker"],
+                description: "Join our team to develop scalable backend services for our cloud-based platform."
+            },
+            {
+                id: 3,
+                title: "Data Scientist",
+                company: "AnalyticsMind",
+                location: "Remote",
+                salary: "$110,000 - $140,000",
+                experienceLevel: "Mid",
+                jobType: "Full-time",
+                postedDate: "2023-08-10",
+                skills: ["Python", "Machine Learning", "SQL", "Data Visualization", "Statistics", "TensorFlow"],
+                description: "Help us turn data into actionable insights and build predictive models."
+            },
+            {
+                id: 4,
+                title: "DevOps Engineer",
+                company: "CloudSphere",
+                location: "Europe",
+                salary: "€70,000 - €90,000",
+                experienceLevel: "Mid",
+                jobType: "Full-time",
+                postedDate: "2023-08-12",
+                skills: ["AWS", "Docker", "Kubernetes", "CI/CD", "Linux", "Terraform", "Ansible"],
+                description: "Drive our infrastructure automation and improve our deployment pipelines."
+            },
+            {
+                id: 5,
+                title: "UX/UI Designer",
+                company: "CreativeLabs",
+                location: "USA",
+                salary: "$85,000 - $110,000",
+                experienceLevel: "Mid",
+                jobType: "Full-time",
+                postedDate: "2023-08-16",
+                skills: ["Figma", "User Research", "Wireframing", "Prototyping", "UI Design", "Design Systems"],
+                description: "Design intuitive and engaging user experiences for our digital products."
+            },
+            {
+                id: 6,
+                title: "Full Stack Developer",
+                company: "WebWorks",
+                location: "India",
+                salary: "₹12,00,000 - ₹18,00,000",
+                experienceLevel: "Mid",
+                jobType: "Full-time",
+                postedDate: "2023-08-14",
+                skills: ["JavaScript", "Node.js", "React", "MongoDB", "Express", "RESTful APIs", "Git"],
+                description: "Develop end-to-end web applications and collaborate with cross-functional teams."
+            },
+            {
+                id: 7,
+                title: "Mobile App Developer",
+                company: "AppFusion",
+                location: "Remote",
+                salary: "$100,000 - $130,000",
+                experienceLevel: "Mid",
+                jobType: "Contract",
+                postedDate: "2023-08-11",
+                skills: ["React Native", "iOS", "Android", "JavaScript", "Redux", "API Integration"],
+                description: "Create cross-platform mobile applications with a focus on performance and user experience."
+            },
+            {
+                id: 8,
+                title: "AI Research Engineer",
+                company: "IntelliTech",
+                location: "USA",
+                salary: "$140,000 - $180,000",
+                experienceLevel: "Senior",
+                jobType: "Full-time",
+                postedDate: "2023-08-09",
+                skills: ["Python", "Deep Learning", "TensorFlow", "PyTorch", "NLP", "Computer Vision"],
+                description: "Research and develop cutting-edge AI solutions for real-world problems."
+            },
+            {
+                id: 9,
+                title: "Quality Assurance Engineer",
+                company: "QualityFirst",
+                location: "Europe",
+                salary: "€50,000 - €70,000",
+                experienceLevel: "Entry",
+                jobType: "Full-time",
+                postedDate: "2023-08-18",
+                skills: ["Manual Testing", "Automated Testing", "Selenium", "JIRA", "Test Planning", "QA Methodologies"],
+                description: "Ensure software quality through comprehensive testing strategies and methodologies."
+            },
+            {
+                id: 10,
+                title: "Product Manager",
+                company: "ProductSphere",
+                location: "Remote",
+                salary: "$115,000 - $145,000",
+                experienceLevel: "Senior",
+                jobType: "Full-time",
+                postedDate: "2023-08-13",
+                skills: ["Product Strategy", "Agile", "User Stories", "Market Research", "Roadmapping", "Data Analysis"],
+                description: "Lead product development from conception to launch and drive product growth."
+            },
+            {
+                id: 11,
+                title: "Junior Web Developer",
+                company: "CodeCrafters",
+                location: "India",
+                salary: "₹5,00,000 - ₹8,00,000",
+                experienceLevel: "Entry",
+                jobType: "Full-time",
+                postedDate: "2023-08-19",
+                skills: ["HTML", "CSS", "JavaScript", "Bootstrap", "jQuery", "Git"],
+                description: "Great opportunity for fresh graduates to start a career in web development."
+            },
+            {
+                id: 12,
+                title: "Blockchain Developer",
+                company: "BlockTech",
+                location: "Remote",
+                salary: "$120,000 - $160,000",
+                experienceLevel: "Senior",
+                jobType: "Full-time",
+                postedDate: "2023-08-08",
+                skills: ["Solidity", "Ethereum", "Smart Contracts", "Web3.js", "Blockchain Protocols", "JavaScript"],
+                description: "Develop and implement blockchain solutions and smart contracts for our platform."
+            }
+        ];
+
+        // DOM elements
+        const skillsInput = document.getElementById('skills-input');
+        const skillTagsContainer = document.getElementById('skill-tags');
+        const filtersToggle = document.getElementById('filters-toggle');
+        const filtersContainer = document.getElementById('filters');
+        const searchButton = document.getElementById('search-button');
+        const loadingIndicator = document.getElementById('loading');
+        const resultsContainer = document.getElementById('results');
+        const locationFilter = document.getElementById('location-filter');
+        const experienceFilter = document.getElementById('experience-filter');
+        const sortFilter = document.getElementById('sort-filter');
+
+        // Store selected skills
+        let selectedSkills = [];
+
+        // Add event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Toggle filters
+            filtersToggle.addEventListener('click', () => {
+                filtersContainer.classList.toggle('show');
+            });
+
+            // Handle skills input
+            skillsInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ',') {
+                    e.preventDefault();
+                    addSkillFromInput();
+                }
+            });
+
+            skillsInput.addEventListener('blur', () => {
+                addSkillFromInput();
+            });
+
+            // Search for jobs
+            searchButton.addEventListener('click', searchJobs);
+        });
+
+        // Add skill from input field
+        function addSkillFromInput() {
+            const input = skillsInput.value.trim();
+            if (!input) return;
+
+            // Split by commas and add each skill
+            const skillsToAdd = input.split(',').map(skill => skill.trim()).filter(skill => skill);
+
+            skillsToAdd.forEach(skill => {
+                if (!selectedSkills.includes(skill) && skill) {
+                    selectedSkills.push(skill);
+                }
+            });
+
+            skillsInput.value = '';
+            renderSkillTags();
+        }
+
+        // Render skill tags
+        function renderSkillTags() {
+            skillTagsContainer.innerHTML = '';
+            
+            selectedSkills.forEach(skill => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'skill-tag';
+                tagElement.innerHTML = `${skill} <i class="fas fa-times"></i>`;
+                
+                // Add remove functionality
+                tagElement.querySelector('i').addEventListener('click', () => {
+                    selectedSkills = selectedSkills.filter(s => s !== skill);
+                    renderSkillTags();
+                });
+                
+                skillTagsContainer.appendChild(tagElement);
+            });
+        }
+
+        // Calculate match score between user skills and job skills
+        function calculateMatchScore(userSkills, jobSkills) {
+            if (!userSkills.length) return 0;
+            
+            let matchedSkills = 0;
+            for (const userSkill of userSkills) {
+                const userSkillLower = userSkill.toLowerCase();
+                for (const jobSkill of jobSkills) {
+                    if (jobSkill.toLowerCase().includes(userSkillLower) || 
+                        userSkillLower.includes(jobSkill.toLowerCase())) {
+                        matchedSkills++;
+                        break;
+                    }
+                }
+            }
+            
+            // Calculate percentage based on user skills (how many of their skills match)
+            return Math.round((matchedSkills / userSkills.length) * 100);
+        }
+
+        // Get matched job skills
+        function getMatchedSkills(userSkills, jobSkills) {
+            const matchedSkills = [];
+            
+            for (const jobSkill of jobSkills) {
+                const jobSkillLower = jobSkill.toLowerCase();
+                if (userSkills.some(userSkill => 
+                    jobSkillLower.includes(userSkill.toLowerCase()) || 
+                    userSkill.toLowerCase().includes(jobSkillLower))) {
+                    matchedSkills.push(jobSkill);
+                }
+            }
+            
+            return matchedSkills;
+        }
+
+        // Get skills to improve
+        function getSkillsToImprove(jobs) {
+            const skillFrequency = {};
+            
+            // Count skills that the user doesn't have
+            jobs.forEach(job => {
+                job.skills.forEach(skill => {
+                    if (!job.matchedSkills.includes(skill)) {
+                        skillFrequency[skill] = (skillFrequency[skill] || 0) + 1;
+                    }
+                });
+            });
+            
+            // Return the top 5 most frequent skills
+            return Object.entries(skillFrequency)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5)
+                .map(entry => entry[0]);
+        }
+
+        // Format date to relative time
+        function getRelativeTime(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 0) return "Today";
+            if (diffDays === 1) return "Yesterday";
+            if (diffDays < 7) return `${diffDays} days ago`;
+            if (diffDays < 30) {
+                const weeks = Math.floor(diffDays / 7);
+                return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
+            }
+            return date.toLocaleDateString();
+        }
+
+        // Search for jobs
+        function searchJobs() {
+            // Add any skills from input
+            addSkillFromInput();
+            
+            // Check if any skills are selected
+            if (selectedSkills.length === 0) {
+                alert("Please enter at least one skill before searching.");
+                return;
+            }
+            
+            // Show loading indicator
+            loadingIndicator.style.display = 'flex';
+            resultsContainer.style.display = 'none';
+            
+            // Simulate API request delay
+            setTimeout(() => {
+                // Get filter values
+                const locationValue = locationFilter.value;
+                const experienceValue = experienceFilter.value;
+                const sortValue = sortFilter.value;
+                
+                // Filter jobs
+                let filteredJobs = [...jobListings];
+                
+                // Apply location filter
+                if (locationValue !== 'all') {
+                    filteredJobs = filteredJobs.filter(job => job.location === locationValue);
+                }
+                
+                // Apply experience filter
+                if (experienceValue !== 'all') {
+                    filteredJobs = filteredJobs.filter(job => job.experienceLevel === experienceValue);
+                }
+                
+                // Calculate match scores and get matched skills
+                filteredJobs.forEach(job => {
+                    job.matchScore = calculateMatchScore(selectedSkills, job.skills);
+                    job.matchedSkills = getMatchedSkills(selectedSkills, job.skills);
+                });
+                
+                // Sort jobs based on selected sort option
+                if (sortValue === 'match') {
+                    filteredJobs.sort((a, b) => b.matchScore - a.matchScore);
+                } else if (sortValue === 'salary') {
+                    filteredJobs.sort((a, b) => {
+                        // Extract highest salary value for comparison (rough estimate)
+                        const getSalaryValue = (salary) => {
+                            const matches = salary.match(/\d+/g);
+                            return matches ? parseInt(matches[matches.length - 1].replace(/,/g, '')) : 0;
+                        };
+                        return getSalaryValue(b.salary) - getSalaryValue(a.salary);
+                    });
+                } else if (sortValue === 'date') {
+                    filteredJobs.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
+                }
+                
+                // Render results
+                renderResults(filteredJobs);
+                
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                resultsContainer.style.display = 'block';
+            }, 1000);
+        }
+
+        // Render job results
+        function renderResults(jobs) {
+            if (jobs.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>No matching jobs found</h3>
+                        <p>Try adjusting your skills or filters to see more opportunities</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div class="results-header">
+                    <h2>Job Matches</h2>
+                    <span>${jobs.length} jobs found</span>
+                </div>
+            `;
+            
+            // Add job cards
+            jobs.forEach(job => {
+                // Determine match score class
+                let matchScoreClass = 'match-low';
+                if (job.matchScore >= 80) {
+                    matchScoreClass = 'match-high';
+                } else if (job.matchScore >= 50) {
+                    matchScoreClass = 'match-medium';
+                }
+                
+                html += `
+                    <div class="job-card">
+                        <div class="job-header">
+                            <div>
+                                <h3 class="job-title">${job.title}</h3>
+                                <div class="company"><i class="fas fa-building"></i> ${job.company}</div>
+                            </div>
+                            <div class="match-score ${matchScoreClass}">${job.matchScore}% Match</div>
+                        </div>
+                        
+                        <div class="job-description">${job.description}</div>
+                        
+                        <div class="job-details">
+                            <div class="job-detail"><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
+                            <div class="job-detail"><i class="fas fa-dollar-sign"></i> ${job.salary}</div>
+                            <div class="job-detail"><i class="fas fa-briefcase"></i> ${job.experienceLevel} Level</div>
+                            <div class="job-detail"><i class="fas fa-calendar-alt"></i> Posted ${getRelativeTime(job.postedDate)}</div>
+                        </div>
+                        
+                        <div class="skills-list">
+                            ${job.skills.map(skill => 
+                                `<div class="skill ${job.matchedSkills.includes(skill) ? 'matched' : ''}">${skill}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Add upskill suggestions
+            const skillsToImprove = getSkillsToImprove(jobs);
+            if (skillsToImprove.length > 0) {
+                html += `
+                    <div class="upskill-section">
+                        <h3><i class="fas fa-chart-line"></i> Recommended skills to improve your matches</h3>
+                        <div class="skills-list">
+                            ${skillsToImprove.map(skill => `<div class="skill">${skill}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            resultsContainer.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

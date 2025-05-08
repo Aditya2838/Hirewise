@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            width: 60%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+        .input-group {
+            margin: 10px 0;
+            text-align: left;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        #resume {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Resume Builder</h2>
+
+    <div class="container">
+        <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+        </div>
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter your email">
+        </div>
+        <div class="input-group">
+            <label>Phone</label>
+            <input type="text" id="phone" placeholder="Enter your phone number">
+        </div>
+        <div class="input-group">
+            <label>Skills</label>
+            <input type="text" id="skills" placeholder="E.g., Java, Python, HTML">
+        </div>
+        <div class="input-group">
+            <label>Experience</label>
+            <textarea id="experience" placeholder="Describe your work experience"></textarea>
+        </div>
+        <div class="input-group">
+            <label>Education</label>
+            <textarea id="education" placeholder="Your educational background"></textarea>
+        </div>
+        <button onclick="generateResume()">Generate Resume</button>
+        <button onclick="downloadPDF()">Download as PDF</button>
+    </div>
+
+    <div id="resume" class="container">
+        <h2 id="res-name">Your Name</h2>
+        <p><strong>Email:</strong> <span id="res-email">example@mail.com</span></p>
+        <p><strong>Phone:</strong> <span id="res-phone">123-456-7890</span></p>
+        <p><strong>Skills:</strong> <span id="res-skills">HTML, CSS, JavaScript</span></p>
+        <h3>Experience</h3>
+        <p id="res-experience">Work experience details...</p>
+        <h3>Education</h3>
+        <p id="res-education">Education details...</p>
+    </div>
+
+    <script>
+        function generateResume() {
+            document.getElementById("res-name").innerText = document.getElementById("name").value;
+            document.getElementById("res-email").innerText = document.getElementById("email").value;
+            document.getElementById("res-phone").innerText = document.getElementById("phone").value;
+            document.getElementById("res-skills").innerText = document.getElementById("skills").value;
+            document.getElementById("res-experience").innerText = document.getElementById("experience").value;
+            document.getElementById("res-education").innerText = document.getElementById("education").value;
+        }
+
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            html2canvas(document.getElementById("resume")).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
+                const pdf = new jsPDF();
+                pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
+                pdf.save("resume.pdf");
+            });
+        }
+    </script>
+
+</body>
+</html>

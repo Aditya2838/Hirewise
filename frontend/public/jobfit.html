@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Job Fit Score Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff9800;
+            --primary-dark: #e68900;
+            --text-color: #f5f5f5;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --input-bg: #252525;
+            --border-color: #555;
+            --success-color: #4caf50;
+            --warning-color: #ff5722;
+            --info-color: #2196f3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            width: 95%;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            margin: 20px 0 10px;
+            font-size: 22px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            padding: 12px;
+            background: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            outline: none;
+            resize: vertical;
+            font-size: 16px;
+            font-family: inherit;
+            margin-bottom: 5px;
+        }
+
+        textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+            min-height: 40px;
+        }
+
+        .skill-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .skill-tag i {
+            cursor: pointer;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        button {
+            background: var(--primary-color);
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: var(--input-bg);
+        }
+
+        button.secondary:hover {
+            background: #333;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .score-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            background: conic-gradient(var(--primary-color) 0% var(--percentage), var(--input-bg) var(--percentage) 100%);
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .score-value {
+            position: relative;
+            z-index: 2;
+            color: var(--text-color);
+        }
+
+        .score-label {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .skill-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .skill-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .skill-box {
+            background: var(--input-bg);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .skill-box h4 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .skill-box ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        .skill-box li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-box li i {
+            margin-right: 8px;
+        }
+
+        #history {
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: block;
+        }
+
+        .history-table th, .history-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .history-table th {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--primary-color);
+            position: sticky;
+            top: 0;
+        }
+
+        .history-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--input-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 3px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+        }
+
+        .recommendation {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--info-color);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background: var(--input-bg);
+            border-radius: 8px;
+            padding: 5px;
+            gap: 5px;
+        }
+
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        #notifications {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .notification {
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 300px;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification i {
+            font-size: 20px;
+        }
+
+        .notification.success i {
+            color: var(--success-color);
+        }
+
+        .notification.error i {
+            color: var(--warning-color);
+        }
+
+        .notification.info i {
+            color: var(--info-color);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .notification-close {
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Dark mode toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Light theme */
+        body.light-theme {
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --input-bg: #f0f0f0;
+            --text-color: #333333;
+            --border-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle" class="theme-toggle" title="Toggle light/dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="container">
+        <h2><i class="fas fa-briefcase"></i> Advanced Job Fit Score Analysis</h2>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="analyze">Analyze</div>
+            <div class="tab" data-tab="history">History</div>
+            <div class="tab" data-tab="stats">Statistics</div>
+        </div>
+        
+        <div class="tab-content active" data-tab="analyze">
+            <div class="input-group">
+                <label for="skills"><i class="fas fa-user-graduate"></i> Your Skills & Experience:</label>
+                <textarea id="skills" placeholder="Enter your skills (comma or new line separated)"></textarea>
+                <div class="skill-tags" id="skills-tags"></div>
+                <small>Press Enter, Tab or comma to add each skill</small>
+            </div>
+            
+            <div class="input-group">
+                <label for="job"><i class="fas fa-clipboard-list"></i> Job Requirements:</label>
+                <textarea id="job" placeholder="Enter job requirements (comma or new line separated)"></textarea>
+                <div class="skill-tags" id="job-tags"></div>
+                <small>Press Enter, Tab or comma to add each requirement</small>
+            </div>
+            
+            <div class="input-group">
+                <label for="job-title"><i class="fas fa-id-badge"></i> Job Title (optional):</label>
+                <input type="text" id="job-title" placeholder="e.g., Senior Web Developer" style="width: 100%; padding: 12px; background: var(--input-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 8px;">
+            </div>
+            
+            <div class="buttons">
+                <button id="analyze-btn" onclick="analyzeJobFit()"><i class="fas fa-chart-pie"></i> Analyze Fit Score</button>
+                <button class="secondary" onclick="clearForm()"><i class="fas fa-eraser"></i> Clear All</button>
+                <button class="secondary" onclick="loadSample()"><i class="fas fa-lightbulb"></i> Load Sample</button>
+            </div>
+            
+            <div id="results" class="results">
+                <div class="score-section">
+                    <div class="score-circle">
+                        <div class="score-value" id="score-value">0%</div>
+                    </div>
+                    <div class="score-label" id="score-label">Job Fit Score</div>
+                </div>
+                
+                <div class="skill-details">
+                    <div class="skill-box">
+                        <h4><i class="fas fa-check-circle"></i> Matched Skills</h4>
+                        <ul id="matched-skills">
+                            <li class="no-results">No matched skills found</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-box">
+                        <h4><i class="fas fa-times-circle"></i> Missing Skills</h4>
+                        <ul id="missing-skills">
+                            <li class="no-results">No missing skills</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="recommendation" class="recommendation">
+                    <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
+                    <p id="recommendation-text">Complete the analysis to get personalized recommendations.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" data-tab="history">
+            <h3><i class="fas fa-history"></i> Previous Analyses</h3>
+            <p>Review your past job fit analyses</p>
+            <button class="secondary" onclick="clearHistory()" style="margin-top: 10px;"><i class="fas fa-trash"></i> Clear History</button>
+            <div id="history-container">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Job Title</th>
+                            <th>Score</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-list">
+                        <tr>
+                            <td colspan="4" class="no-results">No previous analyses found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="tab-content" data-tab="stats">
+            <h3><i class="fas fa-chart-bar"></i> Your Skills Statistics</h3>
+            <p>Insights based on your previous job analyses</p>
+            <div id="stats-container" style="margin-top: 20px;">
+                <div id="top-skills" style="margin-bottom: 20px;">
+                    <h4>Your Top Skills by Demand</h4>
+                    <div id="top-skills-list" style="margin-top: 10px;">
+                        <p class="no-results">Analyze more jobs to see statistics</p>
+                    </div>
+                </div>
+                <div id="skills-to-learn">
+                    <h4>Recommended Skills to Learn</h4>
+                    <div id="skills-to-learn-list" style="margin-top: 10px;">
+                        <p class="no-results">Analyze more jobs to get recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="notifications"></div>
+
+    <script>document.addEventListener('DOMContentLoaded', function() {
+        // Initialize tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.querySelector(`.tab-content[data-tab="${tab.dataset.tab}"]`).classList.add('active');
+            });
+        });
+    
+        // Initialize theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', toggleTheme);
+    
+        // Initialize text inputs for tag creation
+        initTagInput('skills');
+        initTagInput('job');
+    
+        // Load history on page load
+        loadHistory();
+        loadStats();
+    });
+    
+    // Theme toggle functionality
+    function toggleTheme() {
+        const body = document.body;
+        const themeIcon = document.querySelector('#theme-toggle i');
+        
+        if (body.classList.contains('light-theme')) {
+            body.classList.remove('light-theme');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+    
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light-theme');
+        document.querySelector('#theme-toggle i').classList.remove('fa-moon');
+        document.querySelector('#theme-toggle i').classList.add('fa-sun');
+    }
+    
+    // Tag input initialization
+    function initTagInput(inputId) {
+        const textarea = document.getElementById(inputId);
+        const tagsContainer = document.getElementById(`${inputId}-tags`);
+        
+        textarea.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === 'Tab' || e.key === ',') {
+                e.preventDefault();
+                const text = textarea.value.trim();
+                if (text) {
+                    addTags(text.split(/[,\n]+/).filter(t => t.trim()), inputId);
+                    textarea.value = '';
+                }
+            }
+        });
+    
+        textarea.addEventListener('blur', function() {
+            const text = textarea.value.trim();
+            if (text) {
+                addTags(text.split(/[,\n]+/).filter(t => t.trim()), inputId);
+                textarea.value = '';
+            }
+        });
+    }
+    
+    function addTags(tags, targetId) {
+        const tagsContainer = document.getElementById(`${targetId}-tags`);
+        
+        tags.forEach(tag => {
+            tag = tag.trim();
+            if (!tag) return;
+            
+            // Check if tag already exists
+            const existingTags = Array.from(tagsContainer.querySelectorAll('.skill-tag')).map(t => t.dataset.value);
+            if (existingTags.includes(tag.toLowerCase())) return;
+            
+            const tagElement = document.createElement('div');
+            tagElement.className = 'skill-tag';
+            tagElement.dataset.value = tag.toLowerCase();
+            tagElement.innerHTML = `
+                ${tag}
+                <i class="fas fa-times" onclick="removeTag(this)"></i>
+            `;
+            tagsContainer.appendChild(tagElement);
+        });
+    }
+    
+    function removeTag(element) {
+        element.parentElement.remove();
+    }
+    
+    function getTagsFromContainer(containerId) {
+        const container = document.getElementById(containerId);
+        return Array.from(container.querySelectorAll('.skill-tag')).map(tag => tag.dataset.value);
+    }
+    
+    function analyzeJobFit() {
+        // Get skills and job requirements from tags
+        const skills = getTagsFromContainer('skills-tags');
+        const jobReqs = getTagsFromContainer('job-tags');
+        const jobTitle = document.getElementById('job-title').value.trim() || 'Untitled Job';
+        
+        // Validate
+        if (skills.length === 0 || jobReqs.length === 0) {
+            showNotification('Please enter both your skills and job requirements', 'error');
+            return;
+        }
+    
+        // Find matches and calculate score
+        const matchedSkills = skills.filter(skill => jobReqs.includes(skill));
+        const missingSkills = jobReqs.filter(req => !skills.includes(req));
+        
+        let matchPercentage = jobReqs.length > 0 ? (matchedSkills.length / jobReqs.length) * 100 : 0;
+        matchPercentage = Math.min(matchPercentage, 100);
+        matchPercentage = Math.round(matchPercentage);
+        
+        // Update the UI
+        updateResults(matchPercentage, matchedSkills, missingSkills, jobTitle);
+        
+        // Save to history
+        saveToHistory(jobTitle, matchPercentage, skills, jobReqs, matchedSkills, missingSkills);
+        
+        // Update stats
+        updateStats();
+        
+        // Show results
+        document.getElementById('results').style.display = 'block';
+        
+        // Show success notification
+        showNotification('Analysis completed successfully', 'success');
+    }
+    
+    function updateResults(score, matchedSkills, missingSkills, jobTitle) {
+        // Update score circle
+        const scoreCircle = document.querySelector('.score-circle');
+        scoreCircle.style.setProperty('--percentage', `${score}%`);
+        document.getElementById('score-value').textContent = `${score}%`;
+        document.getElementById('score-label').textContent = `Fit Score for ${jobTitle}`;
+        
+        // Update matched skills
+        const matchedList = document.getElementById('matched-skills');
+        matchedList.innerHTML = '';
+        
+        if (matchedSkills.length > 0) {
+            matchedSkills.forEach(skill => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-check" style="color: var(--success-color);"></i> ${skill}`;
+                matchedList.appendChild(li);
+            });
+        } else {
+            const li = document.createElement('li');
+            li.className = 'no-results';
+            li.textContent = 'No matched skills found';
+            matchedList.appendChild(li);
+        }
+        
+        // Update missing skills
+        const missingList = document.getElementById('missing-skills');
+        missingList.innerHTML = '';
+        
+        if (missingSkills.length > 0) {
+            missingSkills.forEach(skill => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-times" style="color: var(--warning-color);"></i> ${skill}`;
+                missingList.appendChild(li);
+            });
+        } else {
+            const li = document.createElement('li');
+            li.className = 'no-results';
+            li.textContent = 'No missing skills';
+            missingList.appendChild(li);
+        }
+        
+        // Generate recommendation
+        const recommendationText = document.getElementById('recommendation-text');
+        if (score >= 90) {
+            recommendationText.innerHTML = `<strong>Excellent match!</strong> You have most of the required skills for this job. Consider highlighting your strong match in your application.`;
+        } else if (score >= 70) {
+            recommendationText.innerHTML = `<strong>Good match!</strong> You have many of the required skills. Focus on highlighting your matched skills and consider learning the missing ones to become a perfect candidate.`;
+        } else if (score >= 50) {
+            recommendationText.innerHTML = `<strong>Moderate match.</strong> You have some of the required skills, but there are gaps. Consider focusing on the missing skills in your learning plan and emphasize transferable skills in your application.`;
+        } else {
+            recommendationText.innerHTML = `<strong>Low match.</strong> This role might not be the best fit for your current skill set. Consider focusing on roles that better match your skills or invest time in learning the missing skills to improve your chances.`;
+        }
+        
+        if (missingSkills.length > 0) {
+            recommendationText.innerHTML += `<p style="margin-top: 10px;">Consider learning: <strong>${missingSkills.slice(0, 3).join(', ')}</strong>${missingSkills.length > 3 ? ' and others' : ''} to improve your fit score.</p>`;
+        }
+    }
+    
+    function saveToHistory(jobTitle, score, skills, jobReqs, matchedSkills, missingSkills) {
+        const historyEntry = {
+            date: new Date().toISOString(),
+            jobTitle: jobTitle,
+            score: score,
+            skills: skills,
+            jobRequirements: jobReqs,
+            matchedSkills: matchedSkills,
+            missingSkills: missingSkills
+        };
+        
+        let history = JSON.parse(localStorage.getItem('jobFitHistory')) || [];
+        history.unshift(historyEntry);
+        
+        // Limit to 20 entries
+        if (history.length > 20) {
+            history = history.slice(0, 20);
+        }
+        
+        localStorage.setItem('jobFitHistory', JSON.stringify(history));
+        loadHistory();
+    }
+    
+    function loadHistory() {
+        const history = JSON.parse(localStorage.getItem('jobFitHistory')) || [];
+        const historyList = document.getElementById('history-list');
+        
+        if (history.length === 0) {
+            historyList.innerHTML = '<tr><td colspan="4" class="no-results">No previous analyses found</td></tr>';
+            return;
+        }
+        
+        historyList.innerHTML = '';
+        
+        history.forEach((entry, index) => {
+            const date = new Date(entry.date);
+            const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${formattedDate}</td>
+                <td>${entry.jobTitle}</td>
+                <td><strong>${entry.score}%</strong></td>
+                <td>
+                    <button class="secondary" style="padding: 5px 10px; font-size: 12px;" onclick="viewHistoryDetails(${index})">
+                        <i class="fas fa-eye"></i> View
+                    </button>
+                </td>
+            `;
+            historyList.appendChild(row);
+        });
+    }
+    
+    function viewHistoryDetails(index) {
+        const history = JSON.parse(localStorage.getItem('jobFitHistory')) || [];
+        if (!history[index]) return;
+        
+        const entry = history[index];
+        
+        // Load data into form
+        document.getElementById('job-title').value = entry.jobTitle;
+        
+        // Clear existing tags
+        document.getElementById('skills-tags').innerHTML = '';
+        document.getElementById('job-tags').innerHTML = '';
+        
+        // Add tags from history
+        addTags(entry.skills, 'skills');
+        addTags(entry.jobRequirements, 'job');
+        
+        // Show results
+        updateResults(entry.score, entry.matchedSkills, entry.missingSkills, entry.jobTitle);
+        document.getElementById('results').style.display = 'block';
+        
+        // Switch to analyze tab
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelector(`.tab[data-tab="analyze"]`).classList.add('active');
+        document.querySelector(`.tab-content[data-tab="analyze"]`).classList.add('active');
+        
+        showNotification('History entry loaded', 'info');
+    }
+    
+    function clearHistory() {
+        if (confirm('Are you sure you want to clear your analysis history?')) {
+            localStorage.removeItem('jobFitHistory');
+            loadHistory();
+            updateStats();
+            showNotification('History cleared successfully', 'success');
+        }
+    }
+    
+    function clearForm() {
+        document.getElementById('skills-tags').innerHTML = '';
+        document.getElementById('job-tags').innerHTML = '';
+        document.getElementById('skills').value = '';
+        document.getElementById('job').value = '';
+        document.getElementById('job-title').value = '';
+        document.getElementById('results').style.display = 'none';
+    }
+    
+    function loadSample() {
+        clearForm();
+        
+        const sampleSkills = ['JavaScript', 'React', 'CSS', 'HTML', 'Node.js', 'Git'];
+        const sampleRequirements = ['JavaScript', 'React', 'TypeScript', 'Redux', 'Node.js', 'GraphQL'];
+        
+        document.getElementById('job-title').value = 'Senior Frontend Developer';
+        
+        // Add tags
+        addTags(sampleSkills, 'skills');
+        addTags(sampleRequirements, 'job');
+        
+        showNotification('Sample data loaded', 'info');
+    }
+    
+    function updateStats() {
+        const history = JSON.parse(localStorage.getItem('jobFitHistory')) || [];
+        if (history.length === 0) {
+            document.getElementById('top-skills-list').innerHTML = '<p class="no-results">Analyze more jobs to see statistics</p>';
+            document.getElementById('skills-to-learn-list').innerHTML = '<p class="no-results">Analyze more jobs to get recommendations</p>';
+            return;
+        }
+        
+        // Count skill frequencies in job requirements
+        const skillDemand = {};
+        history.forEach(entry => {
+            entry.jobRequirements.forEach(skill => {
+                skillDemand[skill] = (skillDemand[skill] || 0) + 1;
+            });
+        });
+        
+        // Count missing skills frequencies
+        const missingSkillsCount = {};
+        history.forEach(entry => {
+            entry.missingSkills.forEach(skill => {
+                missingSkillsCount[skill] = (missingSkillsCount[skill] || 0) + 1;
+            });
+        });
+        
+        // Get your skills from the most recent analysis or combine all
+        let yourSkills = new Set();
+        history.forEach(entry => {
+            entry.skills.forEach(skill => yourSkills.add(skill));
+        });
+        yourSkills = Array.from(yourSkills);
+        
+        // Find your top skills (ones you have that are most demanded)
+        const yourTopSkills = yourSkills
+            .filter(skill => skillDemand[skill])
+            .sort((a, b) => (skillDemand[b] || 0) - (skillDemand[a] || 0))
+            .slice(0, 5);
+        
+        // Find recommended skills to learn (most demanded skills you don't have)
+        const recommendedSkills = Object.keys(missingSkillsCount)
+            .sort((a, b) => missingSkillsCount[b] - missingSkillsCount[a])
+            .slice(0, 5);
+        
+        // Update UI with top skills
+        const topSkillsList = document.getElementById('top-skills-list');
+        topSkillsList.innerHTML = '';
+        
+        if (yourTopSkills.length > 0) {
+            yourTopSkills.forEach(skill => {
+                const frequency = skillDemand[skill] || 0;
+                const percentage = Math.round((frequency / history.length) * 100);
+                
+                const skillElement = document.createElement('div');
+                skillElement.style.marginBottom = '10px';
+                skillElement.innerHTML = `
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>${skill}</span>
+                        <span>${percentage}% of jobs</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                    </div>
+                `;
+                topSkillsList.appendChild(skillElement);
+            });
+        } else {
+            topSkillsList.innerHTML = '<p class="no-results">No data available</p>';
+        }
+        
+        // Update UI with skills to learn
+        const skillsToLearnList = document.getElementById('skills-to-learn-list');
+        skillsToLearnList.innerHTML = '';
+        
+        if (recommendedSkills.length > 0) {
+            recommendedSkills.forEach(skill => {
+                const frequency = missingSkillsCount[skill] || 0;
+                const percentage = Math.round((frequency / history.length) * 100);
+                
+                const skillElement = document.createElement('div');
+                skillElement.style.marginBottom = '10px';
+                skillElement.innerHTML = `
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>${skill}</span>
+                        <span>Missing in ${percentage}% of jobs</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                    </div>
+                `;
+                skillsToLearnList.appendChild(skillElement);
+            });
+        } else {
+            skillsToLearnList.innerHTML = '<p class="no-results">No missing skills data available</p>';
+        }
+    }
+    
+    function loadStats() {
+        updateStats();
+    }
+    
+    function showNotification(message, type = 'info') {
+        const notifications = document.getElementById('notifications');
+        
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        let icon;
+        let title;
+        
+        switch(type) {
+            case 'success':
+                icon = 'check-circle';
+                title = 'Success';
+                break;
+            case 'error':
+                icon = 'exclamation-circle';
+                title = 'Error';
+                break;
+            default:
+                icon = 'info-circle';
+                title = 'Information';
+        }
+        
+        notification.innerHTML = `
+            <i class="fas fa-${icon}"></i>
+            <div class="notification-content">
+                <div class="notification-title">${title}</div>
+                <div>${message}</div>
+            </div>
+            <div class="notification-close" onclick="closeNotification(this)">
+                <i class="fas fa-times"></i>
+            </div>
+        `;
+        
+        notifications.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        // Auto dismiss after 5 seconds
+        setTimeout(() => {
+            closeNotification(notification.querySelector('.notification-close'));
+        }, 5000);
+    }
+    
+    function closeNotification(element) {
+        const notification = element.closest('.notification');
+        notification.classList.remove('show');
+        
+        // Remove from DOM after animation
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }
+</script>
+</body>
+</html>

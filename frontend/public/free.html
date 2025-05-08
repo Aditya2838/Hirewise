@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer & Gig Posting Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS Variables for theme colors */
+        :root {
+            --primary-color: #ff9800;
+            --primary-hover: #e68900;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --bg-input: #252525;
+            --text-light: #f5f5f5;
+            --text-secondary: #aaaaaa;
+            --success-color: #4caf50;
+            --danger-color: #f44336;
+            --warning-color: #ff9800;
+            --info-color: #2196f3;
+        }
+
+        /* General Styling with improved typography and spacing */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--primary-color);
+            color: black;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .container {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+        }
+
+        h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after, h3::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -8px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .search-filter {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .search-filter input {
+            flex: 1;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--bg-input);
+            color: white;
+            border: 1px solid #444;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background: var(--primary-color);
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: black;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button i {
+            margin-right: 8px;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        button.secondary:hover {
+            background: rgba(255, 152, 0, 0.1);
+        }
+
+        button.delete {
+            background: var(--danger-color);
+            padding: a8px 12px;
+            font-size: 14px;
+        }
+
+        button.delete:hover {
+            background: #d32f2f;
+        }
+
+        .gig-list {
+            margin-top: 20px;
+        }
+
+        .gig-card {
+            background: var(--bg-input);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .gig-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 152, 0, 0.3);
+        }
+
+        .gig-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .gig-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .gig-budget {
+            color: var(--success-color);
+            font-weight: bold;
+            background: rgba(76, 175, 80, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .gig-meta {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .gig-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .gig-meta i {
+            margin-right: 5px;
+        }
+
+        .gig-description {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .gig-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--primary-color);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: rgba(33, 150, 243, 0.15);
+            color: #42a5f5;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            opacity: 1;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab:hover {
+            opacity: 0.8;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s;
+        }
+
+        .notification.success {
+            background-color: var(--success-color);
+        }
+
+        .notification.error {
+            background-color: var(--danger-color);
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+
+        .pagination button {
+            padding: 8px 15px;
+            margin: 0 2px;
+            background: var(--bg-input);
+            color: var(--text-light);
+        }
+
+        .pagination button.active {
+            background: var(--primary-color);
+            color: black;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .social-icons a {
+            color: var(--text-light);
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalIn 0.3s;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--danger-color);
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 15px;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: black;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #333 25%, #3a3a3a 50%, #333 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 6px;
+            height: 15px;
+            margin-bottom: 10px;
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skill-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 6px;
+            background: var(--bg-input);
+            min-height: 45px;
+        }
+
+        .skill-pill {
+            display: flex;
+            align-items: center;
+            background: rgba(33, 150, 243, 0.15);
+            color: #42a5f5;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .skill-pill .remove {
+            margin-left: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .skill-input {
+            flex: 1;
+            min-width: 100px;
+            border: none;
+            background: transparent;
+            padding: 5px;
+            outline: none;
+        }
+
+        #skills-container .skill-input-container {
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="container">
+            <div class="tabs">
+                <div class="tab active" data-tab="browse">Browse Gigs</div>
+                <div class="tab" data-tab="post">Post a Gig</div>
+                <div class="tab" data-tab="my-gigs">My Gigs</div>
+            </div>
+
+            <div class="tab-content active" id="browse-tab">
+                <div class="search-filter">
+                    <input type="text" id="search-gigs" placeholder="Search gigs by title or skills...">
+                    <select id="filter-category">
+                        <option value="">All Categories</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Graphic Design">Graphic Design</option>
+                        <option value="Writing & Content">Writing & Content</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Mobile Development">Mobile Development</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <button id="search-button">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+
+                <div id="loading">
+                    <div class="spinner"></div>
+                    <p>Loading gigs...</p>
+                </div>
+
+                <div class="gig-list">
+                    <div id="gig-container"></div>
+                    <div id="no-results" class="no-results" style="display: none;">
+                        <i class="fas fa-search fa-3x" style="margin-bottom: 15px; opacity: 0.5;"></i>
+                        <h3>No gigs found</h3>
+                        <p>Try adjusting your search criteria or browse all gigs.</p>
+                    </div>
+                </div>
+
+                <div class="pagination" id="pagination"></div>
+            </div>
+
+            <div class="tab-content" id="post-tab">
+                <h3><i class="fas fa-plus-circle"></i> Post a New Gig</h3>
+                
+                <div id="gig-form">
+                    <div class="input-group">
+                        <label for="gig-title">Gig Title:</label>
+                        <input type="text" id="gig-title" placeholder="Enter a descriptive title for your gig">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="gig-description">Description:</label>
+                        <textarea id="gig-description" placeholder="Describe the gig in detail including requirements and deliverables..."></textarea>
+                    </div>
+
+                    <div class="two-column">
+                        <div class="input-group">
+                            <label for="gig-category">Category:</label>
+                            <select id="gig-category">
+                                <option value="Web Development">Web Development</option>
+                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Writing & Content">Writing & Content</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Data Science">Data Science</option>
+                                <option value="Mobile Development">Mobile Development</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="gig-budget">Budget ($):</label>
+                            <input type="number" id="gig-budget" placeholder="Enter your budget" min="5">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="gig-deadline">Deadline:</label>
+                        <input type="date" id="gig-deadline">
+                    </div>
+
+                    <div class="input-group" id="skills-container">
+                        <label>Required Skills:</label>
+                        <div class="skill-input-container">
+                            <input type="text" class="skill-input" placeholder="Add skills (press Enter)">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button onclick="clearForm()" class="secondary">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button onclick="postGig()" id="post-button">
+                            <i class="fas fa-plus-circle"></i> Post Gig
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="my-gigs-tab">
+                <h3><i class="fas fa-clipboard-list"></i> My Posted Gigs</h3>
+                <div id="my-gigs-container"></div>
+                <div id="no-my-gigs" class="no-results" style="display: none;">
+                    <i class="fas fa-clipboard-check fa-3x" style="margin-bottom: 15px; opacity: 0.5;"></i>
+                    <h3>No gigs posted yet</h3>
+                    <p>Start posting gigs to find talented freelancers.</p>
+                    <button onclick="switchTab('post')" style="margin-top: 15px;">
+                        <i class="fas fa-plus-circle"></i> Post Your First Gig
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Apply Modal -->
+    <div class="modal" id="apply-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-apply-modal">&times;</span>
+            <h3>Apply for Gig</h3>
+            <div id="apply-gig-title" class="gig-title" style="margin-bottom: 20px;"></div>
+            
+            <div class="input-group">
+                <label for="application-proposal">Proposal:</label>
+                <textarea id="application-proposal" placeholder="Describe why you're the best fit for this job..."></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label for="application-bid">Your Bid ($):</label>
+                <input type="number" id="application-bid" placeholder="Enter your price">
+            </div>
+            
+            <div class="input-group">
+                <label for="application-timeframe">Estimated Completion Time (days):</label>
+                <input type="number" id="application-timeframe" placeholder="Enter number of days">
+            </div>
+            
+            <input type="hidden" id="apply-gig-id">
+            
+            <button onclick="submitApplication()" id="submit-application-btn">
+                <i class="fas fa-paper-plane"></i> Submit Application
+            </button>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <h3>Confirm Deletion</h3>
+            <p>Are you sure you want to delete this gig? This action cannot be undone.</p>
+            
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="secondary" id="cancel-delete">Cancel</button>
+                <button class="delete" id="confirm-delete">Delete Gig</button>
+            </div>
+            
+            <input type="hidden" id="delete-gig-id">
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Variables for pagination
+let currentPage = 1;
+const itemsPerPage = 5;
+let allGigs = [];
+let filteredGigs = [];
+let myGigs = [];
+let skills = [];
+
+// DOM Elements
+const gigContainer = document.getElementById("gig-container");
+const myGigsContainer = document.getElementById("my-gigs-container");
+const pagination = document.getElementById("pagination");
+const notification = document.getElementById("notification");
+const noResultsElement = document.getElementById("no-results");
+const noMyGigsElement = document.getElementById("no-my-gigs");
+const loadingElement = document.getElementById("loading");
+const searchInput = document.getElementById("search-gigs");
+const categoryFilter = document.getElementById("filter-category");
+const tabButtons = document.querySelectorAll(".tab");
+const tabContents = document.querySelectorAll(".tab-content");
+const themeToggle = document.getElementById("theme-toggle");
+const applyModal = document.getElementById("apply-modal");
+const deleteModal = document.getElementById("delete-modal");
+const closeApplyModal = document.getElementById("close-apply-modal");
+const cancelDelete = document.getElementById("cancel-delete");
+const confirmDelete = document.getElementById("confirm-delete");
+const searchButton = document.getElementById("search-button");
+const skillsContainer = document.querySelector(".skill-input-container");
+const skillInput = document.querySelector(".skill-input");
+
+// Initialize the application
+document.addEventListener("DOMContentLoaded", () => {
+    initializeApp();
+});
+
+function initializeApp() {
+    loadGigs();
+    setupEventListeners();
+    setupSkillsInput();
+    checkDarkModePreference();
+    simulateLoading();
+}
+
+// Simulate loading for demonstration
+function simulateLoading() {
+    loadingElement.style.display = "block";
+    gigContainer.style.display = "none";
+    
+    setTimeout(() => {
+        loadingElement.style.display = "none";
+        gigContainer.style.display = "block";
+        renderGigs();
+    }, 800);
+}
+
+// Load gigs from localStorage
+function loadGigs() {
+    allGigs = JSON.parse(localStorage.getItem("gigs")) || generateSampleGigs();
+    myGigs = allGigs.filter(gig => gig.isMyGig);
+    filteredGigs = [...allGigs];
+    localStorage.setItem("gigs", JSON.stringify(allGigs));
+}
+
+// Generate sample gigs for demonstration
+function generateSampleGigs() {
+    const sampleGigs = [
+        {
+            id: generateId(),
+            title: "E-commerce Website Development",
+            description: "Looking for an experienced developer to build a responsive e-commerce website with user authentication, product catalog, and payment processing.",
+            category: "Web Development",
+            budget: 2500,
+            createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+            deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+            skills: ["React", "Node.js", "MongoDB", "PayPal API"],
+            isMyGig: false
+        },
+        {
+            id: generateId(),
+            title: "Logo Design for Tech Startup",
+            description: "Need a modern, minimalist logo for a SaaS company. The logo should convey innovation and reliability. Will need all source files and various formats.",
+            category: "Graphic Design",
+            budget: 500,
+            createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+            deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+            skills: ["Illustrator", "Logo Design", "Branding"],
+            isMyGig: false
+        },
+        {
+            id: generateId(),
+            title: "Content Writing for Tech Blog",
+            description: "Seeking a talented writer to create 10 articles about emerging technologies. Each article should be 1500-2000 words with proper research and SEO optimization.",
+            category: "Writing & Content",
+            budget: 800,
+            createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+            deadline: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(),
+            skills: ["Content Writing", "SEO", "Research", "Tech Knowledge"]
+        }
+    ];
+    
+    return sampleGigs;
+}
+
+// Setup event listeners
+function setupEventListeners() {
+    // Tab switching
+    tabButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const tabName = button.getAttribute("data-tab");
+            switchTab(tabName);
+        });
+    });
+    
+    // Search and filters
+    searchButton.addEventListener("click", filterGigs);
+    searchInput.addEventListener("keyup", (e) => {
+        if (e.key === "Enter") filterGigs();
+    });
+    categoryFilter.addEventListener("change", filterGigs);
+    
+    // Modal controls
+    closeApplyModal.addEventListener("click", () => {
+        applyModal.style.display = "none";
+    });
+    
+    cancelDelete.addEventListener("click", () => {
+        deleteModal.style.display = "none";
+    });
+    
+    confirmDelete.addEventListener("click", deleteGig);
+    
+    // Theme toggle
+    themeToggle.addEventListener("click", toggleTheme);
+    
+    // Close modals when clicking outside
+    window.addEventListener("click", (e) => {
+        if (e.target === applyModal) applyModal.style.display = "none";
+        if (e.target === deleteModal) deleteModal.style.display = "none";
+    });
+}
+
+// Setup skills input functionality
+function setupSkillsInput() {
+    skillInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && skillInput.value.trim() !== "") {
+            e.preventDefault();
+            const skill = skillInput.value.trim();
+            if (!skills.includes(skill)) {
+                skills.push(skill);
+                renderSkills();
+            }
+            skillInput.value = "";
+        }
+    });
+    
+    // Delete skills when clicking remove button
+    skillsContainer.addEventListener("click", (e) => {
+        if (e.target.classList.contains("remove")) {
+            const skill = e.target.parentElement.getAttribute("data-skill");
+            skills = skills.filter(s => s !== skill);
+            renderSkills();
+        }
+    });
+}
+
+// Render skills pills
+function renderSkills() {
+    const pillsContainer = Array.from(skillsContainer.children).filter(
+        child => !child.classList.contains("skill-input")
+    );
+    
+    pillsContainer.forEach(pill => {
+        skillsContainer.removeChild(pill);
+    });
+    
+    skills.forEach(skill => {
+        const pill = document.createElement("div");
+        pill.className = "skill-pill";
+        pill.setAttribute("data-skill", skill);
+        pill.innerHTML = `${skill} <span class="remove">&times;</span>`;
+        skillsContainer.insertBefore(pill, skillInput);
+    });
+}
+
+// Generate unique ID
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Format date
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+}
+
+// Calculate days remaining
+function getDaysRemaining(deadlineString) {
+    const deadline = new Date(deadlineString);
+    const today = new Date();
+    const diffTime = deadline - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+}
+
+// Format time ago
+function timeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffSeconds = Math.floor((now - date) / 1000);
+    
+    if (diffSeconds < 60) return `${diffSeconds} seconds ago`;
+    if (diffSeconds < 3600) return `${Math.floor(diffSeconds / 60)} minutes ago`;
+    if (diffSeconds < 86400) return `${Math.floor(diffSeconds / 3600)} hours ago`;
+    if (diffSeconds < 2592000) return `${Math.floor(diffSeconds / 86400)} days ago`;
+    if (diffSeconds < 31536000) return `${Math.floor(diffSeconds / 2592000)} months ago`;
+    return `${Math.floor(diffSeconds / 31536000)} years ago`;
+}
+
+// Switch tabs
+function switchTab(tabName) {
+    tabButtons.forEach(button => {
+        if (button.getAttribute("data-tab") === tabName) {
+            button.classList.add("active");
+        } else {
+            button.classList.remove("active");
+        }
+    });
+    
+    tabContents.forEach(content => {
+        if (content.id === `${tabName}-tab`) {
+            content.classList.add("active");
+            
+            // Refresh content based on tab
+            if (tabName === "browse") {
+                renderGigs();
+            } else if (tabName === "my-gigs") {
+                renderMyGigs();
+            }
+        } else {
+            content.classList.remove("active");
+        }
+    });
+}
+
+// Toggle dark/light theme
+function toggleTheme() {
+    const root = document.documentElement;
+    const isDarkMode = root.style.getPropertyValue("--bg-dark") === "#121212";
+    
+    if (isDarkMode) {
+        // Switch to light mode
+        root.style.setProperty("--bg-dark", "#f5f5f5");
+        root.style.setProperty("--bg-card", "#ffffff");
+        root.style.setProperty("--bg-input", "#f0f0f0");
+        root.style.setProperty("--text-light", "#333333");
+        root.style.setProperty("--text-secondary", "#666666");
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        localStorage.setItem("theme", "light");
+    } else {
+        // Switch to dark mode
+        root.style.setProperty("--bg-dark", "#121212");
+        root.style.setProperty("--bg-card", "#1e1e1e");
+        root.style.setProperty("--bg-input", "#252525");
+        root.style.setProperty("--text-light", "#f5f5f5");
+        root.style.setProperty("--text-secondary", "#aaaaaa");
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        localStorage.setItem("theme", "dark");
+    }
+}
+
+// Check user's theme preference
+function checkDarkModePreference() {
+    const savedTheme = localStorage.getItem("theme");
+    
+    if (savedTheme === "light") {
+        toggleTheme();
+    } else if (!savedTheme && window.matchMedia("(prefers-color-scheme: light)").matches) {
+        toggleTheme();
+    }
+}
+
+// Filter gigs based on search and category
+function filterGigs() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const categoryValue = categoryFilter.value;
+    
+    filteredGigs = allGigs.filter(gig => {
+        const titleMatch = gig.title.toLowerCase().includes(searchTerm);
+        const skillsMatch = gig.skills.some(skill => 
+            skill.toLowerCase().includes(searchTerm)
+        );
+        const categoryMatch = categoryValue === "" || gig.category === categoryValue;
+        
+        return (titleMatch || skillsMatch) && categoryMatch;
+    });
+    
+    currentPage = 1;
+    renderGigs();
+}
+
+// Add a new gig
+function postGig() {
+    const titleInput = document.getElementById("gig-title");
+    const descriptionInput = document.getElementById("gig-description");
+    const categoryInput = document.getElementById("gig-category");
+    const budgetInput = document.getElementById("gig-budget");
+    const deadlineInput = document.getElementById("gig-deadline");
+    
+    // Validation
+    if (!titleInput.value || !descriptionInput.value || !budgetInput.value || !deadlineInput.value) {
+        showNotification("Please fill in all fields", "error");
+        return;
+    }
+    
+    // Create new gig object
+    const newGig = {
+        id: generateId(),
+        title: titleInput.value,
+        description: descriptionInput.value,
+        category: categoryInput.value,
+        budget: parseInt(budgetInput.value),
+        createdAt: new Date().toISOString(),
+        deadline: new Date(deadlineInput.value).toISOString(),
+        skills: [...skills],
+        isMyGig: true
+    };
+    
+    // Add to arrays and update localStorage
+    allGigs.unshift(newGig);
+    myGigs.unshift(newGig);
+    filteredGigs = [...allGigs];
+    localStorage.setItem("gigs", JSON.stringify(allGigs));
+    
+    // Clear form and show notification
+    clearForm();
+    showNotification("Gig posted successfully!", "success");
+    
+    // Switch to My Gigs tab
+    switchTab("my-gigs");
+}
+
+// Clear the gig form
+function clearForm() {
+    document.getElementById("gig-title").value = "";
+    document.getElementById("gig-description").value = "";
+    document.getElementById("gig-category").selectedIndex = 0;
+    document.getElementById("gig-budget").value = "";
+    document.getElementById("gig-deadline").value = "";
+    skills = [];
+    renderSkills();
+}
+
+// Show notification
+function showNotification(message, type) {
+    notification.textContent = message;
+    notification.className = `notification ${type}`;
+    notification.classList.add("show");
+    
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, 3000);
+}
+
+// Open application modal
+function openApplyModal(gigId) {
+    const gig = allGigs.find(g => g.id === gigId);
+    
+    if (gig) {
+        document.getElementById("apply-gig-title").textContent = gig.title;
+        document.getElementById("apply-gig-id").value = gigId;
+        
+        // Pre-fill the budget as a suggestion
+        document.getElementById("application-bid").value = gig.budget;
+        document.getElementById("application-proposal").value = "";
+        document.getElementById("application-timeframe").value = "";
+        
+        applyModal.style.display = "flex";
+    }
+}
+
+// Submit application
+function submitApplication() {
+    const proposalInput = document.getElementById("application-proposal");
+    const bidInput = document.getElementById("application-bid");
+    const timeframeInput = document.getElementById("application-timeframe");
+    
+    // Validation
+    if (!proposalInput.value || !bidInput.value || !timeframeInput.value) {
+        showNotification("Please fill in all fields", "error");
+        return;
+    }
+    
+    // In a real app, this would send data to a server
+    showNotification("Application submitted successfully!", "success");
+    applyModal.style.display = "none";
+}
+
+// Open delete confirmation modal
+function openDeleteModal(gigId) {
+    document.getElementById("delete-gig-id").value = gigId;
+    deleteModal.style.display = "flex";
+}
+
+// Delete a gig
+function deleteGig() {
+    const gigId = document.getElementById("delete-gig-id").value;
+    
+    allGigs = allGigs.filter(gig => gig.id !== gigId);
+    myGigs = myGigs.filter(gig => gig.id !== gigId);
+    filteredGigs = filteredGigs.filter(gig => gig.id !== gigId);
+    
+    localStorage.setItem("gigs", JSON.stringify(allGigs));
+    
+    showNotification("Gig deleted successfully", "success");
+    deleteModal.style.display = "none";
+    
+    renderMyGigs();
+}
+
+// Render paginated gigs
+function renderGigs() {
+    // Show "no results" message if needed
+    if (filteredGigs.length === 0) {
+        gigContainer.innerHTML = "";
+        noResultsElement.style.display = "block";
+        pagination.innerHTML = "";
+        return;
+    }
+    
+    noResultsElement.style.display = "none";
+    
+    // Calculate pagination
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedGigs = filteredGigs.slice(start, end);
+    
+    // Clear container
+    gigContainer.innerHTML = "";
+    
+    // Add gig cards
+    paginatedGigs.forEach(gig => {
+        const daysRemaining = getDaysRemaining(gig.deadline);
+        const urgencyClass = daysRemaining < 7 ? "danger-color" : 
+                           daysRemaining < 14 ? "warning-color" : "";
+        
+        const gigCard = document.createElement("div");
+        gigCard.className = "gig-card";
+        gigCard.innerHTML = `
+            <div class="gig-header">
+                <div>
+                    <div class="gig-title">${gig.title}</div>
+                    <div class="gig-meta">
+                        <span><i class="fas fa-folder"></i> ${gig.category}</span>
+                        <span><i class="fas fa-clock"></i> ${timeAgo(gig.createdAt)}</span>
+                        <span class="${urgencyClass}">
+                            <i class="fas fa-calendar-day"></i> ${daysRemaining} days left
+                        </span>
+                    </div>
+                </div>
+                <div class="gig-budget">$${gig.budget}</div>
+            </div>
+            
+            <div class="gig-description">${gig.description}</div>
+            
+            <div class="skill-tags">
+                ${gig.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join("")}
+            </div>
+            
+            <div class="gig-actions">
+                <button onclick="openApplyModal('${gig.id}')">
+                    <i class="fas fa-paper-plane"></i> Apply
+                </button>
+            </div>
+        `;
+        
+        gigContainer.appendChild(gigCard);
+    });
+    
+    renderPagination();
+}
+
+// Render my gigs
+function renderMyGigs() {
+    if (myGigs.length === 0) {
+        myGigsContainer.innerHTML = "";
+        noMyGigsElement.style.display = "block";
+        return;
+    }
+    
+    noMyGigsElement.style.display = "none";
+    myGigsContainer.innerHTML = "";
+    
+    myGigs.forEach(gig => {
+        const daysRemaining = getDaysRemaining(gig.deadline);
+        
+        const gigCard = document.createElement("div");
+        gigCard.className = "gig-card";
+        gigCard.innerHTML = `
+            <div class="gig-header">
+                <div>
+                    <div class="gig-title">${gig.title}</div>
+                    <div class="gig-meta">
+                        <span><i class="fas fa-folder"></i> ${gig.category}</span>
+                        <span><i class="fas fa-clock"></i> ${timeAgo(gig.createdAt)}</span>
+                        <span><i class="fas fa-calendar-day"></i> ${daysRemaining} days left</span>
+                    </div>
+                </div>
+                <div class="gig-budget">$${gig.budget}</div>
+            </div>
+            
+            <div class="gig-description">${gig.description}</div>
+            
+            <div class="skill-tags">
+                ${gig.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join("")}
+            </div>
+            
+            <div class="gig-actions">
+                <button class="secondary">
+                    <i class="fas fa-eye"></i> View Applications (0)
+                </button>
+                <button class="delete" onclick="openDeleteModal('${gig.id}')">
+                    <i class="fas fa-trash-alt"></i> Delete
+                </button>
+            </div>
+        `;
+        
+        myGigsContainer.appendChild(gigCard);
+    });
+}
+
+// Render pagination controls
+function renderPagination() {
+    const pageCount = Math.ceil(filteredGigs.length / itemsPerPage);
+    
+    if (pageCount <= 1) {
+        pagination.innerHTML = "";
+        return;
+    }
+    
+    let paginationHTML = "";
+    
+    // Previous button
+    paginationHTML += `
+        <button ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+    `;
+    
+    // Page buttons
+    for (let i = 1; i <= pageCount; i++) {
+        if (
+            i === 1 || 
+            i === pageCount || 
+            (i >= currentPage - 1 && i <= currentPage + 1)
+        ) {
+            paginationHTML += `
+                <button class="${currentPage === i ? 'active' : ''}" onclick="changePage(${i})">
+                    ${i}
+                </button>
+            `;
+        } else if (
+            i === currentPage - 2 || 
+            i === currentPage + 2
+        ) {
+            paginationHTML += `<span>...</span>`;
+        }
+    }
+    
+    // Next button
+    paginationHTML += `
+        <button ${currentPage === pageCount ? 'disabled' : ''} onclick="changePage(${currentPage + 1})">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    `;
+    
+    pagination.innerHTML = paginationHTML;
+}
+
+// Change page
+function changePage(page) {
+    currentPage = page;
+    renderGigs();
+    
+    // Scroll to top of gig container
+    gigContainer.scrollIntoView({ behavior: "smooth" });
+}
+    </script>
+
+</body>
+</html>

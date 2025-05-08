@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Switch Assistance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Enhanced General Styling */
+        :root {
+            --primary-color: #ff9800;
+            --primary-hover: #e68900;
+            --bg-dark: #121212;
+            --container-bg: #1e1e1e;
+            --input-bg: #252525;
+            --text-color: #f5f5f5;
+            --text-secondary: #bbbbbb;
+            --border-color: #555;
+            --success: #4caf50;
+            --warning: #f44336;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            width: 90%;
+            max-width: 700px;
+            margin: 20px 0;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            margin: 20px 0 15px 0;
+            font-size: 22px;
+        }
+
+        p {
+            margin: 10px 0;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-weight: bold;
+        }
+
+        textarea, 
+        input[type="text"],
+        select {
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px;
+            background: var(--input-bg);
+            color: white;
+            border: 1px solid var(--border-color);
+            outline: none;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        textarea:focus, 
+        input[type="text"]:focus,
+        select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: var(--primary-color);
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 150px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        button.secondary:hover {
+            background: #333;
+        }
+
+        /* Results and History */
+        .results-card {
+            background: var(--input-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            border-left: 4px solid var(--primary-color);
+            animation: slideIn 0.3s ease-out;
+            display: none;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .results-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .results-card p {
+            margin: 5px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin: 5px 5px 5px 0;
+            font-size: 14px;
+        }
+
+        #history {
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .history-item {
+            background: var(--input-bg);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+            border-left: 4px solid var(--border-color);
+        }
+
+        .history-item:hover {
+            background: #2a2a2a;
+        }
+
+        .history-item .actions {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .history-item .actions button {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 0;
+            min-width: auto;
+            box-shadow: none;
+        }
+
+        .history-item .actions button:hover {
+            color: var(--primary-color);
+            transform: none;
+        }
+
+        .history-date {
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: var(--border-color);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            width: 48px;
+            height: 48px;
+            border: 5px solid var(--input-bg);
+            border-bottom-color: var(--primary-color);
+            border-radius: 50%;
+            margin: 20px auto;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        #toast.show {
+            transform: translateX(0);
+        }
+
+        #toast.error {
+            background: var(--warning);
+        }
+
+        /* Skills Pills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-pill {
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid rgba(255, 152, 0, 0.3);
+            border-radius: 20px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-pill span {
+            font-size: 14px;
+        }
+
+        .skill-pill button {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 0;
+            margin: 0;
+            min-width: auto;
+            box-shadow: none;
+            font-size: 14px;
+        }
+
+        .skill-pill button:hover {
+            color: var(--warning);
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2><i class="fas fa-exchange-alt"></i> Career Switch Assistance</h2>
+        <p>Enter your skills, experience, and preferences to get personalized career path suggestions.</p>
+        
+        <div class="form-group">
+            <label for="skills">Your Current Skills & Experience:</label>
+            <textarea id="skills" placeholder="e.g., Java, Web Development, Database Management"></textarea>
+            <div class="skills-container" id="skills-pills"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="experience">Years of Experience:</label>
+            <select id="experience">
+                <option value="entry">0-2 years (Entry Level)</option>
+                <option value="mid" selected>3-5 years (Mid Level)</option>
+                <option value="senior">6+ years (Senior Level)</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="preferences">Career Preferences (Optional):</label>
+            <input type="text" id="preferences" placeholder="e.g., Remote work, Creative environment, High salary">
+        </div>
+        
+        <div class="buttons">
+            <button onclick="analyzeCareerSwitch()"><i class="fas fa-search"></i> Get Suggestions</button>
+            <button class="secondary" onclick="resetForm()"><i class="fas fa-undo"></i> Reset</button>
+        </div>
+        
+        <div class="loader" id="loader"></div>
+        
+        <div class="results-card" id="results">
+            <h4>Suggested Career Paths</h4>
+            <div id="suggestions-content"></div>
+        </div>
+
+        <div id="history">
+            <h3>Previous Suggestions</h3>
+            <div id="history-list"></div>
+        </div>
+    </div>
+    
+    <div id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message"></span>
+    </div>
+
+    <script>
+        // Initialize skills array and in-memory history storage
+        let userSkills = [];
+        let suggestionHistory = [];
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            loadHistory();
+            
+            // Add enter key support for skills input
+            document.getElementById('skills').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    processSkillsInput();
+                }
+            });
+            
+            // Add skill pills functionality
+            document.getElementById('skills').addEventListener('blur', function() {
+                processSkillsInput();
+            });
+        });
+        
+        // Process skills input and create pills
+        function processSkillsInput() {
+            const skillsInput = document.getElementById('skills');
+            const inputText = skillsInput.value.trim();
+            
+            if (inputText) {
+                // Split by commas and process each skill
+                const newSkills = inputText.split(',')
+                    .map(skill => skill.trim())
+                    .filter(skill => skill && !userSkills.includes(skill.toLowerCase()));
+                
+                // Add new skills to array
+                newSkills.forEach(skill => {
+                    if (skill) {
+                        userSkills.push(skill.toLowerCase());
+                    }
+                });
+                
+                // Clear input
+                skillsInput.value = '';
+                
+                // Render skills pills
+                renderSkillPills();
+            }
+        }
+        
+        // Render skill pills UI
+        function renderSkillPills() {
+            const pillsContainer = document.getElementById('skills-pills');
+            pillsContainer.innerHTML = '';
+            
+            userSkills.forEach((skill, index) => {
+                const pill = document.createElement('div');
+                pill.className = 'skill-pill';
+                pill.innerHTML = `
+                    <span>${skill}</span>
+                    <button onclick="removeSkill(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                pillsContainer.appendChild(pill);
+            });
+        }
+        
+        // Remove skill from array
+        function removeSkill(index) {
+            userSkills.splice(index, 1);
+            renderSkillPills();
+        }
+        
+        // Reset form
+        function resetForm() {
+            document.getElementById('skills').value = '';
+            document.getElementById('preferences').value = '';
+            document.getElementById('experience').selectedIndex = 1;
+            document.getElementById('results').style.display = 'none';
+            userSkills = [];
+            renderSkillPills();
+            showToast('Form has been reset');
+        }
+        
+        // Analyze career options based on input
+        function analyzeCareerSwitch() {
+            // Validate input
+            if (userSkills.length === 0) {
+                showToast('Please enter at least one skill', true);
+                document.getElementById('skills').focus();
+                return;
+            }
+            
+            // Show loader
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                generateSuggestions();
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('results').style.display = 'block';
+                
+                // Scroll to results
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            }, 1200);
+        }
+        
+        // Generate career suggestions based on skills
+        function generateSuggestions() {
+            const experience = document.getElementById('experience').value;
+            const preferences = document.getElementById('preferences').value;
+            const skills = userSkills.join(', ');
+            
+            // Enhanced career paths database with more detailed information
+            const careerPaths = [
+                {
+                    keywords: ['java', 'web', 'development', 'spring', 'api'],
+                    title: 'Full Stack Developer',
+                    description: 'Build end-to-end web applications using both frontend and backend technologies.',
+                    upskilling: ['React', 'Node.js', 'DevOps', 'Microservices'],
+                    salary: '$70,000 - $120,000',
+                    growth: 'High',
+                    remote: 'Very suitable for remote work'
+                },
+                {
+                    keywords: ['database', 'sql', 'oracle', 'mysql', 'postgresql'],
+                    title: 'Database Administrator',
+                    description: 'Design, implement and maintain database systems ensuring performance, security, and availability.',
+                    upskilling: ['MongoDB', 'PostgreSQL', 'Cloud Databases', 'Data Warehousing'],
+                    salary: '$75,000 - $110,000',
+                    growth: 'Moderate',
+                    remote: 'Suitable for remote work'
+                },
+                {
+                    keywords: ['python', 'machine learning', 'ai', 'data', 'analytics'],
+                    title: 'AI/ML Engineer',
+                    description: 'Develop machine learning models and artificial intelligence solutions for real-world problems.',
+                    upskilling: ['TensorFlow', 'PyTorch', 'Data Science', 'Cloud ML'],
+                    salary: '$90,000 - $150,000',
+                    growth: 'Very High',
+                    remote: 'Well-suited for remote work'
+                },
+                {
+                    keywords: ['c', 'c++', 'embedded', 'hardware', 'systems'],
+                    title: 'Embedded Systems Engineer',
+                    description: 'Design and develop firmware for embedded devices and systems.',
+                    upskilling: ['IoT', 'RTOS', 'Microcontrollers', 'Firmware Security'],
+                    salary: '$80,000 - $130,000',
+                    growth: 'Moderate',
+                    remote: 'Limited remote opportunities'
+                },
+                {
+                    keywords: ['javascript', 'front-end', 'react', 'vue', 'angular'],
+                    title: 'Frontend Developer',
+                    description: 'Create responsive and interactive user interfaces for web applications.',
+                    upskilling: ['React.js', 'Vue.js', 'UI/UX Design', 'TypeScript', 'PWAs'],
+                    salary: '$65,000 - $115,000',
+                    growth: 'High',
+                    remote: 'Very suitable for remote work'
+                },
+                {
+                    keywords: ['project management', 'agile', 'scrum', 'product', 'management'],
+                    title: 'Product Manager',
+                    description: 'Lead product development, define strategy, and coordinate between stakeholders.',
+                    upskilling: ['Scrum', 'Kanban', 'Business Analysis', 'User Research', 'A/B Testing'],
+                    salary: '$85,000 - $140,000',
+                    growth: 'High',
+                    remote: 'Well-suited for remote work'
+                },
+                {
+                    keywords: ['cloud', 'aws', 'azure', 'devops', 'docker', 'kubernetes'],
+                    title: 'Cloud/DevOps Engineer',
+                    description: 'Build and maintain cloud infrastructure and implement CI/CD pipelines.',
+                    upskilling: ['Kubernetes', 'Terraform', 'AWS/Azure/GCP', 'CI/CD', 'Security'],
+                    salary: '$90,000 - $140,000',
+                    growth: 'Very High',
+                    remote: 'Highly suitable for remote work'
+                },
+                {
+                    keywords: ['security', 'cybersecurity', 'hacking', 'pentest', 'network'],
+                    title: 'Cybersecurity Specialist',
+                    description: 'Protect systems from security threats and implement security best practices.',
+                    upskilling: ['Ethical Hacking', 'Security Analysis', 'Threat Detection', 'Security Architecture'],
+                    salary: '$85,000 - $150,000',
+                    growth: 'Very High',
+                    remote: 'Well-suited for remote work'
+                },
+                {
+                    keywords: ['ux', 'ui', 'design', 'user experience', 'interface'],
+                    title: 'UX/UI Designer',
+                    description: 'Design intuitive and engaging user experiences for applications and websites.',
+                    upskilling: ['User Research', 'Prototyping', 'Figma/Sketch', 'Interaction Design'],
+                    salary: '$70,000 - $120,000',
+                    growth: 'High',
+                    remote: 'Very suitable for remote work'
+                },
+                {
+                    keywords: ['mobile', 'android', 'ios', 'flutter', 'react native'],
+                    title: 'Mobile App Developer',
+                    description: 'Build native or cross-platform mobile applications.',
+                    upskilling: ['Flutter', 'React Native', 'Swift', 'Kotlin', 'App Performance'],
+                    salary: '$75,000 - $130,000',
+                    growth: 'High',
+                    remote: 'Well-suited for remote work'
+                }
+            ];
+            
+            // Find matches based on skills
+            let matches = [];
+            let matchScores = {};
+            
+            // Calculate match scores for each career path
+            careerPaths.forEach(career => {
+                let score = 0;
+                userSkills.forEach(skill => {
+                    career.keywords.forEach(keyword => {
+                        if (skill.includes(keyword) || keyword.includes(skill)) {
+                            score += 1;
+                        }
+                    });
+                });
+                
+                if (score > 0) {
+                    matchScores[career.title] = score;
+                    matches.push({...career, score});
+                }
+            });
+            
+            // Sort by match score
+            matches.sort((a, b) => b.score - a.score);
+            
+            // Limit to top 3 matches
+            matches = matches.slice(0, 3);
+            
+            // If no matches, suggest exploring options
+            if (matches.length === 0) {
+                document.getElementById('suggestions-content').innerHTML = `
+                    <p>Based on your skills, we couldn't find a direct match in our database. 
+                    Consider these general options:</p>
+                    <div class="tag">Technology Consultant</div>
+                    <div class="tag">Technical Support Specialist</div>
+                    <div class="tag">IT Project Coordinator</div>
+                    <p class="mt-3">Try adding more specific technical skills to get better matches.</p>
+                `;
+            } else {
+                // Adjust suggestions based on experience level
+                matches.forEach(match => {
+                    if (experience === 'entry') {
+                        match.title = 'Junior ' + match.title;
+                        match.salary = adjustSalaryRange(match.salary, 0.8);
+                    } else if (experience === 'senior') {
+                        match.title = 'Senior ' + match.title;
+                        match.salary = adjustSalaryRange(match.salary, 1.2);
+                    }
+                });
+                
+                // Generate HTML for suggestions
+                let html = `<p>Based on your profile, here are your top career matches:</p>`;
+                
+                matches.forEach((match, index) => {
+                    html += `
+                        <div style="margin-top: 15px; padding-bottom: 15px; ${index < matches.length - 1 ? 'border-bottom: 1px solid #333;' : ''}">
+                            <h4 style="color: var(--primary-color);">${index + 1}. ${match.title}</h4>
+                            <p>${match.description}</p>
+                            <p><strong>Estimated Salary:</strong> ${match.salary}</p>
+                            <p><strong>Growth Potential:</strong> ${match.growth}</p>
+                            <p><strong>Remote Work:</strong> ${match.remote}</p>
+                            <p><strong>Recommended Skills to Develop:</strong></p>
+                            <div>
+                                ${match.upskilling.map(skill => `<div class="tag">${skill}</div>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                // Add personalized note based on preferences if provided
+                if (preferences) {
+                    html += `
+                        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #333;">
+                            <p><strong>Note based on your preferences:</strong></p>
+                            <p>${generatePreferenceNote(preferences, matches)}</p>
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('suggestions-content').innerHTML = html;
+            }
+            
+            // Save suggestion to in-memory history
+            const suggestion = {
+                skills: [...userSkills], // Create a copy
+                experience: document.getElementById('experience').value,
+                preferences: preferences,
+                results: matches.map(m => m.title),
+                timestamp: new Date().toISOString()
+            };
+            
+            saveSuggestion(suggestion);
+            showToast('Career suggestions generated successfully');
+        }
+        
+        // Generate note based on user preferences
+        function generatePreferenceNote(preferences, matches) {
+            const pref = preferences.toLowerCase();
+            
+            if (pref.includes('remote') || pref.includes('work from home')) {
+                const remoteMatches = matches.filter(m => 
+                    m.remote.includes('Very suitable') || m.remote.includes('Well-suited'));
+                if (remoteMatches.length > 0) {
+                    return `For remote work, ${remoteMatches[0].title} offers excellent opportunities with many companies hiring remotely.`;
+                }
+            }
+            
+            if (pref.includes('salary') || pref.includes('pay') || pref.includes('money')) {
+                // Find highest paying match
+                const highestPaying = matches.reduce((prev, current) => {
+                    const prevMax = parseInt(prev.salary.split('$')[2].replace(',', ''));
+                    const currentMax = parseInt(current.salary.split('$')[2].replace(',', ''));
+                    return currentMax > prevMax ? current : prev;
+                }, matches[0]);
+                
+                return `For maximizing income potential, ${highestPaying.title} typically offers the highest salary range among your matches.`;
+            }
+            
+            if (pref.includes('growth') || pref.includes('future') || pref.includes('potential')) {
+                const growthMatches = matches.filter(m => m.growth === 'Very High' || m.growth === 'High');
+                if (growthMatches.length > 0) {
+                    return `For career growth, ${growthMatches[0].title} shows excellent long-term potential with increasing demand in the job market.`;
+                }
+            }
+            
+            return `Based on your preferences, all suggested career paths offer good opportunities. Consider which aligns best with your long-term goals.`;
+        }
+        
+        // Adjust salary range based on experience multiplier
+        function adjustSalaryRange(salaryRange, multiplier) {
+            const parts = salaryRange.split(' - ');
+            const min = parseInt(parts[0].replace('$', '').replace(',', ''));
+            const max = parseInt(parts[1].replace('$', '').replace(',', ''));
+            
+            const newMin = Math.round(min * multiplier / 1000) * 1000;
+            const newMax = Math.round(max * multiplier / 1000) * 1000;
+            
+            return `$${newMin.toLocaleString()} - $${newMax.toLocaleString()}`;
+        }
+        
+        // Save suggestion to in-memory history instead of localStorage
+        function saveSuggestion(suggestion) {
+            // Add to beginning of array
+            suggestionHistory.unshift(suggestion);
+            
+            // Limit history to 10 items
+            if (suggestionHistory.length > 10) {
+                suggestionHistory = suggestionHistory.slice(0, 10);
+            }
+            
+            loadHistory();
+        }
+        
+        // Load suggestion history from in-memory array
+        function loadHistory() {
+            let historyList = document.getElementById("history-list");
+            historyList.innerHTML = "";
+            
+            if (suggestionHistory.length === 0) {
+                historyList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-history"></i>
+                        <p>No previous suggestions yet.</p>
+                        <p>Your career path suggestions will appear here.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            suggestionHistory.forEach((item, index) => {
+                const date = new Date(item.timestamp);
+                const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                
+                const div = document.createElement("div");
+                div.className = "history-item";
+                div.innerHTML = `
+                    <div class="history-date">${formattedDate}</div>
+                    <p><strong>Skills:</strong> ${item.skills.join(', ')}</p>
+                    <p><strong>Experience:</strong> ${formatExperience(item.experience)}</p>
+                    ${item.preferences ? `<p><strong>Preferences:</strong> ${item.preferences}</p>` : ''}
+                    <p><strong>Suggested Careers:</strong> ${item.results.join(', ') || 'No specific matches'}</p>
+                    <div class="actions">
+                        <button onclick="reloadSuggestion(${index})"><i class="fas fa-redo"></i></button>
+                        <button onclick="deleteSuggestion(${index})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                historyList.appendChild(div);
+            });
+        }
+        
+        // Format experience level for display
+        function formatExperience(exp) {
+            switch(exp) {
+                case 'entry': return 'Entry Level (0-2 years)';
+                case 'mid': return 'Mid Level (3-5 years)';
+                case 'senior': return 'Senior Level (6+ years)';
+                default: return exp;
+            }
+        }
+        
+        // Reload a previous suggestion
+        function reloadSuggestion(index) {
+            if (suggestionHistory[index]) {
+                const item = suggestionHistory[index];
+                
+                // Restore form values
+                userSkills = [...item.skills]; // Create a copy
+                renderSkillPills();
+                
+                document.getElementById('experience').value = item.experience;
+                document.getElementById('preferences').value = item.preferences || '';
+                
+                // Generate suggestions again
+                analyzeCareerSwitch();
+                
+                showToast('Previous suggestion loaded');
+            }
+        }
+        
+        // Delete a suggestion from history
+        function deleteSuggestion(index) {
+            if (suggestionHistory[index]) {
+                suggestionHistory.splice(index, 1);
+                loadHistory();
+                showToast('Suggestion removed from history');
+            }
+        }
+        
+        // Show toast notification
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.className = isError ? 'show error' : 'show';
+            
+            setTimeout(() => {
+                toast.className = toast.className.replace('show', '');
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>

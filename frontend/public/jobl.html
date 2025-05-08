@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+    <link rel="stylesheet" href="sky/src/assets/css/style.css">
+    <style>
+        .breadcrumbs {
+            background-color: #f8f9fa;
+            padding: 70px 0;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .breadcrumbs .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb-nav {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .breadcrumb-nav li {
+            display: inline-block;
+            margin: 0 10px;
+            color: #777;
+        }
+        
+        .single-job {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            padding: 20px;
+        }
+        
+        .single-job:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .job-image {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .job-image img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+        
+        .job-content {
+            flex: 1;
+        }
+        
+        .job-content h4 {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .job-content h4 a {
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .job-content h4 a:hover {
+            color: #2d42b2;
+        }
+        
+        .job-content p {
+            margin-bottom: 15px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .job-content ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .job-content ul li {
+            margin-right: 20px;
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .job-content ul li i {
+            margin-right: 5px;
+            color: #2d42b2;
+        }
+        
+        .job-button {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        
+        .job-button ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .job-button ul li {
+            margin-bottom: 10px;
+        }
+        
+        .job-button ul li a {
+            background-color: #2d42b2;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .job-button ul li a:hover {
+            background-color: #1e32a5;
+        }
+        
+        .job-button ul li span {
+            background-color: #f0f0f0;
+            color: #666;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .pagination {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .pagination-list {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            justify-content: center;
+        }
+        
+        .pagination-list li {
+            margin: 0 5px;
+        }
+        
+        .pagination-list li a {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            color: #333;
+            border: 1px solid #eee;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-list li.active a {
+            background-color: #2d42b2;
+            color: #fff;
+            border-color: #2d42b2;
+        }
+        
+        .pagination-list li a:hover {
+            background-color: #2d42b2;
+            color: #fff;
+            border-color: #2d42b2;
+        }
+        
+        .admin-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        
+        .btn-post-new {
+            background-color: #2d42b2;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-post-new:hover {
+            background-color: #1e32a5;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .no-jobs-found {
+            text-align: center;
+            padding: 50px 0;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .no-jobs-found h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .no-jobs-found p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+            <a class="navbar-brand brand-logo me-5" href="sky/src/index.html">
+                <img src="../../images/w.jpeg" style="width: 100%;" class="me-2" alt="logo" />
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="index.html">
+                <img src="../../images/w.jpeg" style="width: 100%;" alt="logo" />
+            </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="icon-menu"></span>
+            </button>
+            <ul class="navbar-nav mr-lg-2">
+                <li class="nav-item nav-search d-none d-lg-block">
+                    <div class="input-group">
+                        <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                            <span class="input-group-text" id="search">
+                                <i class="icon-search"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                        <i class="icon-bell mx-0"></i>
+                        <span class="count"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                        <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-success">
+                                    <i class="ti-info-alt mx-0"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted"> Just now </p>
+                            </div>
+                        </a>
+                        <!-- More notifications -->
+                    </div>
+                </li>
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                        <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png" alt="profile" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item">
+                            <i class="ti-settings text-primary"></i> Settings
+                        </a>
+                        <a href="../../index.html" class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Start Breadcrumbs -->
+    <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Job List</h1>
+                        <p>Explore a wide range of job opportunities across various industries and find the perfect role that matches your skills and ambitions.</p>
+                    </div>
+                    <ul class="breadcrumb-nav" style="text-decoration: none;">
+                        <li><a href="sky/src/index.html" style="text-decoration: none;">Home</a></li>
+                        <li>Job List</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Start Find Job Area -->
+    <section class="find-job job-list section">
+        <div class="container">
+            <div class="admin-actions">
+                <a href="post-job.html" class="btn-post-new">
+                    <i class="lni lni-plus"></i> Post New Job
+                </a>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="job-search-form mb-5">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" id="search-keyword" class="form-control" placeholder="Job Title or Keywords">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" id="search-location" class="form-control" placeholder="Location">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <select id="search-type" class="form-control">
+                                        <option value="">All Job Types</option>
+                                        <option value="Full Time">Full Time</option>
+                                        <option value="Part Time">Part Time</option>
+                                        <option value="Intern">Intern</option>
+                                        <option value="Contract">Contract</option>
+                                        <option value="Remote">Remote</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-6">
+                                <button id="search-button" class="btn btn-primary w-100">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="single-head" id="job-listings-container">
+                <!-- Job listings will be dynamically inserted here -->
+                <div class="row">
+                    <div class="col-lg-6 col-12 left-column">
+                        <!-- Left column jobs will be inserted here -->
+                    </div>
+                    <div class="col-lg-6 col-12 right-column">
+                        <!-- Right column jobs will be inserted here -->
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="pagination center">
+                            <ul class="pagination-list">
+                                <li><a href="#" id="prev-page"><i class="lni lni-arrow-left"></i></a></li>
+                                <!-- Page numbers will be inserted here -->
+                                <li><a href="#" id="next-page"><i class="lni lni-arrow-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--/ End Pagination -->
+            </div>
+        </div>
+    </section>
+    <!-- /End Find Job Area -->
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize variables
+            let currentPage = 1;
+            const jobsPerPage = 6;
+            let filteredJobs = [];
+            
+            // Load jobs from localStorage
+            loadJobsFromStorage();
+            
+            // Add event listeners
+            document.getElementById("search-button").addEventListener("click", filterJobs);
+            document.getElementById("prev-page").addEventListener("click", function(e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayJobs();
+                }
+            });
+            document.getElementById("next-page").addEventListener("click", function(e) {
+                e.preventDefault();
+                const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayJobs();
+                }
+            });
+            
+            // Function to load jobs from localStorage
+            function loadJobsFromStorage() {
+                // Get jobs from localStorage or use default data if none exists
+                let storedJobs = JSON.parse(localStorage.getItem("jobListings"));
+                
+                // If no stored jobs, create default data
+                if (!storedJobs || storedJobs.length === 0) {
+                    storedJobs = [
+                        {
+                            id: 1,
+                            title: "Senior Software Engineer",
+                            company: "TechCorp Inc.",
+                            location: "New York, NY",
+                            type: "Full Time",
+                            salary: "$120,000 - $150,000",
+                            description: "Looking for an experienced software engineer to lead our development team.",
+                            logo: "https://via.placeholder.com/60",
+                            postedDate: new Date().toISOString(),
+                            deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+                        },
+                        {
+                            id: 2,
+                            title: "Marketing Specialist",
+                            company: "Global Marketing Ltd.",
+                            location: "Boston, MA",
+                            type: "Part Time",
+                            salary: "$60,000 - $75,000",
+                            description: "Join our marketing team to develop and execute marketing strategies.",
+                            logo: "https://via.placeholder.com/60",
+                            postedDate: new Date().toISOString(),
+                            deadline: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString()
+                        },
+                        {
+                            id: 3,
+                            title: "UX/UI Designer",
+                            company: "Creative Designs Co.",
+                            location: "San Francisco, CA",
+                            type: "Full Time",
+                            salary: "$90,000 - $110,000",
+                            description: "Seeking a talented designer to create user-friendly interfaces for our products.",
+                            logo: "https://via.placeholder.com/60",
+                            postedDate: new Date().toISOString(),
+                            deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toISOString()
+                        },
+                        {
+                            id: 4,
+                            title: "Data Analyst",
+                            company: "DataInsights Inc.",
+                            location: "Chicago, IL",
+                            type: "Remote",
+                            salary: "$80,000 - $95,000",
+                            description: "Analyze data and provide insights to improve business operations.",
+                            logo: "https://via.placeholder.com/60",
+                            postedDate: new Date().toISOString(),
+                            deadline: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString()
+                        },
+                        {
+                            id: 5,
+                            title: "Sales Representative",
+                            company: "SalesBoost LLC",
+                            location: "Miami, FL",
+                            type: "Full Time",
+                            salary: "$60,000 - $80,000 + Commission",
+                            description: "Drive sales and build relationships with clients in our expanding market.",
+                            logo: "https://via.placeholder.com/60",
+                            postedDate: new Date().toISOString(),
+                            deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString()
+                        },
+                        {
+                            id: 6,
+                            title: "Customer Support Specialist",
+                            company: "ServiceFirst Inc.",
+                            location: "Denver, CO",
+                            type: "Part Time",
+                            salary: "$45,000 - $55,000",
+                            description: "Provide excellent support to our customers through various channels.",
+                            logo: "https://via.placeholder.com/60",
+                            postedDate: new Date().toISOString(),
+                            deadline: new Date(Date.now() + 18 * 24 * 60 * 60 * 1000).toISOString()
+                        },
+                        {
+                            id: 7,
+                            title: "DevOps Engineer",
+                            company: "CloudTech Solutions",
+                            location: "Seattle, WA",
+                            type: "Full Time",
+                            salary: "$110,000 - $140,000",
+                            description: "Manage and improve our cloud infrastructure and deployment processes.",
+                            logo: "https://via.placeholder.com/60",
+                            postedDate: new Date().toISOString(),
+                            deadline: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString()
+                        },
+                        {
+                            id: 8,
+                            title: "Graphic Designer",
+                            company: "Creative Visuals LLC",
+                            location: "Austin, TX",
+                            type: "Contract",
+                            salary: "$40 - $60 per hour",
+                            description: "Create compelling visual content for our marketing campaigns.",
+                            logo: "https://via.placeholder.com/60",
+                            postedDate: new Date().toISOString(),
+                            deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString()
+                        }
+                    ];
+                    
+                    // Store in localStorage
+                    localStorage.setItem("jobListings", JSON.stringify(storedJobs));
+                }
+                
+                // Set filtered jobs to all jobs initially
+                filteredJobs = storedJobs;
+                
+                // Display jobs
+                displayJobs();
+            }
+            
+            // Function to filter jobs based on search criteria
+            function filterJobs() {
+                const keyword = document.getElementById("search-keyword").value.toLowerCase();
+                const location = document.getElementById("search-location").value.toLowerCase();
+                const jobType = document.getElementById("search-type").value;
+                
+                // Get all jobs from localStorage
+                const allJobs = JSON.parse(localStorage.getItem("jobListings"));
+                
+                // Filter based on criteria
+                filteredJobs = allJobs.filter(job => {
+                    const titleMatch = job.title.toLowerCase().includes(keyword);
+                    const companyMatch = job.company.toLowerCase().includes(keyword);
+                    const descriptionMatch = job.description.toLowerCase().includes(keyword);
+                    const locationMatch = location === "" || job.location.toLowerCase().includes(location);
+                    const typeMatch = jobType === "" || job.type === jobType;
+                    
+                    return (titleMatch || companyMatch || descriptionMatch) && locationMatch && typeMatch;
+                });
+                
+                // Reset to first page
+                currentPage = 1;
+                
+                // Display filtered jobs
+                displayJobs();
+            }
+            
+            // Function to display jobs
+            function displayJobs() {
+                const leftColumn = document.querySelector(".left-column");
+                const rightColumn = document.querySelector(".right-column");
+                
+                // Clear previous content
+                leftColumn.innerHTML = "";
+                rightColumn.innerHTML = "";
+                
+                // Calculate pagination
+                const startIndex = (currentPage - 1) * jobsPerPage;
+                const endIndex = Math.min(startIndex + jobsPerPage, filteredJobs.length);
+                const jobsToDisplay = filteredJobs.slice(startIndex, endIndex);
+                
+                // Check if there are jobs to display
+                if (jobsToDisplay.length === 0) {
+                    // No jobs found
+                    const noJobsDiv = document.createElement("div");
+                    noJobsDiv.className = "col-12";
+                    noJobsDiv.innerHTML = `
+                        <div class="no-jobs-found">
+                            <h3>No Jobs Found</h3>
+                            <p>We couldn't find any jobs matching your search criteria.</p>
+                            <button class="btn btn-primary" onclick="location.reload()">Reset Filters</button>
+                        </div>
+                    `;
+                    leftColumn.appendChild(noJobsDiv);
+                } else {
+                    // Split jobs for two columns
+                    const halfLength = Math.ceil(jobsToDisplay.length / 2);
+                    const leftJobs = jobsToDisplay.slice(0, halfLength);
+                    const rightJobs = jobsToDisplay.slice(halfLength);
+                    
+                    // Display left column jobs
+                    leftJobs.forEach(job => {
+                        leftColumn.appendChild(createJobElement(job));
+                    });
+                    
+                    // Display right column jobs
+                    rightJobs.forEach(job => {
+                        rightColumn.appendChild(createJobElement(job));
+                    });
+                }
+                
+                // Update pagination
+                updatePagination();
+            }
+            
+            // Function to create job element
+            function createJobElement(job) {
+                const jobDiv = document.createElement("div");
+                jobDiv.className = "single-job";
+                
+                // Format dates
+                const postedDate = new Date(job.postedDate);
+                const deadline = new Date(job.deadline);
+                const today = new Date();
+                
+                // Calculate days remaining
+                const daysRemaining = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+                const daysAgo = Math.floor((today - postedDate) / (1000 * 60 * 60 * 24));
+                
+                // Create job HTML
+                jobDiv.innerHTML = `
+                    <div class="job-image">
+                        <img src="${job.logo}" alt="${job.company} Logo">
+                    </div>
+                    <div class="job-content">
+                        <h4><a href="job-details.html?id=${job.id}">${job.title}</a></h4>
+                        <p>${job.description}</p>
+                        <ul>
+                            <li><i class="lni lni-briefcase"></i> ${job.company}</li>
+                            <li><i class="lni lni-map-marker"></i> ${job.location}</li>
+                            <li><i class="lni lni-dollar"></i> ${job.salary}</li>
+                            <li><i class="lni lni-calendar"></i> Posted ${daysAgo > 0 ? daysAgo + ' days ago' : 'Today'}</li>
+                        </ul>
+                    </div>
+                    <div class="job-button">
+                        <ul>
+                            <li><a href="job-details.html?id=${job.id}">Apply Now</a></li>
+                            <li><span>${job.type}</span></li>
+                            <li><span class="${daysRemaining <= 7 ? 'text-danger' : ''}">${daysRemaining} days left</span></li>
+                        </ul>
+                    </div>
+                `;
+                
+                return jobDiv;
+            }
+            
+            // Function to update pagination
+            function updatePagination() {
+                const paginationList = document.querySelector(".pagination-list");
+                const pageLinks = paginationList.querySelectorAll("li:not(:first-child):not(:last-child)");
+                
+                // Remove existing page links
+                pageLinks.forEach(link => link.remove());
+                
+                // Calculate total pages
+                const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+                
+                // Get previous and next buttons
+                const prevButton = document.getElementById("prev-page");
+                const nextButton = document.getElementById("next-page");
+                
+                // Disable/enable prev/next buttons
+                prevButton.parentElement.classList.toggle("disabled", currentPage === 1);
+                nextButton.parentElement.classList.toggle("disabled", currentPage === totalPages || totalPages === 0);
+                
+                // Add page links
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                
+                // Adjust start page if we're at the end
+                if (endPage - startPage + 1 < maxVisiblePages && startPage > 1) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+                
+                // Add page numbers
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageItem = document.createElement("li");
+                    pageItem.className = i === currentPage ? "active" : "";
+                    pageItem.innerHTML = `<a href="#" data-page="${i}">${i}</a>`;
+                    
+                    // Insert before the next button
+                    paginationList.insertBefore(pageItem, nextButton.parentElement);
+                    
+                    // Add click event
+                    pageItem.querySelector("a").addEventListener("click", function(e) {
+                        e.preventDefault();
+                        currentPage = parseInt(this.getAttribute("data-page"));
+                        displayJobs();
+                    });
+                }
+            }
+            
+            // Function to delete a job (for admin functionality)
+            function deleteJob(jobId) {
+                const allJobs = JSON.parse(localStorage.getItem("jobListings"));
+                const updatedJobs = allJobs.filter(job => job.id !== jobId);
+                localStorage.setItem("jobListings", JSON.stringify(updatedJobs));
+                
+                // Update filtered jobs
+                filteredJobs = filteredJobs.filter(job => job.id !== jobId);
+                
+                // Redisplay jobs
+                displayJobs();
+            }
+            
+            // Add global window function for delete job (for button access)
+            window.deleteJob = deleteJob;
+        });
+    </script>
+</body>
+</html>

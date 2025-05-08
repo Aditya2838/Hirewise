@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Description Generator</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #ff9800;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 0 5px;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            border-radius: 8px;
+            padding: 10px;
+            background: #252525;
+            color: white;
+            border: 1px solid #555;
+            outline: none;
+            font-size: 14px;
+        }
+
+        button {
+            background: #ff9800;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            transition: 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #e68900;
+        }
+
+        #generatedDescription {
+            margin-top: 15px;
+            text-align: left;
+            background: #252525;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>📝 AI-Powered Job Description Generator</h2>
+
+        <label for="jobRole">🔍 Job Role</label>
+        <input type="text" id="jobRole" placeholder="e.g., Software Engineer">
+
+        <label for="experience">📅 Experience Level</label>
+        <select id="experience">
+            <option value="Entry-Level">Entry-Level</option>
+            <option value="Mid-Level">Mid-Level</option>
+            <option value="Senior">Senior</option>
+        </select>
+
+        <label for="skills">🛠 Required Skills</label>
+        <input type="text" id="skills" placeholder="e.g., JavaScript, React, Node.js">
+
+        <label for="company">🏢 Company Name</label>
+        <input type="text" id="company" placeholder="e.g., Google">
+
+        <label for="location">📍 Location</label>
+        <input type="text" id="location" placeholder="e.g., Remote, New York">
+
+        <button onclick="generateDescription()">⚡ Generate Description</button>
+
+        <h3>📄 Generated Job Description</h3>
+        <div id="generatedDescription">Your job description will appear here...</div>
+    </div>
+
+    <script>
+        function generateDescription() {
+            const jobRole = document.getElementById("jobRole").value;
+            const experience = document.getElementById("experience").value;
+            const skills = document.getElementById("skills").value;
+            const company = document.getElementById("company").value;
+            const location = document.getElementById("location").value;
+
+            if (!jobRole || !skills || !company || !location) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            const description = `
+            ${company} is looking for a ${experience} ${jobRole} to join our dynamic team in ${location}. 
+
+            🔹 **Responsibilities:**
+            - Develop, test, and deploy high-quality software solutions.
+            - Collaborate with cross-functional teams to enhance product performance.
+            - Troubleshoot and resolve technical issues efficiently.
+            - Stay updated with industry trends and advancements.
+
+            🔹 **Requirements:**
+            - Strong experience in ${skills}.
+            - ${experience} level expertise in relevant technologies.
+            - Excellent problem-solving skills and a proactive attitude.
+
+            💡 If you're passionate about ${jobRole} and want to work with an innovative team, apply today! 🚀
+            `;
+
+            document.getElementById("generatedDescription").innerText = description;
+        }
+    </script>
+
+</body>
+</html>

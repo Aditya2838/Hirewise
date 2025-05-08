@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
+  <link rel="stylesheet" href="sky/src/assets/vendors/feather/feather.css">
+    <link rel="stylesheet" href="sky/src/assets/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="sky/src/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="sky/src/assets/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="sky/src/assets/vendors/mdi/css/materialdesignicons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+<style>
+  /* Dropdown menu styles */
+.dropdown-menu {
+  display: none;
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+  min-width: 10rem !important;
+  padding: 0.5rem 0 !important;
+  margin: 0.125rem 0 0 !important;
+  background-color: #fff !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border-radius: 0.25rem !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.dropdown-toggle::after {
+  display: inline-block !important;
+  margin-left: 0.255em !important;
+  vertical-align: 0.255em !important;
+  content: "" !important;
+  border-top: 0.3em solid !important;
+  border-right: 0.3em solid transparent !important;
+  border-bottom: 0 !important;
+  border-left: 0.3em solid transparent !important;
+}
+
+.dropdown-menu-right {
+  right: 0 !important;
+  left: auto !important;
+}
+
+.dropdown-menu.show {
+  display: block !important;
+}
+
+/* Dropdown item styles */
+.dropdown-item {
+  display: block !important;
+  width: 100% !important;
+  padding: 0.25rem 1.5rem !important;
+  clear: both !important;
+  font-weight: 400 !important;
+  color: #212529 !important;
+  text-align: inherit !important;
+  white-space: nowrap !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  text-decoration: none !important;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #16181b !important;
+  text-decoration: none !important;
+  background-color: #f8f9fa !important;
+}
+
+/* Preview item styles */
+.preview-item {
+  display: flex !important;
+  padding: 0.75rem 1.5rem !important;
+  cursor: pointer !important;
+  border-bottom: 1px solid #f3f3f3 !important;
+}
+
+.preview-item:last-child {
+  border-bottom: none !important;
+}
+
+.preview-item:hover {
+  background-color: #f8f9fa !important;
+}
+
+.preview-thumbnail {
+  margin-right: 0.75rem !important;
+}
+
+.preview-icon {
+  width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+}
+
+.preview-icon i {
+  font-size: 18px !important;
+  color: #fff !important;
+}
+
+.bg-success {
+  background-color: #1bcfb4 !important;
+}
+
+.bg-warning {
+  background-color: #fed713 !important;
+}
+
+.bg-info {
+  background-color: #198ae3 !important;
+}
+
+.preview-item-content {
+  flex-grow: 1 !important;
+}
+
+.preview-subject {
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.small-text {
+  font-size: 0.75rem !important;
+}
+
+.dropdown-header {
+  display: block !important;
+  padding: 0.5rem 1.5rem !important;
+  margin-bottom: 0 !important;
+  font-size: 0.875rem !important;
+  color: #6c757d !important;
+  white-space: nowrap !important;
+}
+
+/* Profile dropdown styles */
+.nav-profile img {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+
+.nav-profile .dropdown-menu {
+  min-width: 200px !important;
+}
+
+.text-primary {
+  color: #4B49AC !important;
+}
+
+/* Make sure dropdown works with Bootstrap 5 */
+[data-bs-toggle="dropdown"] {
+  cursor: pointer !important;
+}
+</style>
+<!-- Bootstrap & jQuery CDN -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+<link href="sky/src/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+<meta name="theme-color" content="#712cf9">
+ 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Plugin css for this page -->
+  <!-- <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> -->
+  <link rel="stylesheet" href="sky/src/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
+  <link rel="stylesheet" href="sky/src/assets/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" type="text/css" href="sky/src/assets/js/select.dataTables.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="sky/src/assets/css/style.css">
+  
+  <!-- endinject -->
+  <link rel="shortcut icon" href="sky/src/assets/images/favicon.png" />
+  
+<link rel="stylesheet" href="sky/src/assets/css/style.css">
+  <title>Hirewise</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.122.0">
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
+
+<!-- Bootstrap & jQuery CDN -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+<link href="sky/src/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<link rel="apple-touch-icon" href="sky/src/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+
+<link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
+<meta name="theme-color" content="#712cf9">
+ 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+          <a class="navbar-brand brand-logo me-5" href="sky/src/index.html"><img src="../../images/w.jpeg" style="width: 100%;" class="me-2" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../../images/w.jpeg"  style="width: 100%;" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="icon-menu"></span>
+          </button>
+          <ul class="navbar-nav mr-lg-2">
+            <li class="nav-item nav-search d-none d-lg-block">
+              <div class="input-group">
+                <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                  <span class="input-group-text" id="search">
+                    <i class="icon-search"></i>
+                  </span>
+                </div>
+                <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item dropdown">
+              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                <i class="icon-bell mx-0"></i>
+                <span class="count"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-success">
+                      <i class="ti-info-alt mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                    <p class="font-weight-light small-text mb-0 text-muted"> Just now </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-warning">
+                      <i class="ti-settings mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                    <p class="font-weight-light small-text mb-0 text-muted"> Private message </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-info">
+                      <i class="ti-user mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                    <p class="font-weight-light small-text mb-0 text-muted"> 2 days ago </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item nav-profile dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png" alt="profile" />
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                <a class="dropdown-item">
+                  <i class="ti-settings text-primary"></i> Settings </a>
+                <a href="../../index.html" class="dropdown-item">
+                  <i class="ti-power-off text-primary"></i> Logout </a>
+              </div>
+            </li>
+            <li class="nav-item nav-settings d-none d-lg-flex">
+              <a class="nav-link" href="#">
+                <i class="icon-ellipsis"></i>
+              </a>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+      </nav>
+
+
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Resume</h1>
+                        <p>Your resume showcases your skills, experience, and qualifications to potential employers. Create a strong profile to stand out in the job market.</p>
+                    </div>
+                    <ul class="breadcrumb-nav">
+                        <li><a href="sky/src/index.html" style="text-decoration: none;">Home</a></li>
+                        <li>Resume</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="resume section">
+        <div class="container">
+            <div class="resume-inner">
+                <div class="row">
+                    <!-- Sidebar -->
+                    <div class="col-lg-4 col-12">
+                        <div class="dashbord-sidebar">
+                            <ul>
+                                <li class="heading">Manage Account</li>
+                                <li><a class="active" href="resume.html" style="text-decoration: none;"><i class="lni lni-clipboard"></i> My Resume</a></li>
+                               
+                                <li><a href="notifications.html" style="text-decoration: none;"><i class="lni lni-alarm"></i> Notifications <span class="notifi">5</span></a></li>
+
+                                <li><a href="change-password.html" style="text-decoration: none;"><i class="lni lni-lock"></i> Change Password</a></li>
+                                <li><a href="index.html" style="text-decoration: none;"><i class="lni lni-upload"></i> Sign Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Resume Content -->
+                    <div class="col-lg-8 col-12">
+                        <div class="inner-content">
+                            <div class="resume-wrapper">
+                                <!-- No Resume Message (shown when no resume exists) -->
+                                <div id="no-resume-message" style="display: none;">
+                                    <div class="alert alert-info">
+                                        <h4>No Resume Found</h4>
+                                        <p>You haven't created a resume yet. Please add your resume details.</p>
+                                        <a href="add-resume.html" class="btn btn-primary mt-3">Create Resume</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Resume Content (shown when resume exists) -->
+                                <div id="resume-content">
+                                    <!-- Personal Info Section -->
+                                    <div class="personal-top-content">
+                                        <div class="row">
+                                            <div class="col-lg-5 col-md-5 col-12">
+                                                <div class="name-head">
+                                                    <a class="mb-2" href="#"><img id="profile-image" class="circle-54" src="images/sh.jpeg" alt="" style="width: 100px;"></a>
+                                                    <h4><a id="fullname" class="name" href="#" style="text-decoration: none;">Loading...</a></h4>
+                                                    <p><a id="job-title" class="deg" href="#" style="text-decoration: none;">Loading...</a></p>
+                                                    <ul class="social">
+                                                        <li><a href="#"><i class="lni lni-facebook-original"></i></a></li>
+                                                        <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                                        <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                                        <li><a href="#"><i class="lni lni-dribbble"></i></a></li>
+                                                        <li><a href="#"><i class="lni lni-pinterest"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-7 col-md-7 col-12">
+                                                <div class="content-right">
+                                                    <h5 class="title-main">Contact Info</h5>
+                                                    <!-- Location -->
+                                                    <div class="single-list">
+                                                        <h5 class="title">Location</h5>
+                                                        <p id="location">Loading...</p>
+                                                    </div>
+                                                    <!-- Email -->
+                                                    <div class="single-list">
+                                                        <h5 class="title">E-mail</h5>
+                                                        <p id="email">Loading...</p>
+                                                    </div>
+                                                    <!-- Phone -->
+                                                    <div class="single-list">
+                                                        <h5 class="title">Phone</h5>
+                                                        <p id="phone">Loading...</p>
+                                                    </div>
+                                                    <!-- Website -->
+                                                    <div class="single-list">
+                                                        <h5 class="title">Website</h5>
+                                                        <p><a id="website" href="#" style="text-decoration: none;">Loading...</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- About Section -->
+                                    <div class="single-section">
+                                        <h4>About</h4>
+                                        <p id="about" class="font-size-4 mb-8">Loading...</p>
+                                    </div>
+                                    
+                                    <!-- Skills Section -->
+                                    <div class="single-section skill">
+                                        <h4>Skills</h4>
+                                        <ul id="skills-list" style="color: #6c757d;" class="list-unstyled d-flex align-items-center flex-wrap">
+                                            <!-- Skills will be added here dynamically -->
+                                        </ul>
+                                    </div>
+                                    
+                                    <!-- Work Experience Section -->
+                                    <div class="single-section experience">
+                                        <h4>Work Experience</h4>
+                                        <div id="experience-container">
+                                            <!-- Experience items will be added here dynamically -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Education Section -->
+                                    <div class="single-section education">
+                                        <h4>Education</h4>
+                                        <div id="education-container">
+                                            <!-- Education items will be added here dynamically -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Certifications Section -->
+                                    <div class="single-section certifications">
+                                        <h4>Certifications</h4>
+                                        <div id="certifications-container">
+                                            <!-- Certification items will be added here dynamically -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Projects Section -->
+                                    <div class="single-section projects">
+                                        <h4>Projects</h4>
+                                        <div id="projects-container">
+                                            <!-- Project items will be added here dynamically -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Resume Actions -->
+                                    <div class="resume-actions mt-4">
+                                        <button class="btn btn-primary download-btn">Download Resume</button>
+                                        <a href="add-resume.html" class="btn btn-outline-primary ml-2 edit-btn">Edit Resume</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll to top button -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve resume data from localStorage
+            const resumeDataString = localStorage.getItem('resumeData');
+            
+            if (!resumeDataString) {
+                // Show the no-resume message and hide the resume content
+                document.getElementById('no-resume-message').style.display = 'block';
+                document.getElementById('resume-content').style.display = 'none';
+                return;
+            }
+            
+            // Hide the no-resume message and show the resume content
+            document.getElementById('no-resume-message').style.display = 'none';
+            document.getElementById('resume-content').style.display = 'block';
+            
+            const resumeData = JSON.parse(resumeDataString);
+            
+            // Display personal information
+            document.getElementById('fullname').textContent = resumeData.personalInfo.fullName;
+            document.getElementById('job-title').textContent = resumeData.personalInfo.jobTitle;
+            document.getElementById('email').textContent = resumeData.personalInfo.email;
+            document.getElementById('phone').textContent = resumeData.personalInfo.phone;
+            document.getElementById('location').textContent = resumeData.personalInfo.location;
+            
+            if (resumeData.personalInfo.website) {
+                document.getElementById('website').textContent = resumeData.personalInfo.website;
+                document.getElementById('website').href = resumeData.personalInfo.website;
+            }
+            
+            if (resumeData.personalInfo.profileImage) {
+                document.getElementById('profile-image').src = resumeData.personalInfo.profileImage;
+            }
+            
+            document.getElementById('about').textContent = resumeData.personalInfo.about;
+            
+            // Display skills
+            const skillsList = document.getElementById('skills-list');
+            skillsList.innerHTML = ''; // Clear existing skills
+            
+            resumeData.skills.forEach(skill => {
+                const skillItem = document.createElement('li');
+                skillItem.className = 'badge bg-primary me-2 mb-2';
+                skillItem.textContent = skill;
+                skillsList.appendChild(skillItem);
+            });
+            
+            // Display work experience
+            const experienceContainer = document.getElementById('experience-container');
+            experienceContainer.innerHTML = ''; // Clear existing experiences
+            
+            resumeData.experiences.forEach(exp => {
+                const expItem = document.createElement('div');
+                expItem.className = 'experience-item mb-4';
+                
+                let logoHtml = '';
+                if (exp.logo) {
+                    logoHtml = `<div class="company-logo mb-2">
+                                  <img src="${exp.logo}" alt="${exp.company}" class="img-fluid" style="max-height: 50px;">
+                                </div>`;
+                }
+                
+                expItem.innerHTML = `
+                    ${logoHtml}
+                    <h5>${exp.jobTitle}</h5>
+                    <h6>${exp.company}</h6>
+                    <p class="text-muted">
+                        <span><i class="lni lni-calendar"></i> ${exp.duration}</span>
+                        <span class="ms-3"><i class="lni lni-map-marker"></i> ${exp.location}</span>
+                    </p>
+                    <p>${exp.description || ''}</p>
+                `;
+                experienceContainer.appendChild(expItem);
+            });
+            
+            // Display education
+            const educationContainer = document.getElementById('education-container');
+            educationContainer.innerHTML = ''; // Clear existing education entries
+            
+            resumeData.education.forEach(edu => {
+                const eduItem = document.createElement('div');
+                eduItem.className = 'education-item mb-4';
+                
+                let logoHtml = '';
+                if (edu.logo) {
+                    logoHtml = `<div class="institution-logo mb-2">
+                                  <img src="${edu.logo}" alt="${edu.institution}" class="img-fluid" style="max-height: 50px;">
+                                </div>`;
+                }
+                
+                eduItem.innerHTML = `
+                    ${logoHtml}
+                    <h5>${edu.degree}</h5>
+                    <h6>${edu.institution}</h6>
+                    <p class="text-muted">
+                        <span><i class="lni lni-calendar"></i> ${edu.duration}</span>
+                        <span class="ms-3"><i class="lni lni-map-marker"></i> ${edu.location}</span>
+                    </p>
+                    <p>${edu.description || ''}</p>
+                `;
+                educationContainer.appendChild(eduItem);
+            });
+            
+            // Display certifications
+            const certificationsContainer = document.getElementById('certifications-container');
+            if (certificationsContainer && resumeData.certificates) {
+                certificationsContainer.innerHTML = ''; // Clear existing certificates
+                
+                resumeData.certificates.forEach(cert => {
+                    const certItem = document.createElement('div');
+                    certItem.className = 'certificate-item mb-4';
+                    
+                    let logoHtml = '';
+                    if (cert.logo) {
+                        logoHtml = `<div class="org-logo mb-2">
+                                      <img src="${cert.logo}" alt="${cert.organization}" class="img-fluid" style="max-height: 50px;">
+                                    </div>`;
+                    }
+                    
+                    let urlHtml = '';
+                    if (cert.url) {
+                        urlHtml = `<a href="${cert.url}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                                      <i class="lni lni-link"></i> View Certificate
+                                   </a>`;
+                    }
+                    
+                    certItem.innerHTML = `
+                        ${logoHtml}
+                        <h5>${cert.name}</h5>
+                        <h6>${cert.organization}</h6>
+                        <p class="text-muted">
+                            <span><i class="lni lni-calendar"></i> ${cert.date}</span>
+                            ${cert.id ? `<span class="ms-3"><i class="lni lni-ticket"></i> ID: ${cert.id}</span>` : ''}
+                        </p>
+                        ${urlHtml}
+                    `;
+                    certificationsContainer.appendChild(certItem);
+                });
+            }
+            
+            // Display projects
+            const projectsContainer = document.getElementById('projects-container');
+            if (projectsContainer && resumeData.projects) {
+                projectsContainer.innerHTML = ''; // Clear existing projects
+                
+                resumeData.projects.forEach(proj => {
+                    const projItem = document.createElement('div');
+                    projItem.className = 'project-item mb-4';
+                    
+                    let imageHtml = '';
+                    if (proj.image) {
+                        imageHtml = `<div class="project-image mb-3">
+                                       <img src="${proj.image}" alt="${proj.name}" class="img-fluid rounded">
+                                     </div>`;
+                    }
+                    
+                    let techHtml = '';
+                    if (proj.technologies && Array.isArray(proj.technologies)) {
+                        proj.technologies.forEach(tech => {
+                            techHtml += `<span class="badge bg-secondary me-1 mb-1">${tech}</span>`;
+                        });
+                    }
+                    
+                    let linksHtml = '';
+                    if (proj.url || proj.github) {
+                        linksHtml = '<div class="project-links mt-2">';
+                        if (proj.url) {
+                            linksHtml += `<a href="${proj.url}" target="_blank" class="btn btn-sm btn-outline-primary me-2">
+                                            <i class="lni lni-world"></i> Live Demo
+                                          </a>`;
+                        }
+                        if (proj.github) {
+                            linksHtml += `<a href="${proj.github}" target="_blank" class="btn btn-sm btn-outline-dark">
+                                            <i class="lni lni-github-original"></i> GitHub Repo
+                                          </a>`;
+                        }
+                        linksHtml += '</div>';
+                    }
+                    
+                    projItem.innerHTML = `
+                        ${imageHtml}
+                        <h5>${proj.name}</h5>
+                        <p class="text-muted"><i class="lni lni-calendar"></i> ${proj.duration}</p>
+                        <p>${proj.description || ''}</p>
+                        <div class="technologies mb-2">
+                            ${techHtml}
+                        </div>
+                        ${linksHtml}
+                    `;
+                    projectsContainer.appendChild(projItem);
+                });
+            }
+            
+            // Add event listener for the download button
+            const downloadBtn = document.querySelector('.download-btn');
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    alert('Resume download functionality will be implemented here.');
+                    // Implement the PDF/Doc generation and download functionality
+                });
+            }
+        });
+    </script>
+    
+    </body>
+    </html>

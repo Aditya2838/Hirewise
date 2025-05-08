@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body> 
+    <iframe src="header.html" width="100%" height="442px" frameborder="0"></iframe>
+
+    
+    <div class="bg-gray-100 flex justify-center p-6">
+    <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-5xl">
+
+        <h2 class="text-2xl font-bold mb-4">Basic Information</h2>
+        <p class="text-right text-sm">
+            Already have an account? <a href="#" class="text-blue-600 hover:underline">Click here to login</a>
+        </p>
+        <form id="applicationForm" class="mt-4 space-y-6">
+            <div class="grid grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-medium">Name</label>
+                    <input type="text" class="w-full p-2 border rounded" placeholder="Your Name" >
+                </div>
+                <div>
+                    <label class="block font-medium">Email</label>
+                    <input type="email" class="w-full p-2 border rounded" placeholder="your@email.com" >
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-medium">Profession Title</label>
+                    <input type="text" class="w-full p-2 border rounded" placeholder="e.g. Front-end Developer" >
+                </div>
+                <div>
+                    <label class="block font-medium">Company Name</label>
+                    <input type="text" class="w-full p-2 border rounded" placeholder="Company Name">
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-medium">Role</label>
+                    <input type="text" class="w-full p-2 border rounded" placeholder="Job Role">
+                </div>
+                <div>
+                    <label class="block font-medium">Upload Resume</label>
+                    <input type="file" class="w-full p-2 border rounded bg-gray-100" accept=".pdf,.doc,.docx" >
+                </div>
+            </div>
+            <button type="submit" class="w-full text-white p-3 rounded font-bold transition" style="background-color: #6552D0;"> <a href="sky/src/index.html">   Submit Application</a>
+ 
+</button>
+
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("applicationForm");
+        
+            form.addEventListener("submit", async function (event) {
+                event.preventDefault();
+                
+                const formData = new FormData(form);
+                
+                try {
+                    const response = await fetch("http://localhost:5000/submit", {
+                        method: "POST",
+                        body: formData
+                    });
+        
+                    const result = await response.json();
+                    alert(result.message);
+                    form.reset();
+                } catch (error) {
+                    alert("Error submitting application. Please try again.");
+                    console.error(error);
+                }
+            });
+        });
+        
+    </script>
+</body>
+</html>  

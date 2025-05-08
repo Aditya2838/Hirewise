@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Job - Admin Panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+    <link rel="stylesheet" href="sky/src/assets/css/style.css">
+    <style>
+        .post-job-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .breadcrumbs {
+            background-color: #f8f9fa;
+            padding: 70px 0;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .breadcrumbs .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb-nav {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .breadcrumb-nav li {
+            display: inline-block;
+            margin: 0 10px;
+            color: #777;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+        }
+        
+        .btn-post-job {
+            background-color: #2d42b2;
+            color: #fff;
+            padding: 10px 25px;
+            border: none;
+            font-weight: 600;
+        }
+        
+        .btn-post-job:hover {
+            background-color: #1e32a5;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar - Same as on job-list.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+            <a class="navbar-brand brand-logo me-5" href="sky/src/index.html">
+                <img src="../../images/w.jpeg" style="width: 100%;" class="me-2" alt="logo" />
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="index.html">
+                <img src="../../images/w.jpeg" style="width: 100%;" alt="logo" />
+            </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="icon-menu"></span>
+            </button>
+            <ul class="navbar-nav mr-lg-2">
+                <li class="nav-item nav-search d-none d-lg-block">
+                    <div class="input-group">
+                        <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                            <span class="input-group-text" id="search">
+                                <i class="icon-search"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                        <i class="icon-bell mx-0"></i>
+                        <span class="count"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                        <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-success">
+                                    <i class="ti-info-alt mx-0"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted"> Just now </p>
+                            </div>
+                        </a>
+                        <!-- More notification items -->
+                    </div>
+                </li>
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                        <img src="https://toppng.com/public/uploads/preview/user-account-management-logo-user-icon-11562867145a56rus2zwu.png" alt="profile" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item">
+                            <i class="ti-settings text-primary"></i> Settings
+                        </a>
+                        <a href="../../index.html" class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Start Breadcrumbs -->
+    <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Post a Job</h1>
+                        <p>Create a new job listing to attract talented candidates to your organization.</p>
+                    </div>
+                    <ul class="breadcrumb-nav" style="text-decoration: none;">
+                        <li><a href="sky/src/index.html" style="text-decoration: none;">Home</a></li>
+                        <li><a href="job-list.html" style="text-decoration: none;">Job List</a></li>
+                        <li>Post a Job</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Post Job Section -->
+    <section class="post-job-section section">
+        <div class="container">
+            <div class="post-job-container">
+                <form id="post-job-form">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="job-title">Job Title <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="job-title" placeholder="e.g. Software Engineer" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="company-name">Company Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="company-name" placeholder="e.g. TechCorp Inc." required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="company-website">Company Website</label>
+                                <input type="url" class="form-control" id="company-website" placeholder="e.g. https://example.com">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="job-location">Location <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="job-location" placeholder="e.g. New York, USA" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="job-type">Job Type <span class="text-danger">*</span></label>
+                                <select class="form-control" id="job-type" required>
+                                    <option value="">Select Job Type</option>
+                                    <option value="Full Time">Full Time</option>
+                                    <option value="Part Time">Part Time</option>
+                                    <option value="Intern">Intern</option>
+                                    <option value="Contract">Contract</option>
+                                    <option value="Remote">Remote</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="salary-range">Salary Range <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="salary-range" placeholder="e.g. $50k - $70k" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="company-logo">Company Logo URL</label>
+                                <input type="url" class="form-control" id="company-logo" placeholder="e.g. https://example.com/logo.png">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="job-description">Job Description <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="job-description" rows="6" placeholder="Provide detailed information about the job..." required></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="job-requirements">Requirements <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="job-requirements" rows="4" placeholder="List the key requirements for this position..." required></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="job-benefits">Benefits (Optional)</label>
+                                <textarea class="form-control" id="job-benefits" rows="4" placeholder="List the benefits offered with this position..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="application-deadline">Application Deadline (Optional)</label>
+                                <input type="date" class="form-control" id="application-deadline">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12 mt-3">
+                            <button type="submit" class="btn btn-post-job">Post Job</button>
+                            <button type="button" class="btn btn-secondary ml-2" onclick="window.location.href='job-list.html'">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- End Post Job Section -->
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const jobForm = document.getElementById("post-job-form");
+            
+            jobForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                // Gather form data
+                const jobData = {
+                    id: generateJobId(),
+                    title: document.getElementById("job-title").value,
+                    company: document.getElementById("company-name").value,
+                    website: document.getElementById("company-website").value || "",
+                    location: document.getElementById("job-location").value,
+                    type: document.getElementById("job-type").value,
+                    salary: document.getElementById("salary-range").value,
+                    logoUrl: document.getElementById("company-logo").value || "https://via.placeholder.com/50",
+                    description: document.getElementById("job-description").value,
+                    requirements: document.getElementById("job-requirements").value,
+                    benefits: document.getElementById("job-benefits").value || "",
+                    deadline: document.getElementById("application-deadline").value || "",
+                    datePosted: new Date().toISOString(),
+                    status: "active"
+                };
+                
+                // Save job to localStorage
+                saveJobToStorage(jobData);
+                
+                // Show success message and redirect
+                alert("Job posted successfully!");
+                window.location.href = "job-list.html";
+            });
+            
+            // Function to generate a unique job ID
+            function generateJobId() {
+                return 'job_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            }
+            
+            // Function to save job to localStorage
+            function saveJobToStorage(jobData) {
+                // Get existing jobs from localStorage
+                let jobs = JSON.parse(localStorage.getItem("jobListings")) || [];
+                
+                // Add the new job
+                jobs.push(jobData);
+                
+                // Save back to localStorage
+                localStorage.setItem("jobListings", JSON.stringify(jobs));
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Job Search Sentiment Tracker</title>
+    <style>
+        /* Modern Styling with CSS Variables - Orange Theme */
+        :root {
+            --primary-color: #f97316;
+            --secondary-color: #ea580c;
+            --dark-bg: #111827;
+            --card-bg: #1f2937;
+            --text-primary: #f3f4f6;
+            --text-secondary: #d1d5db;
+            --success-color: #f59e0b;
+            --warning-color: #f97316;
+            --danger-color: #dc2626;
+            --border-radius: 8px;
+            --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            border: 1px solid #374151;
+            border-radius: var(--border-radius);
+            outline: none;
+            font-size: 16px;
+            resize: vertical;
+            height: 150px;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.25);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: var(--primary-color);
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: #374151;
+        }
+
+        button.secondary:hover {
+            background: #4b5563;
+        }
+
+        button i {
+            margin-right: 8px;
+        }
+
+        .result-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(10px);
+            height: 0;
+            overflow: hidden;
+        }
+
+        .result-container.show {
+            opacity: 1;
+            transform: translateY(0);
+            height: auto;
+        }
+
+        .sentiment-score {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .sentiment-icon {
+            font-size: 32px;
+            margin-right: 10px;
+        }
+
+        .analysis {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+
+        .analysis-item {
+            text-align: center;
+            flex: 1;
+            padding: 10px;
+        }
+
+        .analysis-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .meter-container {
+            width: 100%;
+            background: #374151;
+            height: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .meter {
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(to right, var(--danger-color), var(--warning-color), var(--success-color));
+            transition: width 1s ease-in-out;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.15);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .keyword {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .keyword.positive {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+
+        .keyword.negative {
+            background: rgba(220, 38, 38, 0.2);
+            color: #ef4444;
+        }
+
+        .keyword.neutral {
+            background: rgba(249, 115, 22, 0.2);
+            color: #fb923c;
+        }
+
+        .history-container {
+            margin-top: 30px;
+            width: 100%;
+            display: none;
+        }
+
+        .history-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .history-items {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .history-item:hover {
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .history-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .history-preview {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+        }
+
+        .history-sentiment {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .tips {
+            background: rgba(249, 115, 22, 0.1);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .tips h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .tips ul {
+            padding-left: 20px;
+        }
+
+        .tips li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .analysis {
+                flex-direction: column;
+            }
+            
+            .analysis-item {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>📊 Advanced Job Search Sentiment Tracker</h2>
+        <p>Track your emotional journey through your job search process. Share your experience, and we'll analyze your sentiment!</p>
+
+        <div class="input-group">
+            <textarea id="jobExperience" placeholder="Describe your job search experience in detail... (e.g., 'I had two interviews this week and received positive feedback, but I'm still waiting to hear back from other applications...')"></textarea>
+        </div>
+
+        <div class="button-group">
+            <button id="analyzeBtn" onclick="analyzeSentiment()">
+                <i>🔍</i> Analyze Sentiment
+            </button>
+            <button id="showHistoryBtn" class="secondary" onclick="toggleHistory()">
+                <i>📅</i> View History
+            </button>
+            <button id="clearBtn" class="secondary" onclick="clearTextarea()">
+                <i>🗑️</i> Clear
+            </button>
+        </div>
+
+        <div id="resultContainer" class="result-container">
+            <div class="sentiment-score">
+                <span id="sentimentIcon" class="sentiment-icon"></span>
+                <span id="sentimentScore"></span>
+            </div>
+
+            <div class="meter-container">
+                <div id="sentimentMeter" class="meter" style="width: 50%;"></div>
+            </div>
+
+            <div class="analysis">
+                <div class="analysis-item">
+                    <div id="positiveValue" class="analysis-value">0</div>
+                    <div>Positive</div>
+                </div>
+                <div class="analysis-item">
+                    <div id="neutralValue" class="analysis-value">0</div>
+                    <div>Neutral</div>
+                </div>
+                <div class="analysis-item">
+                    <div id="negativeValue" class="analysis-value">0</div>
+                    <div>Negative</div>
+                </div>
+            </div>
+
+            <div id="feedback" class="feedback"></div>
+
+            <div id="keywordsContainer" class="keywords"></div>
+
+            <div id="tips" class="tips">
+                <h3>Personalized Tips</h3>
+                <ul id="tipsList"></ul>
+            </div>
+        </div>
+
+        <div id="historyContainer" class="history-container">
+            <div class="history-heading">
+                <h3>Your Sentiment History</h3>
+                <button class="secondary" onclick="clearHistory()">Clear History</button>
+            </div>
+            <div id="historyItems" class="history-items"></div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize data structure for sentiment tracking
+        let sentimentHistory = JSON.parse(localStorage.getItem('sentimentHistory')) || [];
+        
+        // Enhanced sentiment analysis with more keywords and categories
+        const sentimentKeywords = {
+            positive: [
+                "happy", "excited", "great", "successful", "good", "amazing", "excellent", "wonderful", 
+                "hopeful", "confident", "productive", "promising", "impressed", "thrilled", "enthusiastic", 
+                "fortunate", "pleased", "grateful", "positive", "opportunity", "advance", "progress", 
+                "interview", "offer", "callback", "hired", "accepted", "prospect", "potential", "growth"
+            ],
+            negative: [
+                "frustrated", "bad", "stressed", "depressed", "rejected", "anxious", "disappointed", 
+                "worried", "unhappy", "discouraged", "exhausted", "tired", "overwhelmed", "hopeless", 
+                "ignored", "ghosted", "declined", "failed", "upset", "difficult", "challenging", "negative", 
+                "struggle", "tough", "impossible", "annoyed", "angry", "confused", "overqualified", "underqualified"
+            ],
+            neutral: [
+                "waiting", "applied", "resume", "portfolio", "application", "contacted", "networking", 
+                "searching", "browsing", "reviewing", "considering", "thinking", "planning", "preparing", 
+                "researching", "learning", "improving", "developing", "practicing", "balancing"
+            ]
+        };
+
+        // Job search tips based on sentiment
+        const jobSearchTips = {
+            positive: [
+                "Keep track of your successful interactions for future reference",
+                "Follow up with thank-you notes after positive interviews",
+                "Leverage your current momentum to apply for more positions",
+                "Share your positive experiences with your network to generate more leads",
+                "Document what worked well for future applications"
+            ],
+            neutral: [
+                "Set specific, achievable daily goals for your job search",
+                "Try new networking strategies like informational interviews",
+                "Refine your resume and cover letter for each application",
+                "Consider learning new skills that are in demand",
+                "Establish a structured daily routine for job searching"
+            ],
+            negative: [
+                "Take short breaks to prevent burnout",
+                "Seek feedback on your resume and interview skills",
+                "Join support groups for job seekers",
+                "Consider temporary or freelance work to build experience",
+                "Focus on self-care and maintaining a positive mindset",
+                "Remember that rejection is part of the process, not a reflection of your worth"
+            ]
+        };
+
+        // Function to analyze sentiment with more advanced techniques
+        function analyzeSentiment() {
+            let text = document.getElementById("jobExperience").value.toLowerCase();
+            let resultContainer = document.getElementById("resultContainer");
+            
+            if (text.trim().length === 0) {
+                alert("Please enter your job search experience!");
+                return;
+            }
+
+            // Show loading animation
+            let analyzeBtn = document.getElementById("analyzeBtn");
+            analyzeBtn.innerHTML = '<div class="loader"></div>';
+            
+            // Simulate processing delay for better UX
+            setTimeout(() => {
+                // Count sentiment keywords
+                let counts = {
+                    positive: 0,
+                    negative: 0,
+                    neutral: 0
+                };
+                
+                let foundKeywords = {
+                    positive: [],
+                    negative: [],
+                    neutral: []
+                };
+
+                // Check for each sentiment keyword
+                for (let sentiment in sentimentKeywords) {
+                    sentimentKeywords[sentiment].forEach(keyword => {
+                        // Check for whole words using regex
+                        const regex = new RegExp('\\b' + keyword + '\\b', 'i');
+                        if (regex.test(text)) {
+                            counts[sentiment]++;
+                            if (!foundKeywords[sentiment].includes(keyword)) {
+                                foundKeywords[sentiment].push(keyword);
+                            }
+                        }
+                    });
+                }
+                
+                // Calculate sentiment score (from -1 to 1)
+                const total = counts.positive + counts.negative + counts.neutral;
+                const sentimentScore = total > 0 
+                    ? ((counts.positive - counts.negative) / total).toFixed(2)
+                    : 0;
+                
+                // Determine overall sentiment
+                let overallSentiment;
+                let icon;
+                let color;
+                let tips;
+                
+                if (sentimentScore > 0.25) {
+                    overallSentiment = "Positive";
+                    icon = "😊";
+                    color = "var(--success-color)";
+                    tips = jobSearchTips.positive;
+                } else if (sentimentScore < -0.25) {
+                    overallSentiment = "Negative";
+                    icon = "😞";
+                    color = "var(--danger-color)";
+                    tips = jobSearchTips.negative;
+                } else {
+                    overallSentiment = "Neutral";
+                    icon = "😐";
+                    color = "var(--warning-color)";
+                    tips = jobSearchTips.neutral;
+                }
+                
+                // Generate personalized feedback
+                let feedbackMessage = generateFeedback(overallSentiment, counts, text);
+                
+                // Update UI
+                document.getElementById("sentimentIcon").innerText = icon;
+                document.getElementById("sentimentScore").innerText = `${overallSentiment} (${sentimentScore})`;
+                document.getElementById("sentimentScore").style.color = color;
+                
+                document.getElementById("positiveValue").innerText = counts.positive;
+                document.getElementById("neutralValue").innerText = counts.neutral;
+                document.getElementById("negativeValue").innerText = counts.negative;
+                
+                document.getElementById("feedback").innerText = feedbackMessage;
+                
+                // Set meter position (convert from -1:1 to 0:100)
+                const meterPosition = (parseFloat(sentimentScore) + 1) * 50;
+                document.getElementById("sentimentMeter").style.width = `${meterPosition}%`;
+                
+                // Generate keyword pills
+                const keywordsContainer = document.getElementById("keywordsContainer");
+                keywordsContainer.innerHTML = "";
+                
+                for (let sentiment in foundKeywords) {
+                    foundKeywords[sentiment].slice(0, 5).forEach(keyword => {
+                        const pill = document.createElement("span");
+                        pill.classList.add("keyword", sentiment);
+                        pill.innerText = keyword;
+                        keywordsContainer.appendChild(pill);
+                    });
+                }
+                
+                // Generate personalized tips
+                const tipsList = document.getElementById("tipsList");
+                tipsList.innerHTML = "";
+                
+                // Randomly select 3 tips
+                const selectedTips = tips.sort(() => 0.5 - Math.random()).slice(0, 3);
+                
+                selectedTips.forEach(tip => {
+                    const li = document.createElement("li");
+                    li.innerText = tip;
+                    tipsList.appendChild(li);
+                });
+                
+                // Save to history
+                saveToHistory(text, overallSentiment, sentimentScore, new Date());
+                
+                // Show result container with animation
+                resultContainer.classList.add("show");
+                
+                // Reset button
+                analyzeBtn.innerHTML = '<i>🔍</i> Analyze Sentiment';
+                
+            }, 1000); // End of timeout
+        }
+        
+        // Generate personalized feedback based on sentiment and text content
+        function generateFeedback(sentiment, counts, text) {
+            // Base feedback templates
+            const feedbackTemplates = {
+                "Positive": [
+                    "Your job search journey is showing positive momentum! Your optimistic approach is a great asset.",
+                    "You're demonstrating a positive outlook which employers often notice and appreciate.",
+                    "Your positive attitude shines through! This resilience will serve you well in your job search."
+                ],
+                "Negative": [
+                    "Job searching can be challenging, and it's normal to feel frustrated at times.",
+                    "Many job seekers experience difficult periods. Remember that persistence often leads to success.",
+                    "The job market can be tough, but every rejection brings you closer to the right opportunity."
+                ],
+                "Neutral": [
+                    "Your approach seems balanced and methodical, which is effective for long-term job searching.",
+                    "You're maintaining a steady perspective, which helps in navigating the ups and downs of job hunting.",
+                    "A measured approach can help you make objective decisions throughout your job search process."
+                ]
+            };
+
+            // Select a random template
+            const baseTemplate = feedbackTemplates[sentiment][Math.floor(Math.random() * feedbackTemplates[sentiment].length)];
+            
+            // Add specific advice based on content
+            let specificAdvice = "";
+            
+            if (text.includes("interview")) {
+                specificAdvice = " Consider preparing specific examples of your achievements for future interviews.";
+            } else if (text.includes("resume") || text.includes("cv")) {
+                specificAdvice = " Tailoring your resume for each application can significantly improve your response rate.";
+            } else if (text.includes("network") || text.includes("connect")) {
+                specificAdvice = " Your networking efforts are valuable - many positions are filled through connections rather than job boards.";
+            } else if (text.includes("reject") || text.includes("declin")) {
+                specificAdvice = " Remember that rejections are often about fit, not your value as a professional.";
+            }
+            
+            return baseTemplate + specificAdvice;
+        }
+        
+        // Save entry to history
+        function saveToHistory(text, sentiment, score, date) {
+            const entry = {
+                text: text,
+                sentiment: sentiment,
+                score: score,
+                date: date.toISOString()
+            };
+            
+            sentimentHistory.unshift(entry);
+            
+            // Limit history to 20 entries
+            if (sentimentHistory.length > 20) {
+                sentimentHistory.pop();
+            }
+            
+            localStorage.setItem('sentimentHistory', JSON.stringify(sentimentHistory));
+            renderHistory();
+        }
+        
+        // Render history entries
+        function renderHistory() {
+            const historyItems = document.getElementById("historyItems");
+            historyItems.innerHTML = "";
+            
+            if (sentimentHistory.length === 0) {
+                historyItems.innerHTML = "<p>No history yet. Start tracking your job search journey!</p>";
+                return;
+            }
+            
+            sentimentHistory.forEach((entry, index) => {
+                const historyItem = document.createElement("div");
+                historyItem.classList.add("history-item");
+                historyItem.setAttribute("data-index", index);
+                historyItem.onclick = function() { loadHistoryEntry(index); };
+                
+                const date = new Date(entry.date);
+                const formattedDate = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+                
+                historyItem.innerHTML = `
+                    <div class="history-date">${formattedDate}</div>
+                    <div class="history-preview">${entry.text.substring(0, 60)}${entry.text.length > 60 ? '...' : ''}</div>
+                    <div class="history-sentiment">Sentiment: ${getSentimentIcon(entry.sentiment)} ${entry.sentiment}</div>
+                `;
+                
+                historyItems.appendChild(historyItem);
+            });
+        }
+        
+        // Get sentiment icon
+        function getSentimentIcon(sentiment) {
+            switch(sentiment) {
+                case "Positive": return "😊";
+                case "Negative": return "😞";
+                case "Neutral": return "😐";
+                default: return "❓";
+            }
+        }
+        
+        // Load history entry
+        function loadHistoryEntry(index) {
+            const entry = sentimentHistory[index];
+            document.getElementById("jobExperience").value = entry.text;
+            toggleHistory();
+            analyzeSentiment();
+        }
+        
+        // Toggle history visibility
+        function toggleHistory() {
+            const historyContainer = document.getElementById("historyContainer");
+            const resultContainer = document.getElementById("resultContainer");
+            
+            if (historyContainer.style.display === "block") {
+                historyContainer.style.display = "none";
+            } else {
+                renderHistory();
+                historyContainer.style.display = "block";
+                resultContainer.classList.remove("show");
+            }
+        }
+        
+        // Clear textarea
+        function clearTextarea() {
+            document.getElementById("jobExperience").value = "";
+            document.getElementById("resultContainer").classList.remove("show");
+        }
+        
+        // Clear history
+        function clearHistory() {
+            if (confirm("Are you sure you want to clear your sentiment history?")) {
+                sentimentHistory = [];
+                localStorage.removeItem('sentimentHistory');
+                renderHistory();
+            }
+        }
+        
+        // Initialize
+        renderHistory();
+    </script>
+
+</body>
+</html>
